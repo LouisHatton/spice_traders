@@ -4,12 +4,15 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.pirategame.pref.AudioPreferences;
+import com.mygdx.pirategame.screen.*;
 
 
 /**
  * The start of the program. Sets up the main back bone of the game.
  * This includes most constants used throught for collision and changing screens
  * Provides access for screens to interact with eachother and the options interface
+ *
  * @author Sam Pearson
  * @version 1.0
  */
@@ -25,20 +28,6 @@ public class PirateGame extends Game {
 	public static final short ENEMY_BIT = 32;
 	public static final short COLLEGE_BIT = 64;
 	public static final short COLLEGESENSOR_BIT = 128;
-
-	public SpriteBatch batch;
-
-	//Variable for each screen
-	private MainMenu menuScreen;
-	private GameScreen gameScreen;
-	private SkillTree skillTreeScreen;
-	private DeathScreen deathScreen;
-	private Help helpScreen;
-	private VictoryScreen victoryScreen;
-
-	private audioControls options;
-	public Music song;
-
 	//Constant for swapping between screens
 	public final static int MENU = 0;
 	public final static int GAME = 1;
@@ -46,6 +35,16 @@ public class PirateGame extends Game {
 	public final static int DEATH = 3;
 	public final static int HELP = 4;
 	public final static int VICTORY = 5;
+	public SpriteBatch batch;
+	public Music song;
+	//Variable for each screen
+	private MainMenu menuScreen;
+	private GameScreen gameScreen;
+	private SkillsScreen skillTreeScreen;
+	private DeathScreen deathScreen;
+	private HelpScreen helpScreen;
+	private VictoryScreen victoryScreen;
+	private AudioPreferences options;
 
 	/**
 	 * Creates the main body of the game.
@@ -53,18 +52,18 @@ public class PirateGame extends Game {
 	 * Also sets up audio interface
 	 */
 	@Override
-	public void create () {
+	public void create() {
 		batch = new SpriteBatch();
 		//Set starting screen
 		MainMenu mainMenu = new MainMenu(this);
 		setScreen(mainMenu);
 		//Create options
-		options = new audioControls();
+		options = new AudioPreferences();
 
 		//Set background music and play if valid
 		song = Gdx.audio.newMusic(Gdx.files.internal("pirate-music.mp3"));
 		song.setLooping(true);
-		if(getPreferences().isMusicEnabled()){
+		if (getPreferences().isMusicEnabled()) {
 			song.play();
 		}
 		song.setVolume(getPreferences().getMusicVolume());
@@ -85,12 +84,12 @@ public class PirateGame extends Game {
 
 			case GAME:
 				if (gameScreen == null) gameScreen = new GameScreen(this);
-				if (skillTreeScreen == null) skillTreeScreen = new SkillTree(this);
+				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this);
 				this.setScreen(gameScreen);
 				break;
 
 			case SKILL:
-				if (skillTreeScreen == null) skillTreeScreen = new SkillTree(this);
+				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this);
 				this.setScreen(skillTreeScreen);
 				break;
 
@@ -100,7 +99,7 @@ public class PirateGame extends Game {
 				break;
 
 			case HELP:
-				if (helpScreen == null) helpScreen = new Help(this);
+				if (helpScreen == null) helpScreen = new HelpScreen(this);
 				this.setScreen(helpScreen);
 				break;
 
@@ -116,14 +115,14 @@ public class PirateGame extends Game {
 	 *
 	 * @return the options object
 	 */
-	public audioControls getPreferences() {
+	public AudioPreferences getPreferences() {
 		return this.options;
 	}
 
 	/**
 	 * Kills the game screen and skill tree so they can be refreshed on next game start
 	 */
-	public void killGame(){
+	public void killGame() {
 		gameScreen = null;
 		skillTreeScreen = null;
 	}
@@ -131,16 +130,17 @@ public class PirateGame extends Game {
 	/**
 	 * Kill end screens so they can be made again.
 	 */
-	public void killEndScreen(){
+	public void killEndScreen() {
 		deathScreen = null;
 		victoryScreen = null;
 	}
+
 	/**
 	 * (Not Used)
 	 * Renders the visual data for all objects
 	 */
 	@Override
-	public void render () {
+	public void render() {
 		super.render();
 	}
 
@@ -148,7 +148,7 @@ public class PirateGame extends Game {
 	 * Disposes game data
 	 */
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
 	}
 }
