@@ -28,4 +28,4 @@ jobs:
       with:
         name: SpiceTraders
         path: desktop/build/libs/desktop-1.0.jar
-        retention-days: 2
+        retention-days: 3
