@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+version '1.0'
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    compile project(":desktop")
+    compile project(":core")
+
+    compile "junit:junit:4.+"
+    compile "org.mockito:mockito-all:1.9.+"
+
+    compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    testCompile 'junit:junit:4.+'
+    testCompile "org.mockito:mockito-all:1.9.+"
+
+    testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+    testCompile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+}
+
+sourceSets {
+    test {
+        java {
+            srcDirs = ["src/test/java"]
+        }
+    }
+}
