@@ -17,7 +17,12 @@ jobs:
       with:
         java-version: '8'
         distribution: 'adopt'
-        
+
+    - name: Unit Testing
+      uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
+      with:
+        arguments: tests:test --build-cache --daemon --parallel --stacktrace
+
     - name: Build with Gradle
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
       with:
