@@ -21,11 +21,11 @@ jobs:
     - name: Build with Gradle
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
       with:
-        arguments: build copyToBuildsDir --build-cache --daemon --parallel --stacktrace
+        arguments: desktop:dist --build-cache --daemon --parallel --stacktrace
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: jars
-        path: bin/*.jar
-        retention-days: 2
+        name: SpiceTraders
+        path: desktop/build/libs/desktop-1.0.jar
+        retention-days: 3
