@@ -21,7 +21,7 @@ jobs:
     - name: Unit Testing
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
       with:
-        arguments: tests:test --build-cache --daemon --parallel --stacktrace
+        arguments: tests:test --info --build-cache --daemon --parallel --stacktrace
 
     - name: Build with Gradle
       uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
@@ -32,5 +32,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: SpiceTraders
-        path: desktop/build/libs/desktop-1.0.jar
-        retention-days: 3
+        path: | 
+          desktop/build/libs/desktop-1.0.jar
+          tests/build/reports/tests/test/
+        retention-days: 2
