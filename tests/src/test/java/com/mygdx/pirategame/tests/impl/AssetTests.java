@@ -2,6 +2,7 @@ package com.mygdx.pirategame.tests.impl;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.internal.util.collections.Sets;
@@ -9,6 +10,7 @@ import org.mockito.internal.util.collections.Sets;
 import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(GdxTestRunner.class)
 public class AssetTests {
@@ -43,9 +45,17 @@ public class AssetTests {
 
 	@Test
 	public void testAssetsExist() {
+		boolean hasPassed = true;
+
 		for (String requiredAsset : IMPORTANT_ASSETS) {
-			assertTrue("Checking that " + requiredAsset + " exists", Gdx.files.internal(requiredAsset).exists());
+			if (Gdx.files.internal(requiredAsset).exists()) {
+				continue;
+			}
+
+			fail("Missing asset!" + requiredAsset);
 		}
+
+		Assert.assertTrue("Valid assets", hasPassed);
 	}
 
 	@Test

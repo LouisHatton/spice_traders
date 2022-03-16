@@ -20,7 +20,6 @@ public class TestRunner {
 			TileTests.class
 	);
 
-	@Test
 	public static void main(String[] args) {
 		for (Class<?> clazz : TESTS_TO_RUN) {
 			System.out.println("Running " + clazz.getSimpleName());
@@ -30,7 +29,9 @@ public class TestRunner {
 				System.out.println(failure.toString());
 			}
 
-			System.out.println(result.wasSuccessful());
+			System.out.println("Pass! " + result.wasSuccessful());
 		}
+
+		System.out.println("All tests complete");
 	}
 }
