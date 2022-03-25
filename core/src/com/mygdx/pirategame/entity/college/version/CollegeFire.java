@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.Entity;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * College Fire
@@ -34,7 +34,7 @@ public class CollegeFire extends Entity {
 	 * @param x      x position of player
 	 * @param y      y position of player
 	 */
-	public CollegeFire(GameScreen screen, float x, float y) {
+	public CollegeFire(ActiveGameScreen screen, float x, float y) {
 		super(screen, x, y);
 
 		playerPos = screen.getPlayerPos();

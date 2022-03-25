@@ -23,14 +23,14 @@ import com.mygdx.pirategame.screen.SkillsScreen;
 public class HUD implements Disposable {
 
 	public static Stage stage;
-	private static Integer score;
-	private static Integer health;
+	private static int score;
+	private static int health;
 	private static Label scoreLabel;
 	private static Label healthLabel;
 	private static Label coinLabel;
 	private static Label pointsText;
-	private static Integer coins;
-	private static Integer coinMulti;
+	private static int coins;
+	private static int coinMulti;
 	private final Viewport viewport;
 	private float timeCount;
 	private final Texture hp;
@@ -118,6 +118,15 @@ public class HUD implements Disposable {
 		}
 	}
 
+	public static void setCoins(int value) {
+		coins = value;
+		coinLabel.setText(String.format("%03d", coins));
+	}
+
+	public static void setScore(int value) {
+		score = value;
+		scoreLabel.setText(String.format("%03d", score));
+	}
 	/**
 	 * Changes points by value increase
 	 *
@@ -164,7 +173,7 @@ public class HUD implements Disposable {
 	 *
 	 * @return health : returns coins value
 	 */
-	public static Integer getCoins() {
+	public static int getCoins() {
 		return coins;
 	}
 
@@ -197,6 +206,10 @@ public class HUD implements Disposable {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+
+	public static int getScore() {
+		return score;
 	}
 }
 

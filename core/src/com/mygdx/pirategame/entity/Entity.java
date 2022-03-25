@@ -3,7 +3,7 @@ package com.mygdx.pirategame.entity;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Entity
@@ -16,7 +16,7 @@ import com.mygdx.pirategame.screen.GameScreen;
 public abstract class Entity extends Sprite {
 
 	private final World world;
-	private final GameScreen screen;
+	private final ActiveGameScreen screen;
 	private Body b2body;
 
 	/**
@@ -27,7 +27,7 @@ public abstract class Entity extends Sprite {
 	 * @param x      x position of entity
 	 * @param y      y position of entity
 	 */
-	public Entity(GameScreen screen, float x, float y) {
+	public Entity(ActiveGameScreen screen, float x, float y) {
 		this.world = screen.getWorld();
 		this.screen = screen;
 
@@ -51,7 +51,7 @@ public abstract class Entity extends Sprite {
 		return world;
 	}
 
-	public GameScreen getScreen() {
+	public ActiveGameScreen getScreen() {
 		return screen;
 	}
 

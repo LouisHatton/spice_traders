@@ -1,7 +1,7 @@
 package com.mygdx.pirategame.entity;
 
 import com.mygdx.pirategame.display.HealthBar;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Enemy
@@ -26,7 +26,7 @@ public abstract class Enemy extends Entity {
 	 * @param x      x position of entity
 	 * @param y      y position of entity
 	 */
-	public Enemy(GameScreen screen, float x, float y) {
+	public Enemy(ActiveGameScreen screen, float x, float y) {
 		super(screen, x, y);
 
 		this.setToDestroy = false;

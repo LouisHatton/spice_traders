@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.tile.InteractiveTileObject;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Sets up the class for all the Islands. Deals with what happens on collision and its properties
@@ -21,7 +21,7 @@ public class Islands extends InteractiveTileObject {
 	 * @param screen visual data
 	 * @param bounds Rectangle boundary (world boundary)
 	 */
-	public Islands(GameScreen screen, Rectangle bounds) {
+	public Islands(ActiveGameScreen screen, Rectangle bounds) {
 		super(screen, bounds);
 		fixture.setUserData(this);
 		//Set the category bit

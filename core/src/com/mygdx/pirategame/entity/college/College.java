@@ -12,7 +12,7 @@ import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Enemy;
 import com.mygdx.pirategame.entity.college.version.CollegeFire;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.utils.SpawnUtils;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class College extends Enemy {
 	 * @param ship_no      Number of college ships to produce
 	 * @param invalidSpawn Spawn data to check spawn validity when generating ships
 	 */
-	public College(GameScreen screen, String college, float x, float y, String flag, String ship, int ship_no, SpawnUtils invalidSpawn) {
+	public College(ActiveGameScreen screen, String college, float x, float y, String flag, String ship, int ship_no, SpawnUtils invalidSpawn) {
 		super(screen, x, y);
 		noSpawn = invalidSpawn;
 		currentCollege = flag;

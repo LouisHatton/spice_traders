@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,7 +28,7 @@ import java.util.List;
 public class SkillsScreen implements Screen {
 
 	//To store whether buttons are enabled or disabled
-	private static final List<Integer> states = new ArrayList<Integer>();
+	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1);
 	private static TextButton movement1;
 	private final PirateGame parent;
 	private final Stage stage;
@@ -45,12 +45,6 @@ public class SkillsScreen implements Screen {
 	public SkillsScreen(PirateGame pirateGame) {
 		parent = pirateGame;
 		stage = new Stage(new ScreenViewport());
-
-		//0 = enabled, 1 = disabled
-		states.add(1);
-		states.add(1);
-		states.add(1);
-		states.add(1);
 	}
 
 	/**
@@ -63,9 +57,9 @@ public class SkillsScreen implements Screen {
 		//States.get() checks whether it has already been unlocked. 1 = not unlocked, 0 = unlocked
 		if (states.get(0) == 1 && points >= 100) {
 			//Change acceleration
-			GameScreen.changeAcceleration(20F);
+			ActiveGameScreen.changeAcceleration(20F);
 			//Change Max speed
-			GameScreen.changeMaxSpeed(20F);
+			ActiveGameScreen.changeMaxSpeed(20F);
 			states.set(0, 0);
 
 		} else if (states.get(1) == 1 && points >= 200) {
@@ -74,14 +68,14 @@ public class SkillsScreen implements Screen {
 			states.set(1, 0);
 		} else if (states.get(2) == 1 && points >= 300) {
 			//Change acceleration
-			GameScreen.changeAcceleration(20F);
+			ActiveGameScreen.changeAcceleration(20F);
 			//Change Max speed
-			GameScreen.changeMaxSpeed(20F);
+			ActiveGameScreen.changeMaxSpeed(20F);
 			states.set(2, 0);
 
 		} else if (states.get(3) == 1 && points >= 400) {
 			//Increase damage
-			GameScreen.changeDamage(5);
+			ActiveGameScreen.changeDamage(5);
 			states.set(3, 0);
 		}
 	}

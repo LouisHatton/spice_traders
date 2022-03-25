@@ -39,7 +39,7 @@ public class PirateGame extends Game {
 	public Music song;
 	//Variable for each screen
 	private MainMenu menuScreen;
-	private GameScreen gameScreen;
+	private ActiveGameScreen gameScreen;
 	private SkillsScreen skillTreeScreen;
 	private DeathScreen deathScreen;
 	private HelpScreen helpScreen;
@@ -83,7 +83,7 @@ public class PirateGame extends Game {
 				break;
 
 			case GAME:
-				if (gameScreen == null) gameScreen = new GameScreen(this);
+				if (gameScreen == null) gameScreen = new ActiveGameScreen(this);
 				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this);
 				this.setScreen(gameScreen);
 				break;

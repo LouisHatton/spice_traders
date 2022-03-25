@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.pirategame.entity.tile.type.CollegeWalls;
 import com.mygdx.pirategame.entity.tile.type.Islands;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * This is the class where all boundaries and collisions are created for the map.
@@ -19,7 +19,7 @@ public class WorldCreator {
 	 *
 	 * @param screen the screen that the boundaries are relevant for
 	 */
-	public WorldCreator(GameScreen screen) {
+	public WorldCreator(ActiveGameScreen screen) {
 		TiledMap map = screen.getMap();
 
 		// Object class is islands, stuff for boat to collide with

@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Creates the class of the player. Everything that involves actions coming from the player boat
@@ -29,7 +29,7 @@ public class Player extends Entity {
 	 *
 	 * @param screen visual data
 	 */
-	public Player(GameScreen screen) {
+	public Player(ActiveGameScreen screen) {
 		super(screen, 0, 0);
 		// Retrieves world data and creates ship texture
 		ship = new Texture("player_ship.png");
@@ -72,8 +72,8 @@ public class Player extends Entity {
 	 */
 	public void playBreakSound() {
 		// Plays damage sound effect
-		if (GameScreen.game.getPreferences().isEffectsEnabled()) {
-			breakSound.play(GameScreen.game.getPreferences().getEffectsVolume());
+		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+			breakSound.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
 	}
 

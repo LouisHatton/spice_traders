@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Entity;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Coin
@@ -34,7 +34,7 @@ public class Coin extends Entity {
 	 * @param x      the x value to be placed at
 	 * @param y      the y value to be placed at
 	 */
-	public Coin(GameScreen screen, float x, float y) {
+	public Coin(ActiveGameScreen screen, float x, float y) {
 		super(screen, x, y);
 		//Set coin image
 		coin = new Texture("coin.png");
@@ -99,8 +99,8 @@ public class Coin extends Entity {
 		setToDestroyed = true;
 		Gdx.app.log("coin", "collision");
 		//Play pickup sound
-		if (GameScreen.game.getPreferences().isEffectsEnabled()) {
-			coinPickup.play(GameScreen.game.getPreferences().getEffectsVolume());
+		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+			coinPickup.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
 
 	}

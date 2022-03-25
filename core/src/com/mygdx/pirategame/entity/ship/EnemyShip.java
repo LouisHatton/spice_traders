@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Enemy;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Enemy Ship
@@ -36,7 +36,7 @@ public class EnemyShip extends Enemy {
 	 * @param path       path of texture file
 	 * @param assignment College ship is assigned to
 	 */
-	public EnemyShip(GameScreen screen, float x, float y, String path, String assignment) {
+	public EnemyShip(ActiveGameScreen screen, float x, float y, String path, String assignment) {
 		super(screen, x, y);
 		enemyShip = new Texture(path);
 		//Assign college
@@ -64,8 +64,8 @@ public class EnemyShip extends Enemy {
 		//If ship is set to destroy and isnt, destroy it
 		if (isSetToDestroy() && !isDestroyed()) {
 			//Play death noise
-			if (GameScreen.game.getPreferences().isEffectsEnabled()) {
-				destroy.play(GameScreen.game.getPreferences().getEffectsVolume());
+			if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+				destroy.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 			}
 			getWorld().destroyBody(getBody());
 			setDestroyed(true);
@@ -139,8 +139,8 @@ public class EnemyShip extends Enemy {
 	public void onContact() {
 		Gdx.app.log("enemy", "collision");
 		//Play collision sound
-		if (GameScreen.game.getPreferences().isEffectsEnabled()) {
-			hit.play(GameScreen.game.getPreferences().getEffectsVolume());
+		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+			hit.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
 		//Deal with the damage
 		takeDamage(getDamage());

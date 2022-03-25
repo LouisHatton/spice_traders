@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.Entity;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Cannon Fire
@@ -43,7 +43,7 @@ public class CannonFire extends Entity {
 	 * @param body     body of origin
 	 * @param velocity velocity of the cannon ball
 	 */
-	public CannonFire(GameScreen screen, float x, float y, Body body, float velocity) {
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity) {
 		super(screen, x, y);
 		this.velocity = velocity;
 		//sets the angle and velocity
@@ -58,8 +58,8 @@ public class CannonFire extends Entity {
 		//set collision bounds
 		//set sound for fire and play if on
 		fireNoise = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
-		if (GameScreen.game.getPreferences().isEffectsEnabled()) {
-			fireNoise.play(GameScreen.game.getPreferences().getEffectsVolume());
+		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
 	}
 

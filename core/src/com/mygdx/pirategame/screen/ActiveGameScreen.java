@@ -42,7 +42,7 @@ import java.util.Random;
  * @author Ethan Alabaster, Adam Crook, Joe Dickinson, Sam Pearson, Tom Perry, Edward Poulter
  * @version 1.0
  */
-public class GameScreen implements Screen {
+public class ActiveGameScreen implements Screen {
 	public static final int GAME_RUNNING = 0;
 	public static final int GAME_PAUSED = 1;
 	public static PirateGame game;
@@ -74,9 +74,9 @@ public class GameScreen implements Screen {
 	 *
 	 * @param game passes game data to current class,
 	 */
-	public GameScreen(PirateGame game) {
+	public ActiveGameScreen(PirateGame game) {
 		gameStatus = GAME_RUNNING;
-		GameScreen.game = game;
+		ActiveGameScreen.game = game;
 		// Initialising camera and extendable viewport for viewing game
 		camera = new OrthographicCamera();
 		camera.zoom = 0.0155f;

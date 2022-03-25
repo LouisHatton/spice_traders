@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.tile.InteractiveTileObject;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * College Walls (Alcuin)
@@ -15,7 +15,7 @@ import com.mygdx.pirategame.screen.GameScreen;
  */
 public class CollegeWalls extends InteractiveTileObject {
 
-	private final GameScreen screen;
+	private final ActiveGameScreen screen;
 	private final String college;
 
 	/**
@@ -24,7 +24,7 @@ public class CollegeWalls extends InteractiveTileObject {
 	 * @param screen Visual data
 	 * @param bounds Wall bounds
 	 */
-	public CollegeWalls(GameScreen screen, String college, Rectangle bounds) {
+	public CollegeWalls(ActiveGameScreen screen, String college, Rectangle bounds) {
 		super(screen, bounds);
 		this.screen = screen;
 		this.college = college;

@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.Entity;
-import com.mygdx.pirategame.screen.GameScreen;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
  * Interactive Tile Object
@@ -26,7 +26,7 @@ public abstract class InteractiveTileObject extends Entity {
 	 * @param screen Visual data
 	 * @param bounds Rectangle boundary (world boundary)
 	 */
-	public InteractiveTileObject(GameScreen screen, Rectangle bounds) {
+	public InteractiveTileObject(ActiveGameScreen screen, Rectangle bounds) {
 		super(screen, bounds.getX(), bounds.getY());
 		this.bounds = bounds;
 
