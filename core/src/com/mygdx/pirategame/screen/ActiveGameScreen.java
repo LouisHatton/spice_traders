@@ -24,14 +24,15 @@ import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Player;
 import com.mygdx.pirategame.entity.coin.Coin;
 import com.mygdx.pirategame.entity.college.College;
+import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.listener.WorldContactListener;
 import com.mygdx.pirategame.utils.SpawnUtils;
 import com.mygdx.pirategame.utils.WorldCreator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 
 /**
@@ -43,17 +44,17 @@ import java.util.Random;
  * @version 1.0
  */
 public class ActiveGameScreen implements Screen {
+	
 	public static final int GAME_RUNNING = 0;
 	public static final int GAME_PAUSED = 1;
 	public static PirateGame game;
 	private static float maxSpeed = 2.5f;
 	private static float accel = 0.05f;
-	private static HashMap<String, College> colleges = new HashMap<>();
-	private static ArrayList<EnemyShip> ships = new ArrayList<>();
-	private static ArrayList<Coin> Coins = new ArrayList<>();
+	private static Map<String, College> colleges = new HashMap<>();
+	private static List<EnemyShip> ships = new ArrayList<>();
+	private static List<Coin> Coins = new ArrayList<>();
 	private static int gameStatus;
 	private final Stage stage;
-	public Random rand = new Random();
 	private float stateTime;
 	private final OrthographicCamera camera;
 	private final Viewport viewport;
@@ -63,7 +64,6 @@ public class ActiveGameScreen implements Screen {
 	private final World world;
 	private final Box2DDebugRenderer b2dr;
 	private final Player player;
-	private final SpawnUtils invalidSpawn = new SpawnUtils();
 	private final HUD hud;
 	private Table pauseTable;
 	private Table table;
@@ -102,30 +102,23 @@ public class ActiveGameScreen implements Screen {
 
 		// Spawning enemy ship and coin. x and y is spawn location
 		colleges = new HashMap<>();
-		colleges.put("Alcuin", new College(this, "Alcuin", 1900 / PirateGame.PPM, 2100 / PirateGame.PPM,
-				"alcuin_flag.png", "alcuin_ship.png", 0, invalidSpawn));
-		colleges.put("Anne Lister", new College(this, "Anne Lister", 6304 / PirateGame.PPM, 1199 / PirateGame.PPM,
-				"anne_lister_flag.png", "anne_lister_ship.png", 8, invalidSpawn));
-		colleges.put("Constantine", new College(this, "Constantine", 6240 / PirateGame.PPM, 6703 / PirateGame.PPM,
-				"constantine_flag.png", "constantine_ship.png", 8, invalidSpawn));
-		colleges.put("Goodricke", new College(this, "Goodricke", 1760 / PirateGame.PPM, 6767 / PirateGame.PPM,
-				"goodricke_flag.png", "goodricke_ship.png", 8, invalidSpawn));
-		ships = new ArrayList<>();
-		ships.addAll(colleges.get("Alcuin").fleet);
-		ships.addAll(colleges.get("Anne Lister").fleet);
-		ships.addAll(colleges.get("Constantine").fleet);
-		ships.addAll(colleges.get("Goodricke").fleet);
+		colleges.put("Alcuin", new College(this, CollegeType.ALCUIN));
+		colleges.put("Anne Lister", new College(this, CollegeType.ANNE_LISTER));
+		colleges.put("Constantine", new College(this, CollegeType.CONSTANTINE));
+		colleges.put("Goodricke", new College(this, CollegeType.GOODRICKE));
+		
+		ships = colleges.values().stream().flatMap(col -> col.getFleet().stream()).collect(Collectors.toList());
 
 		//Random ships
-		Boolean validLoc;
+		boolean validLoc;
 		int a = 0;
 		int b = 0;
 		for (int i = 0; i < 20; i++) {
 			validLoc = false;
 			while (!validLoc) {
 				//Get random x and y coords
-				a = rand.nextInt(SpawnUtils.xCap - SpawnUtils.xBase) + SpawnUtils.xBase;
-				b = rand.nextInt(SpawnUtils.yCap - SpawnUtils.yBase) + SpawnUtils.yBase;
+				a = ThreadLocalRandom.current().nextInt(SpawnUtils.get().xCap - SpawnUtils.get().xBase) + SpawnUtils.get().xBase;
+				b = ThreadLocalRandom.current().nextInt(SpawnUtils.get().yCap - SpawnUtils.get().yBase) + SpawnUtils.get().yBase;
 				//Check if valid
 				validLoc = checkGenPos(a, b);
 			}
@@ -139,8 +132,8 @@ public class ActiveGameScreen implements Screen {
 			validLoc = false;
 			while (!validLoc) {
 				//Get random x and y coords
-				a = rand.nextInt(SpawnUtils.xCap - SpawnUtils.xBase) + SpawnUtils.xBase;
-				b = rand.nextInt(SpawnUtils.yCap - SpawnUtils.yBase) + SpawnUtils.yBase;
+				a = ThreadLocalRandom.current().nextInt(SpawnUtils.get().xCap - SpawnUtils.get().xBase) + SpawnUtils.get().xBase;
+				b = ThreadLocalRandom.current().nextInt(SpawnUtils.get().yCap - SpawnUtils.get().yBase) + SpawnUtils.get().yBase;
 				validLoc = checkGenPos(a, b);
 			}
 			//Add a coins at the random coords
@@ -179,10 +172,14 @@ public class ActiveGameScreen implements Screen {
 		for (int i = 0; i < ships.size(); i++) {
 			ships.get(i).changeDamageReceived(value);
 		}
-		colleges.get("Anne Lister").changeDamageReceived(value);
-		colleges.get("Constantine").changeDamageReceived(value);
-		colleges.get("Goodricke").changeDamageReceived(value);
 
+		colleges.values().forEach(col -> {
+			if (col.getType().equals(CollegeType.ALCUIN)) {
+				return;
+			}
+
+			col.changeDamageReceived(value);
+		});
 	}
 
 	/**
@@ -349,10 +346,8 @@ public class ActiveGameScreen implements Screen {
 
 		// Update all players and entities
 		player.update(dt);
-		colleges.get("Alcuin").update(dt);
-		colleges.get("Anne Lister").update(dt);
-		colleges.get("Constantine").update(dt);
-		colleges.get("Goodricke").update(dt);
+
+		colleges.values().forEach(col -> col.update(dt));
 
 		//Update ships
 		for (int i = 0; i < ships.size(); i++) {
@@ -363,17 +358,19 @@ public class ActiveGameScreen implements Screen {
 		for (int i = 0; i < Coins.size(); i++) {
 			Coins.get(i).update();
 		}
+
 		//After a delay check if a college is destroyed. If not, if can fire
 		if (stateTime > 1) {
-			if (!colleges.get("Anne Lister").isDestroyed()) {
-				colleges.get("Anne Lister").fire();
+			for (College college : colleges.values()) {
+				if (college.getType().equals(CollegeType.ALCUIN)) {
+					continue;
+				}
+
+				if (!college.isDestroyed()) {
+					college.fire();
+				}
 			}
-			if (!colleges.get("Constantine").isDestroyed()) {
-				colleges.get("Constantine").fire();
-			}
-			if (!colleges.get("Goodricke").isDestroyed()) {
-				colleges.get("Goodricke").fire();
-			}
+
 			stateTime = 0;
 		}
 
@@ -417,24 +414,23 @@ public class ActiveGameScreen implements Screen {
 
 		//Renders colleges
 		player.draw(game.batch);
-		colleges.get("Alcuin").draw(game.batch);
-		colleges.get("Anne Lister").draw(game.batch);
-		colleges.get("Constantine").draw(game.batch);
-		colleges.get("Goodricke").draw(game.batch);
+		colleges.values().forEach(col -> col.draw(game.batch));
 
 		//Updates all ships
-		for (int i = 0; i < ships.size(); i++) {
-			if (ships.get(i).college != "Unaligned") {
+		for (EnemyShip ship : ships) {
+			if (!Objects.equals(ship.college, "Unaligned")) {
 				//Flips a colleges allegence if their college is destroyed
-				if (colleges.get(ships.get(i).college).isDestroyed()) {
-
-					ships.get(i).updateTexture("Alcuin", "alcuin_ship.png");
+				if (colleges.get(ship.college).isDestroyed()) {
+					ship.updateTexture("Alcuin", "alcuin_ship.png");
 				}
 			}
-			ships.get(i).draw(game.batch);
+
+			ship.draw(game.batch);
 		}
+
 		game.batch.end();
 		HUD.stage.draw();
+
 		stage.act();
 		stage.draw();
 		//Checks game over conditions
@@ -495,7 +491,15 @@ public class ActiveGameScreen implements Screen {
 			game.killGame();
 		}
 		//Win game if all colleges destroyed
-		else if (colleges.get("Anne Lister").isDestroyed() && colleges.get("Constantine").isDestroyed() && colleges.get("Goodricke").isDestroyed()) {
+		boolean allDestroyed = colleges.values().stream().allMatch(col -> {
+			if (col.getType().equals(CollegeType.ALCUIN)) {
+				return true;
+			}
+
+			return col.isDestroyed();
+		});
+
+		if (allDestroyed) {
 			game.changeScreen(PirateGame.VICTORY);
 			game.killGame();
 		}
@@ -516,9 +520,9 @@ public class ActiveGameScreen implements Screen {
 	 * @param x random x value
 	 * @param y random y value
 	 */
-	private Boolean checkGenPos(int x, int y) {
-		if (invalidSpawn.tileBlocked.containsKey(x)) {
-			ArrayList<Integer> yTest = invalidSpawn.tileBlocked.get(x);
+	private boolean checkGenPos(int x, int y) {
+		if (SpawnUtils.get().tileBlocked.containsKey(x)) {
+			ArrayList<Integer> yTest = SpawnUtils.get().tileBlocked.get(x);
 			return !yTest.contains(y);
 		}
 		return true;

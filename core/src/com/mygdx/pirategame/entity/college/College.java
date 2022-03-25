@@ -16,7 +16,9 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.utils.SpawnUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * College
@@ -30,28 +32,21 @@ import java.util.Random;
 
 public class College extends Enemy {
 
-	public Random rand = new Random();
-	public ArrayList<EnemyShip> fleet = new ArrayList<>();
+	private List<EnemyShip> fleet = new ArrayList<>();
 	private final Texture enemyCollege;
 	private final String currentCollege;
 	private final Array<CollegeFire> cannonBalls;
-	private final SpawnUtils noSpawn;
+	private final CollegeType type;
 
 	/**
 	 * @param screen       Visual data
-	 * @param college      College name i.e. "Alcuin" used for fleet assignment
-	 * @param x            College position on x-axis
-	 * @param y            College position on y-axis
-	 * @param flag         College flag sprite (image name)
-	 * @param ship         College ship sprite (image name)
-	 * @param ship_no      Number of college ships to produce
-	 * @param invalidSpawn Spawn data to check spawn validity when generating ships
+	 * @param college      Data about the college i.e. "Alcuin" used for fleet assignment
 	 */
-	public College(ActiveGameScreen screen, String college, float x, float y, String flag, String ship, int ship_no, SpawnUtils invalidSpawn) {
-		super(screen, x, y);
-		noSpawn = invalidSpawn;
-		currentCollege = flag;
-		enemyCollege = new Texture(flag);
+	public College(ActiveGameScreen screen, CollegeType college) {
+		super(screen, college.getX(), college.getY());
+		this.type = college;
+		currentCollege = college.getFlagTexture();
+		enemyCollege = new Texture(this.currentCollege);
 		//Set the position and size of the college
 		setBounds(0, 0, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
 		setRegion(enemyCollege);
@@ -66,16 +61,16 @@ public class College extends Enemy {
 		boolean spawnIsValid;
 
 		//Generates college fleet
-		for (int i = 0; i < ship_no; i++) {
+		for (int i = 0; i < college.getShipSpawns(); i++) {
 			spawnIsValid = false;
 			while (!spawnIsValid) {
-				ranX = rand.nextInt(2000) - 1000;
-				ranY = rand.nextInt(2000) - 1000;
-				ranX = (int) Math.floor(x + (ranX / PirateGame.PPM));
-				ranY = (int) Math.floor(y + (ranY / PirateGame.PPM));
+				ranX = ThreadLocalRandom.current().nextInt(2000) - 1000;
+				ranY = ThreadLocalRandom.current().nextInt(2000) - 1000;
+				ranX = (int) Math.floor(college.getX() + (ranX / PirateGame.PPM));
+				ranY = (int) Math.floor(college.getY() + (ranY / PirateGame.PPM));
 				spawnIsValid = getCoord(ranX, ranY);
 			}
-			fleet.add(new EnemyShip(screen, ranX, ranY, ship, college));
+			fleet.add(new EnemyShip(screen, ranX, ranY, college.getShipTexture(), college.getName()));
 		}
 	}
 
@@ -87,10 +82,10 @@ public class College extends Enemy {
 	 * @return isValid : returns the validity of the proposed spawn point
 	 */
 	public boolean getCoord(int x, int y) {
-		if (x < SpawnUtils.xBase || x >= SpawnUtils.xCap || y < SpawnUtils.yBase || y >= SpawnUtils.yCap) {
+		if (x < SpawnUtils.get().xBase || x >= SpawnUtils.get().xCap || y < SpawnUtils.get().yBase || y >= SpawnUtils.get().yCap) {
 			return false;
-		} else if (noSpawn.tileBlocked.containsKey(x)) {
-			return !noSpawn.tileBlocked.get(x).contains(y);
+		} else if (SpawnUtils.get().tileBlocked.containsKey(x)) {
+			return !SpawnUtils.get().tileBlocked.get(x).contains(y);
 		}
 		return true;
 	}
@@ -115,7 +110,7 @@ public class College extends Enemy {
 			//Award the player coins and points for destroying a college
 			if (!currentCollege.equals("alcuin_flag.png")) {
 				HUD.changePoints(100);
-				HUD.changeCoins(rand.nextInt(10));
+				HUD.changeCoins(ThreadLocalRandom.current().nextInt(10));
 			}
 		}
 		//If not destroyed, update the college position
@@ -195,6 +190,14 @@ public class College extends Enemy {
 	 */
 	public void fire() {
 		cannonBalls.add(new CollegeFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y));
+	}
+
+	public List<EnemyShip> getFleet() {
+		return fleet;
+	}
+
+	public CollegeType getType() {
+		return type;
 	}
 }
 
