@@ -30,7 +30,7 @@ public class SpawnUtils {
 		//Determines island coverage (where ships and coins can't spawn)
 		for (int x = 0; x < xCap; x++) {
 			for (int y = 0; y < yCap; y++) {
-				//Goodricke islands
+				//Goodricke islands.
 				if (x >= 50 && y <= 50) {
 					if (x >= 53 && x <= 59 && y >= 10 && y <= 12) {
 						add(x, y);

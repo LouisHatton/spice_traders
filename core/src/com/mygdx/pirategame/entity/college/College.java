@@ -103,7 +103,7 @@ public class College extends Enemy {
 			getWorld().destroyBody(getBody());
 			setDestroyed(true);
 
-			//If it is the player ally college, end the game for the player
+			//If it is the player ally college, end the game for the player.
 			if (currentCollege.equals("alcuin_flag.png")) {
 				getScreen().gameOverCheck();
 			}
