@@ -1,6 +1,7 @@
 package com.mygdx.pirategame.tests;
 
 import com.mygdx.pirategame.tests.impl.AssetTests;
+import com.mygdx.pirategame.tests.impl.ScoreTest;
 import com.mygdx.pirategame.tests.impl.TileTests;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import org.junit.Test;
@@ -17,7 +18,8 @@ public class TestRunner {
 
 	private final static Set<Class<?>> TESTS_TO_RUN = Sets.newSet(
 			AssetTests.class,
-			TileTests.class
+			TileTests.class,
+			ScoreTest.class
 	);
 
 	public static void main(String[] args) {
@@ -26,10 +28,11 @@ public class TestRunner {
 			Result result = JUnitCore.runClasses(clazz);
 
 			for (Failure failure : result.getFailures()) {
-				System.out.println(failure.toString());
+				System.out.println("Failure for " + clazz + " at " + failure.toString());
+				System.out.println(failure.getTrace());
 			}
 
-			System.out.println("Pass! " + result.wasSuccessful());
+			System.out.println("Complete! Ran " + result.getRunCount() + " tests. In total " + (result.getRunCount() - result.getFailureCount()) + " tests passed. Failure for " + result.getFailureCount() + " tests.");
 		}
 
 		System.out.println("All tests complete");

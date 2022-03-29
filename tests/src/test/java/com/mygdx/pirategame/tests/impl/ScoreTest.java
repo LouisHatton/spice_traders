@@ -7,11 +7,14 @@ import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import com.mygdx.pirategame.utils.SpawnUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
@@ -41,8 +44,9 @@ public class ScoreTest {
 	@Test
 	public void shipDestroyTest() {
 		MockUtilities.createDefaultScoreAndPoints();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
 
-		EnemyShip enemyShip = new EnemyShip(MockUtilities.createScreen(), 0, 0, "unaligned_ship.png", "Unaligned");
+		EnemyShip enemyShip = new EnemyShip(activeGameScreen, 0, 0, "unaligned_ship.png", "Unaligned");
 
 		enemyShip.setToDestroy(true);
 		enemyShip.update(5);

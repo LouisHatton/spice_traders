@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.pref.AudioPreferences;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
@@ -25,13 +26,36 @@ public class MockUtilities {
 		HUD.setCoins(0);
 	}
 
+	public static PirateGame createGame() {
+		PirateGame pirateGame = Mockito.mock(PirateGame.class);
+
+		AudioPreferences audioPreferences = new AudioPreferences();
+
+		Whitebox.setInternalState(pirateGame, "options", audioPreferences);
+		Mockito.when(pirateGame.getPreferences()).thenReturn(audioPreferences);
+
+		return pirateGame;
+	}
 
 	public static ActiveGameScreen createScreen() {
 		ActiveGameScreen screen = Mockito.mock(ActiveGameScreen.class);
 		Mockito.when(screen.getWorld()).thenReturn(new World(new Vector2(0, 0), true));
 
-		Whitebox.setInternalState(screen.game, "options", new AudioPreferences());
 		return screen;
+	}
+
+	public static PirateGame createGameAndScreen() {
+		PirateGame pirateGame = createGame();
+		ActiveGameScreen activeGameScreen = createScreen();
+
+		Whitebox.setInternalState(pirateGame, "gameScreen", activeGameScreen);
+		Mockito.when(pirateGame.getScreen()).thenReturn(activeGameScreen);
+
+		Whitebox.setInternalState(activeGameScreen, "game", pirateGame);
+
+		pirateGame.setScreen(activeGameScreen); // game screen.
+
+		return pirateGame;
 	}
 
 }
