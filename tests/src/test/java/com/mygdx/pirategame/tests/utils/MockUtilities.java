@@ -2,6 +2,7 @@ package com.mygdx.pirategame.tests.utils;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -52,6 +53,10 @@ public class MockUtilities {
 		Mockito.when(pirateGame.getScreen()).thenReturn(activeGameScreen);
 
 		Whitebox.setInternalState(activeGameScreen, "game", pirateGame);
+		Whitebox.setInternalState(pirateGame, "batch", Mockito.mock(SpriteBatch.class));
+
+		Whitebox.setInternalState(activeGameScreen, "hud", new HUD(pirateGame.batch));
+		//Mockito.when(activeGameScreen.getHud()).thenReturn(new HUD(pirateGame.batch));
 
 		pirateGame.setScreen(activeGameScreen); // game screen.
 

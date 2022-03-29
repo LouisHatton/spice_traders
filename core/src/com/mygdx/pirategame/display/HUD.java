@@ -163,7 +163,7 @@ public class HUD implements Disposable {
 	 *
 	 * @return health : returns health value
 	 */
-	public static Integer getHealth() {
+	public static int getHealth() {
 		return health;
 	}
 
@@ -186,7 +186,7 @@ public class HUD implements Disposable {
 		timeCount += dt;
 		if (timeCount >= 1) {
 			//Regen health every second
-			if (health != 100) {
+			if (health < 100) {
 				health += 1;
 				healthLabel.setText(String.format("%02d", health));
 			}

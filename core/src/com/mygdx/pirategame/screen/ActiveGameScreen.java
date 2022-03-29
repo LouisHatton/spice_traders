@@ -64,7 +64,7 @@ public class ActiveGameScreen implements Screen {
 	private final World world;
 	private final Box2DDebugRenderer b2dr;
 	private final Player player;
-	private final HUD hud;
+	public HUD hud;
 	private Table pauseTable;
 	private Table table;
 
@@ -564,5 +564,9 @@ public class ActiveGameScreen implements Screen {
 		b2dr.dispose();
 		hud.dispose();
 		stage.dispose();
+	}
+
+	public HUD getHud() {
+		return hud;
 	}
 }
