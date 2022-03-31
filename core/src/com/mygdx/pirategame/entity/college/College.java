@@ -199,5 +199,9 @@ public class College extends Enemy {
 	public CollegeType getType() {
 		return type;
 	}
+
+	public Array<CollegeFire> getCannonBalls() {
+		return cannonBalls;
+	}
 }
 

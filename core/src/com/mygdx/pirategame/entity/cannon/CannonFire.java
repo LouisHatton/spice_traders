@@ -133,4 +133,8 @@ public class CannonFire extends Entity {
 	public void onContact() {
 
 	}
+
+	public boolean isSetToDestroy() {
+		return setToDestroy;
+	}
 }

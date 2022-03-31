@@ -11,7 +11,6 @@ import org.mockito.internal.util.collections.Sets;
 
 import java.util.Set;
 
-@Suite.SuiteClasses({AssetTests.class, ScoreTest.class, TileTests.class, ShipTest.class, CoinTest.class})
 public class TestRunner {
 
 	private final static Set<Class<?>> TESTS_TO_RUN = Sets.newSet(
@@ -19,7 +18,9 @@ public class TestRunner {
 			TileTests.class,
 			ScoreTest.class,
 			ShipTest.class,
-			CoinTest.class
+			CoinTest.class,
+			CannonTest.class,
+			CollegeWallTest.class
 	);
 
 	@Test
