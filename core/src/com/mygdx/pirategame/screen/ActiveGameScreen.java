@@ -52,7 +52,7 @@ public class ActiveGameScreen implements Screen {
 	private static float accel = 0.05f;
 	private static Map<String, College> colleges = new HashMap<>();
 	private static List<EnemyShip> ships = new ArrayList<>();
-	private static List<Coin> Coins = new ArrayList<>();
+	public static List<Coin> Coins = new ArrayList<>();
 	private static int gameStatus;
 	private final Stage stage;
 	private float stateTime;

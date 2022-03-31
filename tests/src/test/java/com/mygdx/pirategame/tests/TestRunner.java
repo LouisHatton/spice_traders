@@ -1,9 +1,6 @@
 package com.mygdx.pirategame.tests;
 
-import com.mygdx.pirategame.tests.impl.AssetTests;
-import com.mygdx.pirategame.tests.impl.ScoreTest;
-import com.mygdx.pirategame.tests.impl.ShipTest;
-import com.mygdx.pirategame.tests.impl.TileTests;
+import com.mygdx.pirategame.tests.impl.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
@@ -14,14 +11,15 @@ import org.mockito.internal.util.collections.Sets;
 
 import java.util.Set;
 
-@Suite.SuiteClasses({AssetTests.class, ScoreTest.class, TileTests.class, ShipTest.class})
+@Suite.SuiteClasses({AssetTests.class, ScoreTest.class, TileTests.class, ShipTest.class, CoinTest.class})
 public class TestRunner {
 
 	private final static Set<Class<?>> TESTS_TO_RUN = Sets.newSet(
 			AssetTests.class,
 			TileTests.class,
 			ScoreTest.class,
-			ShipTest.class
+			ShipTest.class,
+			CoinTest.class
 	);
 
 	@Test

@@ -115,4 +115,12 @@ public class Coin extends Entity {
 			super.draw(batch);
 		}
 	}
+
+	public boolean isSetToDestroyed() {
+		return setToDestroyed;
+	}
+
+	public boolean isDestroyed() {
+		return destroyed;
+	}
 }
