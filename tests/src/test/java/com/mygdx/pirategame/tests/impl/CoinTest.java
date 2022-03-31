@@ -2,7 +2,6 @@ package com.mygdx.pirategame.tests.impl;
 
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.coin.Coin;
-import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
@@ -10,7 +9,8 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class CoinTest {

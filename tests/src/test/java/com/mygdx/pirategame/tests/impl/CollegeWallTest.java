@@ -1,20 +1,21 @@
 package com.mygdx.pirategame.tests.impl;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.pirategame.entity.cannon.CannonFire;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
-import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.entity.tile.type.CollegeWalls;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
+import com.mygdx.pirategame.utils.WorldCreator;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(GdxTestRunner.class)
 public class CollegeWallTest {
@@ -39,5 +40,18 @@ public class CollegeWallTest {
 		collegeWalls.onContact();
 
 		assertEquals("Did not take expected damage.", 90, college.getHealth());
+	}
+
+	@Test
+	public void testWallsPerCollege() {
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
+
+		TmxMapLoader tmxMapLoader = new TmxMapLoader();
+		TiledMap map = tmxMapLoader.load("map.tmx");
+
+		Mockito.when(activeGameScreen.getMap()).thenReturn(map);
+
+		WorldCreator worldCreator = new WorldCreator(activeGameScreen);
+		assertEquals("Not all colleges have walls!", (CollegeType.values().length * 2), worldCreator.getWalls().size()); // each college has two walls.
 	}
 }

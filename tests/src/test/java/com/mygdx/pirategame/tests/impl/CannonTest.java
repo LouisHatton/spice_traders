@@ -1,8 +1,6 @@
 package com.mygdx.pirategame.tests.impl;
 
-import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
-import com.mygdx.pirategame.entity.coin.Coin;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
@@ -14,7 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class CannonTest {

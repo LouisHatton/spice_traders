@@ -25,22 +25,22 @@ public class AssetTests {
 
 	private final static Set<String> IMPORTANT_ASSETS = Sets.newSet(
 			// Skin Assets
-		"skin/default.fnt",
-		"skin/uiskin.atlas",
-		"skin/uiskin.json",
-		"skin/uiskin.png",
+			"skin/default.fnt",
+			"skin/uiskin.atlas",
+			"skin/uiskin.json",
+			"skin/uiskin.png",
 
-		// Ship Assets
-		"unaligned_ship.png",
-		"ship.png",
-		"ship1.png",
-		"enemyShip1.png",
-		"player_ship.png",
+			// Ship Assets
+			"unaligned_ship.png",
+			"ship.png",
+			"ship1.png",
+			"enemyShip1.png",
+			"player_ship.png",
 
-		// Flag Assets
-		"james_flag.png",
-		"langwith_flag.png",
-		"vanbrugh_flag.png"
+			// Flag Assets
+			"james_flag.png",
+			"langwith_flag.png",
+			"vanbrugh_flag.png"
 	);
 
 	@Test
