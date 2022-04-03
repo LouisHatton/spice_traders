@@ -27,6 +27,7 @@ import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.listener.WorldContactListener;
+import com.mygdx.pirategame.utils.Location;
 import com.mygdx.pirategame.utils.SpawnUtils;
 import com.mygdx.pirategame.utils.WorldCreator;
 
@@ -108,37 +109,10 @@ public class ActiveGameScreen implements Screen {
 		colleges.put("Goodricke", new College(this, CollegeType.GOODRICKE));
 		
 		ships = colleges.values().stream().flatMap(col -> col.getFleet().stream()).collect(Collectors.toList());
-
-		//Random ships
-		boolean validLoc;
-		int a = 0;
-		int b = 0;
-		for (int i = 0; i < 20; i++) {
-			validLoc = false;
-			while (!validLoc) {
-				//Get random x and y coords
-				a = ThreadLocalRandom.current().nextInt(SpawnUtils.get().xCap - SpawnUtils.get().xBase) + SpawnUtils.get().xBase;
-				b = ThreadLocalRandom.current().nextInt(SpawnUtils.get().yCap - SpawnUtils.get().yBase) + SpawnUtils.get().yBase;
-				//Check if valid
-				validLoc = checkGenPos(a, b);
-			}
-			//Add a ship at the random coords
-			ships.add(new EnemyShip(this, a, b, "unaligned_ship.png", "Unaligned"));
-		}
+		ships.addAll(this.generateShips(20));
 
 		//Random coins
-		Coins = new ArrayList<>();
-		for (int i = 0; i < 100; i++) {
-			validLoc = false;
-			while (!validLoc) {
-				//Get random x and y coords
-				a = ThreadLocalRandom.current().nextInt(SpawnUtils.get().xCap - SpawnUtils.get().xBase) + SpawnUtils.get().xBase;
-				b = ThreadLocalRandom.current().nextInt(SpawnUtils.get().yCap - SpawnUtils.get().yBase) + SpawnUtils.get().yBase;
-				validLoc = checkGenPos(a, b);
-			}
-			//Add a coins at the random coords
-			Coins.add(new Coin(this, a, b));
-		}
+		Coins = this.generateCoins(60);
 
 		//Setting stage
 		stage = new Stage(new ScreenViewport());
@@ -520,12 +494,55 @@ public class ActiveGameScreen implements Screen {
 	 * @param x random x value
 	 * @param y random y value
 	 */
-	private boolean checkGenPos(int x, int y) {
+	public boolean checkGenPos(int x, int y) {
 		if (SpawnUtils.get().tileBlocked.containsKey(x)) {
 			ArrayList<Integer> yTest = SpawnUtils.get().tileBlocked.get(x);
 			return !yTest.contains(y);
 		}
 		return true;
+	}
+
+	public List<Coin> generateCoins(int amount) {
+		List<Coin> generatedCoins = new ArrayList<>();
+
+		this.generateRandomLocations(amount).forEach(loc -> {
+			generatedCoins.add(new Coin(this, loc.getX(), loc.getY()));
+		});
+
+		return generatedCoins;
+	}
+
+	public List<EnemyShip> generateShips(int amount) {
+		List<EnemyShip> enemyShips = new ArrayList<>();
+
+		this.generateRandomLocations(amount).forEach(loc -> {
+			enemyShips.add(new EnemyShip(this, loc.getX(), loc.getY(), "unaligned_ship.png", "Unaligned"));
+		});
+
+		return enemyShips;
+	}
+
+	public Set<Location> generateRandomLocations(int amount) {
+		Set<Location> locations = new HashSet<>();
+
+		boolean validLoc;
+		int a = 0;
+		int b = 0;
+
+		for (int i = 0; i < amount; i++) {
+			validLoc = false;
+			while (!validLoc) {
+				//Get random x and y coords
+				a = ThreadLocalRandom.current().nextInt(SpawnUtils.get().xCap - SpawnUtils.get().xBase) + SpawnUtils.get().xBase;
+				b = ThreadLocalRandom.current().nextInt(SpawnUtils.get().yCap - SpawnUtils.get().yBase) + SpawnUtils.get().yBase;
+				//Check if valid
+				validLoc = checkGenPos(a, b);
+			}
+
+			locations.add(new Location(a, b));
+		}
+
+		return locations;
 	}
 
 	/**

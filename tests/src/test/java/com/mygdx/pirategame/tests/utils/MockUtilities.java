@@ -12,6 +12,7 @@ import com.mygdx.pirategame.pref.AudioPreferences;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
+import org.mockito.invocation.InvocationOnMock;
 
 public class MockUtilities {
 
@@ -57,6 +58,11 @@ public class MockUtilities {
 
 		Whitebox.setInternalState(activeGameScreen, "hud", new HUD(pirateGame.batch));
 		//Mockito.when(activeGameScreen.getHud()).thenReturn(new HUD(pirateGame.batch));
+
+		Mockito.when(activeGameScreen.checkGenPos(Mockito.anyInt(), Mockito.anyInt())).thenCallRealMethod();
+		Mockito.when(activeGameScreen.generateCoins(Mockito.anyInt())).thenCallRealMethod();
+		Mockito.when(activeGameScreen.generateShips(Mockito.anyInt())).thenCallRealMethod();
+		Mockito.when(activeGameScreen.generateRandomLocations(Mockito.anyInt())).thenCallRealMethod();
 
 		pirateGame.setScreen(activeGameScreen); // game screen.
 

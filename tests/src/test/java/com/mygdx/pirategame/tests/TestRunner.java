@@ -19,7 +19,8 @@ public class TestRunner {
 			ShipTest.class,
 			CoinTest.class,
 			CannonTest.class,
-			CollegeWallTest.class
+			CollegeWallTest.class,
+			GenerationTests.class
 	);
 
 	@Test
