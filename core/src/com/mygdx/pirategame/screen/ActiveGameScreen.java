@@ -90,7 +90,7 @@ public class ActiveGameScreen implements Screen {
 		// Initialising box2d physics
 		world = new World(new Vector2(0, 0), true);
 		b2dr = new Box2DDebugRenderer();
-		player = new Player(this, 2f, 120f, 0.3f, 30f);
+		player = new Player(this, 2f, 120f, 0.3f, 34f);
 
 		// making the Tiled tmx file render as a map
 		maploader = new TmxMapLoader();
@@ -261,7 +261,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 
 	public void inputUpdate() {
-		if (player.getBody().getLinearVelocity().len() > 2f) {
+		if (player.getBody().getLinearVelocity().len() > .5f) {
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) | Gdx.input.isKeyPressed(Input.Keys.A)) {
 				player.setTurnDirection(2);
 			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) | Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -287,7 +287,25 @@ public class ActiveGameScreen implements Screen {
 			if(camera.zoom > 1)camera.zoom -= 0.02f;
 		}
 
+
+		// Cannon fire on 'E'
+		if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+			player.fire();
+		}
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			if (gameStatus == GAME_PAUSED) {
+				resume();
+				table.setVisible(true);
+				pauseTable.setVisible(false);
+			} else {
+				table.setVisible(false);
+				pauseTable.setVisible(true);
+				pause();
+			}
+		}
 	}
+
+
 
 
 
@@ -345,23 +363,8 @@ public class ActiveGameScreen implements Screen {
 		player.getBody().setLinearVelocity(forwardSpeed.x + lateralSpeed.x * player.getDriftFactor(), forwardSpeed.y + lateralSpeed.y * player.getDriftFactor());
 	}
 
-		/*
-		// Cannon fire on 'E'
-		if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			player.fire();
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			if (gameStatus == GAME_PAUSED) {
-				resume();
-				table.setVisible(true);
-				pauseTable.setVisible(false);
-			} else {
-				table.setVisible(false);
-				pauseTable.setVisible(true);
-				pause();
-			}
-		}
-	}*/
+
+
 
 	/**
 	 * Updates the state of each object with delta time
