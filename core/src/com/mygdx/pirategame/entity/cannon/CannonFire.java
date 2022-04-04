@@ -5,10 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.Entity;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
@@ -31,6 +28,11 @@ public class CannonFire extends Entity {
 	private final float angle;
 	private final float velocity;
 	private final Sound fireNoise;
+	Body body;
+	Vector2 target;
+	boolean rotated = false;
+	float speed = 2f;
+
 
 	/**
 	 * Instantiates cannon fire
@@ -43,11 +45,14 @@ public class CannonFire extends Entity {
 	 * @param body     body of origin
 	 * @param velocity velocity of the cannon ball
 	 */
-	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity) {
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target) {
 		super(screen, x, y);
 		this.velocity = velocity;
 		//sets the angle and velocity
 		angle = body.getAngle();
+		this.target = target;
+
+
 
 		//set cannonBall dimensions for the texture
 		cannonBall = new Texture("cannonBall.png");
@@ -61,6 +66,8 @@ public class CannonFire extends Entity {
 		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
 			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
+
+
 	}
 
 	/**
@@ -73,11 +80,12 @@ public class CannonFire extends Entity {
 		bDef.position.set(getX(), getY());
 		bDef.type = BodyDef.BodyType.DynamicBody;
 		setBody(getWorld().createBody(bDef));
+		this.body = getBody();
 
 		//Sets collision boundaries
 		FixtureDef fDef = new FixtureDef();
-		CircleShape shape = new CircleShape();
-		shape.setRadius(5 / PirateGame.PPM);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox((10/ 2f) / PirateGame.PPM, (10 * 12f) / PirateGame.PPM);
 
 		// setting BIT identifier
 		fDef.filter.categoryBits = PirateGame.CANNON_BIT;
@@ -101,7 +109,18 @@ public class CannonFire extends Entity {
 	 */
 	public void update(float dt) {
 		stateTime += dt;
-		//Update position of ball
+
+		if(!rotated) {
+			rotate((float)Math.toDegrees( Math.atan2( getBody().getPosition().x-target.x,target.y- getBody().getPosition().y)));
+			rotated = true;
+			getBody().setTransform(getBody().getPosition().x, getBody().getPosition().y, (float)Math.atan2( getBody().getPosition().x-target.x,target.y- getBody().getPosition().y  ));
+		}
+
+		Vector2 direction = new Vector2(this.body.getWorldPoint(new Vector2(0,this.cannonBall.getHeight()))); /**gets the direction the ball is going towards*/
+		Vector2 position = this.body.getPosition();
+		position.x = position.x + (direction.x - position.x) *  (speed / 100f) ; /** changes the direction and slightly teleports the ball so it can travel way faster**/
+		position.y = position.y + (direction.y - position.y) * (speed / 100f);
+		this.body.setTransform(position, this.body.getAngle()); /**moves ball forward**/
 		setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getHeight() / 2);
 
 		//If ball is set to destroy and isnt, destroy it

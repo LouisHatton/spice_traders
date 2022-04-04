@@ -2,10 +2,12 @@ package com.mygdx.pirategame.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -34,15 +36,18 @@ public class Player extends Entity {
 	private float originalSpeed;
 	private float speed;
 
+	private Camera cam;
+
 	/**
 	 * Instantiates a new Player. Constructor only called once per game
 	 *
 	 * @param screen visual data
 	 */
-	public Player(ActiveGameScreen screen, float spawnSpeed, float maxSpeed, float driftFactor, float turnSpeed) {
+	public Player(ActiveGameScreen screen, float spawnSpeed, float maxSpeed, float driftFactor, float turnSpeed, Camera cam) {
 		super(screen, 0, 0);
 
 		this.originalSpeed = spawnSpeed;
+		this.cam = cam;
 		this.maximumSpeed = maxSpeed;
 		this.driftFactor = driftFactor;
 		this.turnSpeed = turnSpeed;
@@ -130,8 +135,11 @@ public class Player extends Entity {
 	 */
 	public void fire() {
 		// Fires cannons
-		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 5));
-		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), -5));
+		Vector3 mouse_position = new Vector3(0,0,0);
+		mouse_position.set(Gdx.input.getX(), Gdx.input.getY(), 0); /** gets mouse position*/
+		cam.unproject(mouse_position);
+		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y)));
+
 
 		// Cone fire below
         /*cannonBalls.add(new CannonFire(screen, getBody().getPosition().x, getBody().getPosition().y, (float) (getBody().getAngle() - Math.PI / 6), -5, getBody().getLinearVelocity()));
