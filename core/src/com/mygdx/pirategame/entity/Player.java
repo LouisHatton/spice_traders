@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -23,14 +25,30 @@ public class Player extends Entity {
 	private final Texture ship;
 	private final Sound breakSound;
 	private final Array<CannonFire> cannonBalls;
+	private float turnDirection;
+	private float turnSpeed;
+	private float driveDirection;
+	private float driftFactor;
+
+	private float maximumSpeed;
+	private float originalSpeed;
+	private float speed;
 
 	/**
 	 * Instantiates a new Player. Constructor only called once per game
 	 *
 	 * @param screen visual data
 	 */
-	public Player(ActiveGameScreen screen) {
+	public Player(ActiveGameScreen screen, float spawnSpeed, float maxSpeed, float driftFactor, float turnSpeed) {
 		super(screen, 0, 0);
+
+		this.originalSpeed = spawnSpeed;
+		this.maximumSpeed = maxSpeed;
+		this.driftFactor = driftFactor;
+		this.turnSpeed = turnSpeed;
+		this .turnDirection = 0;
+		this.driveDirection = 0;
+		this.speed = 20f;
 		// Retrieves world data and creates ship texture
 		ship = new Texture("player_ship.png");
 
@@ -55,8 +73,8 @@ public class Player extends Entity {
 	public void update(float dt) {
 		// Updates position and orientation of player
 		setPosition(getBody().getPosition().x - getWidth() / 2f, getBody().getPosition().y - getHeight() / 2f);
-		float angle = (float) Math.atan2(getBody().getLinearVelocity().y, getBody().getLinearVelocity().x);
-		getBody().setTransform(getBody().getWorldCenter(), angle - ((float) Math.PI) / 2.0f);
+		//float angle = (float) Math.atan2(getBody().getLinearVelocity().y, getBody().getLinearVelocity().x);
+		//getBody().setTransform(getBody().getWorldCenter(), angle - ((float) Math.PI) / 2.0f);
 		setRotation((float) (getBody().getAngle() * 180 / Math.PI));
 
 		// Updates cannonball data
@@ -123,6 +141,64 @@ public class Player extends Entity {
         }
          */
 	}
+	public Vector2 getForwardVelocity() {
+		Vector2 currentNormal = this.getBody().getWorldVector(new Vector2(0, 1));
+		float dotProduct = currentNormal.dot(this.getBody().getLinearVelocity());
+
+		return multiply(dotProduct, currentNormal);
+	}
+
+	public Vector2 multiply(float a, Vector2 v) {
+		return new Vector2(a * v.x, a * v.y);
+	}
+
+	public Vector2 getLateralVelocity() {
+		Vector2 currentNormal = this.getBody().getWorldVector(new Vector2(1, 0));
+		float dotProduct = currentNormal.dot(this.getBody().getLinearVelocity());
+
+		return multiply(dotProduct, currentNormal);
+	}
+
+
+	public float getTurnDirection() {
+		return this.turnDirection;
+	}
+
+	public void setTurnDirection(float turnDirection) {
+		this.turnDirection = turnDirection;
+	}
+
+	public float getTurnSpeed() {
+		return this.turnSpeed;
+	}
+
+	public float getDriveDirection() {
+		return this.driveDirection;
+	}
+
+	public void setDriveDirection(float driveDirection) {
+		this.driveDirection = driveDirection;
+	}
+
+	public float getDriftFactor() {
+		return this.driftFactor;
+	}
+
+	public float getSpeed() {
+		return this.speed;
+	}
+
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+
+	public float getOriginalSpeed() {
+		return this.originalSpeed;
+	}
+
+	public float getMaximumSpeed() {
+		return this.maximumSpeed;
+	}
 
 	/**
 	 * Draws the player using batch
@@ -136,4 +212,6 @@ public class Player extends Entity {
 		for (CannonFire ball : cannonBalls)
 			ball.draw(batch);
 	}
+
+
 }
