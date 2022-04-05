@@ -90,7 +90,7 @@ public class ActiveGameScreen implements Screen {
 		// Initialising box2d physics
 		world = new World(new Vector2(0, 0), true);
 		b2dr = new Box2DDebugRenderer();
-		player = new Player(this, 2f, 120f, 0.3f, 34f, camera);
+		player = new Player(this, 2f, 120f, 0.3f, 60f, camera);
 
 		// making the Tiled tmx file render as a map
 		maploader = new TmxMapLoader();
@@ -289,9 +289,7 @@ public class ActiveGameScreen implements Screen {
 
 
 		// Cannon fire on 'E'
-		if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			player.fire();
-		}
+
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			if (gameStatus == GAME_PAUSED) {
 				resume();

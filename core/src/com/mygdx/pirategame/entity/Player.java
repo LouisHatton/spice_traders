@@ -1,6 +1,7 @@
 package com.mygdx.pirategame.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,6 +25,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  */
 public class Player extends Entity {
 
+	float firingCoolDown = 0.2f;
+	float ogFiringCoolDown = 0.2f;
 	private final Texture ship;
 	private final Sound breakSound;
 	private final Array<CannonFire> cannonBalls;
@@ -88,6 +91,15 @@ public class Player extends Entity {
 			if (ball.isDestroyed())
 				cannonBalls.removeValue(ball, true);
 		}
+
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && firingCoolDown <= 0) {
+			fire();
+			firingCoolDown = ogFiringCoolDown;
+		}
+		else if(firingCoolDown > 0){
+			firingCoolDown -= dt;
+		}
+
 	}
 
 	/**
