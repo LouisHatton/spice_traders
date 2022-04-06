@@ -2,6 +2,7 @@ package com.mygdx.pirategame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.pirategame.pref.AudioPreferences;
@@ -46,6 +47,8 @@ public class PirateGame extends Game {
 	private VictoryScreen victoryScreen;
 	private AudioPreferences options;
 
+	private int currentScreen;
+
 	/**
 	 * Creates the main body of the game.
 	 * Establises the batch for the whole game as well as sets the first screen
@@ -76,6 +79,8 @@ public class PirateGame extends Game {
 	 */
 	public void changeScreen(int screen) {
 		//Depending on which value given, change the screen
+		this.currentScreen = screen;
+
 		switch (screen) {
 			case MENU:
 				if (menuScreen == null) menuScreen = new MainMenu(this);
@@ -96,6 +101,7 @@ public class PirateGame extends Game {
 			case DEATH:
 				if (deathScreen == null) deathScreen = new DeathScreen(this);
 				this.setScreen(deathScreen);
+				System.out.println("Setting screen.." + this.getScreen() + " and " + deathScreen);
 				break;
 
 			case HELP:
@@ -150,5 +156,9 @@ public class PirateGame extends Game {
 	@Override
 	public void dispose() {
 		batch.dispose();
+	}
+
+	public int getCurrentScreen() {
+		return currentScreen;
 	}
 }

@@ -20,7 +20,8 @@ public class TestRunner {
 			CoinTest.class,
 			CannonTest.class,
 			CollegeWallTest.class,
-			GenerationTests.class
+			GenerationTests.class,
+			DamageTest.class
 	);
 
 	@Test

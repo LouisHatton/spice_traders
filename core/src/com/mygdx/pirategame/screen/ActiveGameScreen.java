@@ -142,7 +142,6 @@ public class ActiveGameScreen implements Screen {
 	 * @param value damage dealt
 	 */
 	public static void changeDamage(int value) {
-
 		for (int i = 0; i < ships.size(); i++) {
 			ships.get(i).changeDamageReceived(value);
 		}
@@ -585,5 +584,9 @@ public class ActiveGameScreen implements Screen {
 
 	public HUD getHud() {
 		return hud;
+	}
+
+	public List<EnemyShip> getShips() {
+		return ships;
 	}
 }
