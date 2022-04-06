@@ -90,7 +90,7 @@ public class ActiveGameScreen implements Screen {
 		// Initialising box2d physics
 		world = new World(new Vector2(0, 0), true);
 		b2dr = new Box2DDebugRenderer();
-		player = new Player(this);
+		player = new Player(this, 2f, 120f, 0.3f, 60f, camera);
 
 		// making the Tiled tmx file render as a map
 		maploader = new TmxMapLoader();
@@ -247,6 +247,7 @@ public class ActiveGameScreen implements Screen {
 				Gdx.app.exit();
 			}
 		});
+		//renderer.render(world, camera.combined.scl());
 	}
 
 	/**
@@ -255,44 +256,39 @@ public class ActiveGameScreen implements Screen {
 	 * <p>
 	 * Caps player velocity
 	 *
-	 * @param dt Delta time (elapsed time since last game tick)
+	 *
 	 */
-	public void handleInput(float dt) {
-		if (gameStatus == GAME_RUNNING) {
-			// Left physics impulse on 'A'
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				player.getBody().applyLinearImpulse(new Vector2(-accel, 0), player.getBody().getWorldCenter(), true);
-			}
-			// Right physics impulse on 'D'
-			if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				player.getBody().applyLinearImpulse(new Vector2(accel, 0), player.getBody().getWorldCenter(), true);
-			}
-			// Up physics impulse on 'W'
-			if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-				player.getBody().applyLinearImpulse(new Vector2(0, accel), player.getBody().getWorldCenter(), true);
-			}
-			// Down physics impulse on 'S'
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				player.getBody().applyLinearImpulse(new Vector2(0, -accel), player.getBody().getWorldCenter(), true);
-			}
-			// Cannon fire on 'E'
-			if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-				player.fire();
-			}
-			// Checking if player at max velocity, and keeping them below max
-			if (player.getBody().getLinearVelocity().x >= maxSpeed) {
-				player.getBody().applyLinearImpulse(new Vector2(-accel, 0), player.getBody().getWorldCenter(), true);
-			}
-			if (player.getBody().getLinearVelocity().x <= -maxSpeed) {
-				player.getBody().applyLinearImpulse(new Vector2(accel, 0), player.getBody().getWorldCenter(), true);
-			}
-			if (player.getBody().getLinearVelocity().y >= maxSpeed) {
-				player.getBody().applyLinearImpulse(new Vector2(0, -accel), player.getBody().getWorldCenter(), true);
-			}
-			if (player.getBody().getLinearVelocity().y <= -maxSpeed) {
-				player.getBody().applyLinearImpulse(new Vector2(0, accel), player.getBody().getWorldCenter(), true);
+
+	public void inputUpdate() {
+		if (player.getBody().getLinearVelocity().len() > .5f) {
+			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) | Gdx.input.isKeyPressed(Input.Keys.A)) {
+				player.setTurnDirection(2);
+			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) | Gdx.input.isKeyPressed(Input.Keys.D)) {
+				player.setTurnDirection(1);
+			} else {
+				player.setTurnDirection(0);
 			}
 		}
+
+
+		if (Gdx.input.isKeyPressed(Input.Keys.UP) | Gdx.input.isKeyPressed(Input.Keys.W)) {
+			player.setDriveDirection(1);
+		} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) | Gdx.input.isKeyPressed(Input.Keys.S)) {
+			player.setDriveDirection(2);
+		} else {
+			player.setDriveDirection(0);
+		}
+
+		if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
+			if(camera.zoom < 2)camera.zoom += 0.02f;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
+			if(camera.zoom > 1)camera.zoom -= 0.02f;
+		}
+
+
+		// Cannon fire on 'E'
+
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			if (gameStatus == GAME_PAUSED) {
 				resume();
@@ -306,14 +302,78 @@ public class ActiveGameScreen implements Screen {
 		}
 	}
 
+
+
+
+
+
+	private void processInput() {
+		Vector2 baseVector = new Vector2(0, 0);
+
+		/** apllying liner velocity to the player based on input*/
+		float turnPercentage = 0;
+		if (player.getBody().getLinearVelocity().len() < (player.getMaximumSpeed() / 2)) {
+			turnPercentage = player.getBody().getLinearVelocity().len() / (player.getMaximumSpeed());
+		} else {
+			turnPercentage = 1;
+		}
+
+		float currentTurnSpeed = player.getTurnSpeed() * turnPercentage;
+
+
+		/** applying angular velocity to the player based on input*/
+		if (player.getTurnDirection() == 1) {
+			player.getBody().setAngularVelocity(-currentTurnSpeed);
+		} else if (player.getTurnDirection() == 2) {
+			player.getBody().setAngularVelocity(currentTurnSpeed);
+		} else if (player.getTurnDirection() == 0 && player.getBody().getAngularVelocity() != 0) {
+			player.getBody().setAngularVelocity(0);
+		}
+
+		/** applies speed to the player based on input*/
+		if (player.getDriveDirection() == 1) {
+			baseVector.set(0, player.getSpeed());
+		} else if (player.getDriveDirection() == 2) {
+			baseVector.set(0, -player.getSpeed() * 4 / 5);
+		}
+		if (player.getBody().getLinearVelocity().len() > 0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			player.getBody().setLinearDamping(1.75f);
+		} else {
+			player.getBody().setLinearDamping(0.5f);
+		}
+		//recordedSpeed = player.getBody()().getLinearVelocity().len();
+		if (player.getBody().getLinearVelocity().len() > player.getMaximumSpeed() / 3f) {
+			player.setSpeed(player.getOriginalSpeed() * 2);
+		} else {
+			player.setSpeed(player.getOriginalSpeed());
+		}
+		if (!baseVector.isZero() && (player.getBody().getLinearVelocity().len() < player.getMaximumSpeed())) {
+			player.getBody().applyForceToCenter(player.getBody().getWorldVector(baseVector), true);
+		}
+	}
+
+	private void handleDirft() {
+		/** handles drifts of the boat */
+		Vector2 forwardSpeed = player.getForwardVelocity();
+		Vector2 lateralSpeed = player.getLateralVelocity();
+
+		player.getBody().setLinearVelocity(forwardSpeed.x + lateralSpeed.x * player.getDriftFactor(), forwardSpeed.y + lateralSpeed.y * player.getDriftFactor());
+	}
+
+
+
+
 	/**
 	 * Updates the state of each object with delta time
 	 *
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+		inputUpdate();
+		processInput();
+		handleDirft();
 		stateTime += dt;
-		handleInput(dt);
+		//handleInput(dt);
 		// Stepping the physics engine by time of 1 frame
 		world.step(1 / 60f, 6, 2);
 
@@ -354,6 +414,7 @@ public class ActiveGameScreen implements Screen {
 		camera.position.y = player.getBody().getPosition().y;
 		camera.update();
 		renderer.setView(camera);
+
 	}
 
 	/**
@@ -366,8 +427,6 @@ public class ActiveGameScreen implements Screen {
 	public void render(float dt) {
 		if (gameStatus == GAME_RUNNING) {
 			update(dt);
-		} else {
-			handleInput(dt);
 		}
 
 		Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
