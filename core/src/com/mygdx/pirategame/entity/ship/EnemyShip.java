@@ -45,7 +45,7 @@ public class EnemyShip extends Enemy {
 		destroy = Gdx.audio.newSound(Gdx.files.internal("ship-explosion-2.wav"));
 		hit = Gdx.audio.newSound(Gdx.files.internal("ship-hit.wav"));
 		//Set the position and size of the college
-		setBounds(0, 0, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
+		setBounds(x, y, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
 		setRegion(enemyShip);
 		setOrigin(32 / PirateGame.PPM, 55 / PirateGame.PPM);
 		defineEntity();

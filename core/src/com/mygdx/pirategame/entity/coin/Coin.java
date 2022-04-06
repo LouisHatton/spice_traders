@@ -39,7 +39,7 @@ public class Coin extends Entity {
 		//Set coin image
 		coin = new Texture("coin.png");
 		//Set the position and size of the coin
-		setBounds(0, 0, 48 / PirateGame.PPM, 48 / PirateGame.PPM);
+		setBounds(x, y, 48 / PirateGame.PPM, 48 / PirateGame.PPM);
 		//Set the texture
 		setRegion(coin);
 		//Sets origin of the coin

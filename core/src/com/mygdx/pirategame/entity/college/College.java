@@ -48,7 +48,7 @@ public class College extends Enemy {
 		currentCollege = college.getFlagTexture();
 		enemyCollege = new Texture(this.currentCollege);
 		//Set the position and size of the college
-		setBounds(0, 0, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
+		setBounds(college.getX(), college.getY(), 64 / PirateGame.PPM, 110 / PirateGame.PPM);
 		setRegion(enemyCollege);
 		setOrigin(32 / PirateGame.PPM, 55 / PirateGame.PPM);
 		defineEntity();

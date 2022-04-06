@@ -440,8 +440,8 @@ public class ActiveGameScreen implements Screen {
 		// Order determines layering
 
 		//Renders coins
-		for (int i = 0; i < Coins.size(); i++) {
-			Coins.get(i).draw(game.batch);
+		for (Coin coin : Coins) {
+			coin.draw(game.batch);
 		}
 
 		//Renders colleges
