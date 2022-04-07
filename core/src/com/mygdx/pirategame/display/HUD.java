@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
@@ -102,7 +103,7 @@ public class HUD implements Disposable {
 	 * @param value Increase to health
 	 */
 	public static void changeHealth(int value) {
-		health += value;
+		health = (int)(health + (value * PirateGame.difficulityMultiplier));
 		healthLabel.setText(String.format("%02d", health));
 	}
 

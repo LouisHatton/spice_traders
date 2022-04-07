@@ -168,6 +168,7 @@ public class ActiveGameScreen implements Screen {
 		//GAME BUTTONS
 		final TextButton pauseButton = new TextButton("Pause", skin);
 		final TextButton skill = new TextButton("Skill Tree", skin);
+		final TextButton changeDiff = new TextButton("Change Difficulity", skin);
 
 		//PAUSE MENU BUTTONS
 		final TextButton start = new TextButton("Resume", skin);
@@ -203,6 +204,8 @@ public class ActiveGameScreen implements Screen {
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(skill).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
+		pauseTable.add(changeDiff).fillX().uniformX();
+		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(options).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(exit).fillX().uniformX();
@@ -223,6 +226,13 @@ public class ActiveGameScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
 				game.changeScreen(PirateGame.SKILL);
+			}
+		});
+		changeDiff.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				pauseTable.setVisible(false);
+				game.setScreen(new DifficulityScreen(game, game.getScreen()));
 			}
 		});
 		start.addListener(new ChangeListener() {
@@ -287,9 +297,9 @@ public class ActiveGameScreen implements Screen {
 		}
 
 
-		// Cannon fire on 'E'
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			System.out.println(PirateGame.difficulityMultiplier);
 			if (gameStatus == GAME_PAUSED) {
 				resume();
 				table.setVisible(true);

@@ -84,7 +84,7 @@ public class WorldContactListener implements ContactListener {
 				break;
 			case PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT:
 				if (fixA.getFilterData().categoryBits == PirateGame.COLLEGEFIRE_BIT) {
-					HUD.changeHealth(-15);
+				HUD.changeHealth(-15);
 					((CollegeFire) fixA.getUserData()).setToDestroy();
 				} else {
 					HUD.changeHealth(-15);
