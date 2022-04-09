@@ -114,7 +114,7 @@ public class HUD implements Disposable {
 	 */
 	public static void changeCoins(int value) {
 		if (value > 0) {
-			coins += value * coinMulti;
+			coins = (int)(coins + (value * PirateGame.difficulityMultiplier) * coinMulti);
 			coinLabel.setText(String.format("%03d", coins));
 		}
 	}
