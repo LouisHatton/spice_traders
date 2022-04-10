@@ -28,13 +28,25 @@ import java.util.List;
 public class SkillsScreen implements Screen {
 
 	//To store whether buttons are enabled or disabled
-	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1);
+	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1);
 	private static TextButton movement1;
 	private final PirateGame parent;
 	private final Stage stage;
 	private TextButton damage1;
+	private TextButton health1;
+	private TextButton dps1;
+	private TextButton range1;
 	private TextButton GoldMulti1;
-	private TextButton movement2;
+	private TextButton resistance;
+	private TextButton bulletSpeed;
+
+	private float healthPrice = 100f;
+	private float DamagehPrice = 200f;
+	private float SpeedPrice = 150f;
+	private float goldPrice = 50f;
+
+	public int[] tracker = {0,0,0,0,0,0,0,0};
+	public float percentPerPurchase = 20f;
 
 	/**
 	 * Instantiates a new Skill tree.
@@ -53,31 +65,7 @@ public class SkillsScreen implements Screen {
 	 * @param points the current amount of points
 	 */
 	public static void pointsCheck(int points) {
-
-		//States.get() checks whether it has already been unlocked. 1 = not unlocked, 0 = unlocked
-		if (states.get(0) == 1 && points >= 100) {
-			//Change acceleration
-			ActiveGameScreen.changeAcceleration(20F);
-			//Change Max speed
-			ActiveGameScreen.changeMaxSpeed(20F);
-			states.set(0, 0);
-
-		} else if (states.get(1) == 1 && points >= 200) {
-			//Change multiplier
-			HUD.changeCoinsMulti(2);
-			states.set(1, 0);
-		} else if (states.get(2) == 1 && points >= 300) {
-			//Change acceleration
-			ActiveGameScreen.changeAcceleration(20F);
-			//Change Max speed
-			ActiveGameScreen.changeMaxSpeed(20F);
-			states.set(2, 0);
-
-		} else if (states.get(3) == 1 && points >= 400) {
-			//Increase damage
-			ActiveGameScreen.changeDamage(5);
-			states.set(3, 0);
-		}
+		//code for skills here
 	}
 
 	/**
@@ -102,34 +90,86 @@ public class SkillsScreen implements Screen {
 		//The skin for the actors
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-		//create skill tree buttons
-		movement1 = new TextButton("Movement Speed + 20%", skin);
 
-		//Sets enabled or disabled
-		if (states.get(0) == 1) {
-			movement1.setDisabled(true);
-		}
-		GoldMulti1 = new TextButton("Gold Multiplier x2", skin);
-		if (states.get(1) == 1) {
-			GoldMulti1.setDisabled(true);
-		}
-		movement2 = new TextButton("Movement Speed + 20%", skin);
-		if (states.get(2) == 1) {
-			movement2.setDisabled(true);
-		}
+		bulletSpeed = new TextButton("Increase Bullet Speed", skin);
+		bulletSpeed.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
 
-		damage1 = new TextButton("Damage + 5", skin);
+				//code for purchases!
+			}
+		});
+		dps1 = new TextButton("Increase Fire Rate", skin);
+		dps1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
 
-		if (states.get(3) == 1) {
-			damage1.setDisabled(true);
 
-		}
+			}
+		});
+		range1 = new TextButton("Increase Bullet Range", skin);
+
+		range1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+
+			}
+		});
+		resistance = new TextButton("Increase Resistance", skin);
+
+		resistance.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+
+			}
+		});
+		damage1 = new TextButton("Increase Damage", skin);
+
+		damage1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+
+			}
+		});
+		movement1 = new TextButton("Increase Movement Speed", skin);
+		movement1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+
+			}
+		});
+		health1 = new TextButton("Increase Health", skin);
+
+		health1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+
+			}
+		});
+		GoldMulti1 = new TextButton("Increase Gold multiplier", skin);
+		GoldMulti1.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+
+			}
+		});
+
 
 		//Point unlock labels
-		final Label unlock100 = new Label("100 points", skin);
-		final Label unlock200 = new Label("200 points", skin);
-		final Label unlock300 = new Label("300 points", skin);
-		final Label unlock400 = new Label("400 points", skin);
+		final Label bulletSpeedLabel = new Label(DamagehPrice + " Gold", skin);
+		final Label dps1Label = new Label(DamagehPrice + " Gold", skin);
+		final Label range1Label = new Label(DamagehPrice + " Gold", skin);
+		final Label resistanceLabel = new Label(healthPrice + " Gold", skin);
+		final Label damage1Label = new Label(DamagehPrice + " Gold", skin);
+		final Label movement1Label = new Label(SpeedPrice + " Gold", skin);
+		final Label health1Label = new Label(healthPrice + " Gold", skin);
+		final Label GoldMulti1Label = new Label(goldPrice + " Gold", skin);
 
 		//Return Button
 		TextButton backButton = new TextButton("Return", skin);
@@ -143,17 +183,29 @@ public class SkillsScreen implements Screen {
 		});
 
 		//add buttons and labels to main table
-		table.add(movement1);
-		table.add(unlock100);
+		table.add(bulletSpeed);
+		table.add(bulletSpeedLabel);
 		table.row().pad(10, 0, 10, 0);
-		table.add(GoldMulti1);
-		table.add(unlock200);
+		table.add(dps1);
+		table.add(dps1Label);
 		table.row().pad(10, 0, 10, 0);
-		table.add(movement2);
-		table.add(unlock300);
+		table.add(range1);
+		table.add(range1Label);
+		table.row().pad(10, 0, 10, 0);
+		table.add(resistance);
+		table.add(resistanceLabel);
 		table.row().pad(10, 0, 10, 0);
 		table.add(damage1);
-		table.add(unlock400);
+		table.add(damage1Label);
+		table.row().pad(10, 0, 10, 0);
+		table.add(movement1);
+		table.add(movement1Label);
+		table.row().pad(10, 0, 10, 0);
+		table.add(health1);
+		table.add(health1Label);
+		table.row().pad(10, 0, 10, 0);
+		table.add(GoldMulti1);
+		table.add(GoldMulti1Label);
 		table.top();
 
 		//add return button
