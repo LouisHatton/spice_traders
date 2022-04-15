@@ -168,6 +168,7 @@ public class ActiveGameScreen implements Screen {
 		//GAME BUTTONS
 		final TextButton pauseButton = new TextButton("Pause", skin);
 		final TextButton skill = new TextButton("Skill Tree", skin);
+		final TextButton shop = new TextButton("Shop", skin);
 		final TextButton changeDiff = new TextButton("Change Difficulity", skin);
 
 		//PAUSE MENU BUTTONS
@@ -204,6 +205,8 @@ public class ActiveGameScreen implements Screen {
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(skill).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
+		pauseTable.add(shop).fillX().uniformX();
+		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(changeDiff).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(options).fillX().uniformX();
@@ -226,6 +229,13 @@ public class ActiveGameScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
 				game.changeScreen(PirateGame.SKILL);
+			}
+		});
+		shop.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				pauseTable.setVisible(false);
+				game.changeScreen(PirateGame.SHOP);
 			}
 		});
 		changeDiff.addListener(new ChangeListener() {
@@ -435,8 +445,15 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void render(float dt) {
+		if(gameStatus == GAME_PAUSED) {
+			pauseTable.setVisible(true);
+			table.setVisible(false);
+		}
+
 		if (gameStatus == GAME_RUNNING) {
 			update(dt);
+			table.setVisible(true);
+			pauseTable.setVisible(false);
 		}
 
 		Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);

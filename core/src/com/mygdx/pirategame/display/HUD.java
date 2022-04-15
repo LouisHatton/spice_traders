@@ -31,7 +31,7 @@ public class HUD implements Disposable {
 	private static Label coinLabel;
 	private static Label pointsText;
 	private static int coins;
-	private static int coinMulti;
+	private static float coinMulti;
 	private final Viewport viewport;
 	private float timeCount;
 	private final Texture hp;
@@ -107,6 +107,15 @@ public class HUD implements Disposable {
 		healthLabel.setText(String.format("%02d", health));
 	}
 
+	public static boolean purchase(float value){
+		if(coins >= value){
+			coins -= value;
+			coinLabel.setText(String.format("%03d", coins));
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Changes coins by value increase
 	 *
@@ -145,7 +154,7 @@ public class HUD implements Disposable {
 	 *
 	 * @param value Factor of coin increase
 	 */
-	public static void changeCoinsMulti(int value) {
+	public static void changeCoinsMulti(float value) {
 		coinMulti = coinMulti * value;
 	}
 
