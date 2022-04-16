@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
+import com.mygdx.pirategame.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +47,7 @@ public class Shop implements Screen {
     private float GoldMulti1Price = 50f;
     private float resistancePrice = 150f;
     private float bulletSpeedPrice = 200f;
-    private float movement1Price = 100f;
+    private float movement1Price = 175f;
 
     public float percentPerPurchase = 15f;
 
@@ -65,6 +66,9 @@ public class Shop implements Screen {
     Label movement1Label = new Label(movement1Price + " Gold", skin);
     Label health1Label = new Label(health1Price + " Gold", skin);
     Label GoldMulti1Label = new Label(GoldMulti1Price + " Gold", skin);
+
+    Label currentGold = new Label(" Gold: " + HUD.getCoins() , skin);
+
     final Table Other = new Table();
     Table table = new Table();
     /**
@@ -121,9 +125,11 @@ public class Shop implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(bulletSpeedPrice)){
+                    Player.upgradeCannonBallSpeed();
                     bulletSpeedPrice = bulletSpeedPrice + (int)(bulletSpeedPrice * (percentPerPurchase/100));
                     bulletSpeedLabel.setText("");
                     bulletSpeedLabel.setText(bulletSpeedPrice + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
             }
@@ -133,9 +139,11 @@ public class Shop implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(dps1Price)){
+                    Player.upgradeFireRate();
                     dps1Price = dps1Price + (int)(dps1Price * (percentPerPurchase/100));
                     dps1Label.setText("");
                     dps1Label.setText(dps1Price + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
 
@@ -147,10 +155,11 @@ public class Shop implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(range1Price)){
-                    HUD.changeCoinsMulti(1.1f);
+                    Player.upgradeRange(0.1f);
                     range1Price = range1Price + (int)(range1Price * (percentPerPurchase/100));
                     range1Label.setText("");
                     range1Label.setText(range1Price + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
 
@@ -162,9 +171,11 @@ public class Shop implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(resistancePrice)){
+                    HUD.upgradResistance(10f);
                     resistancePrice = resistancePrice + (int)(resistancePrice * (percentPerPurchase/100));
                     resistanceLabel.setText("");
                     resistanceLabel.setText(resistancePrice + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
 
@@ -176,9 +187,11 @@ public class Shop implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(damage1Price)){
+                    ActiveGameScreen.changeDamage(1);
                     damage1Price = damage1Price + (int)(damage1Price * (percentPerPurchase/100));
                     damage1Label.setText("");
                     damage1Label.setText(damage1Price + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
 
@@ -189,9 +202,12 @@ public class Shop implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(movement1Price)){
+                    ActiveGameScreen.changeAcceleration(10F);
+                    ActiveGameScreen.changeMaxSpeed(10F);
                     movement1Price = movement1Price + (int)(movement1Price * (percentPerPurchase/100));
                     movement1Label.setText("");
-                    movement1Label.setText(movement1Label + " Gold");
+                    movement1Label.setText(movement1Price + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
 
@@ -203,9 +219,11 @@ public class Shop implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(health1Price)){
+                    HUD.upgradMaxHealth(10f);
                     health1Price = health1Price + (int)(health1Price * (percentPerPurchase/100));
                     health1Label.setText("");
                     health1Label.setText(health1Price + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
 
@@ -220,6 +238,7 @@ public class Shop implements Screen {
                     GoldMulti1Price = GoldMulti1Price + (int)(GoldMulti1Price * (percentPerPurchase/100));
                     GoldMulti1Label.setText("");
                     GoldMulti1Label.setText(GoldMulti1Price + " Gold");
+                    currentGold.setText(" Gold: " + HUD.getCoins());
                 }
 
 
@@ -231,6 +250,8 @@ public class Shop implements Screen {
 
         //Return Button
         TextButton backButton = new TextButton("Return", skin);
+
+        currentGold.setText(" Gold: " + HUD.getCoins());
 
         backButton.addListener(new ChangeListener() {
             @Override
@@ -269,6 +290,7 @@ public class Shop implements Screen {
 
         //add return button
         Other.add(backButton);
+        Other.add(currentGold);
         Other.bottom().left();
     }
 

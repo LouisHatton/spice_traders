@@ -25,6 +25,8 @@ public class HUD implements Disposable {
 
 	public static Stage stage;
 	private static int score;
+	public static float resistanceMultiplier = 100;
+	public static float maxHealth = 100;
 	private static int health;
 	private static Label scoreLabel;
 	private static Label healthLabel;
@@ -103,8 +105,15 @@ public class HUD implements Disposable {
 	 * @param value Increase to health
 	 */
 	public static void changeHealth(int value) {
-		health = (int)(health + (value * PirateGame.difficulityMultiplier));
+		health = (int)(health +((value* (resistanceMultiplier/100)) * PirateGame.difficulityMultiplier ));
 		healthLabel.setText(String.format("%02d", health));
+	}
+
+	public static void upgradResistance(float multiplier){
+		resistanceMultiplier -= multiplier;
+	}
+	public static void upgradMaxHealth(float amount){
+		maxHealth += amount;
 	}
 
 	public static boolean purchase(float value){
@@ -196,7 +205,7 @@ public class HUD implements Disposable {
 		timeCount += dt;
 		if (timeCount >= 1) {
 			//Regen health every second
-			if (health < 100) {
+			if (health < maxHealth) {
 				health += 1;
 				healthLabel.setText(String.format("%02d", health));
 			}

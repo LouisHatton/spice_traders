@@ -24,7 +24,11 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * @version 1.0
  */
 public class Player extends Entity {
-
+	static float cannonBallSpeedLvl = 0;
+	static float fireRateLvl = 0;
+	static float rangeMultiplier = 0.7f;
+	static float resistanceMultiplier = 0;
+	static boolean fireRateChanged = false;
 	float firingCoolDown = 0.2f;
 	float ogFiringCoolDown = 0.2f;
 	private final Texture ship;
@@ -56,7 +60,7 @@ public class Player extends Entity {
 		this.turnSpeed = turnSpeed;
 		this .turnDirection = 0;
 		this.driveDirection = 0;
-		this.speed = 20f;
+		this.speed = 80f;
 		// Retrieves world data and creates ship texture
 		ship = new Texture("player_ship.png");
 
@@ -79,6 +83,10 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+		if(fireRateChanged){
+			ogFiringCoolDown = ogFiringCoolDown / (fireRateLvl * 0.1f);
+			fireRateChanged = false;
+		}
 		// Updates position and orientation of player
 		setPosition(getBody().getPosition().x - getWidth() / 2f, getBody().getPosition().y - getHeight() / 2f);
 		//float angle = (float) Math.atan2(getBody().getLinearVelocity().y, getBody().getLinearVelocity().x);
@@ -112,6 +120,12 @@ public class Player extends Entity {
 		}
 	}
 
+	public void changeMaxSpeed(float percentage){
+		this.maximumSpeed = this.maximumSpeed * (1 + (percentage / 100));
+		this.turnSpeed = this.turnSpeed * (1 + (percentage / 100));
+		this.originalSpeed = this.originalSpeed * (1 + (percentage / 100));
+	}
+
 	/**
 	 * Defines all the parts of the player's physical model. Sets it up for collisons
 	 */
@@ -142,6 +156,21 @@ public class Player extends Entity {
 
 	}
 
+	public static void upgradeCannonBallSpeed(){
+		cannonBallSpeedLvl ++;
+	}
+
+	public static void upgradeFireRate(){
+		fireRateLvl ++;
+		fireRateChanged = true;
+	}
+	public static void upgradeRange(float multiplier){
+		rangeMultiplier += multiplier;
+	}
+	public static void upgradeResistance(float multiplier){
+		resistanceMultiplier += multiplier;
+	}
+
 	/**
 	 * Called when E is pushed. Causes 1 cannon ball to spawn on both sides of the ships wih their relative velocity
 	 */
@@ -150,7 +179,7 @@ public class Player extends Entity {
 		Vector3 mouse_position = new Vector3(0,0,0);
 		mouse_position.set(Gdx.input.getX(), Gdx.input.getY(), 0); /** gets mouse position*/
 		cam.unproject(mouse_position);
-		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y)));
+		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y), cannonBallSpeedLvl, rangeMultiplier));
 
 
 		// Cone fire below

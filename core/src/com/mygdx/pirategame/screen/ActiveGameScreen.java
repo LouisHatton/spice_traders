@@ -49,7 +49,7 @@ public class ActiveGameScreen implements Screen {
 	public static final int GAME_RUNNING = 0;
 	public static final int GAME_PAUSED = 1;
 	public static PirateGame game;
-	private static float maxSpeed = 2.5f;
+	private static float maxSpeed = 60f;
 	private static float accel = 0.05f;
 	private static Map<String, College> colleges = new HashMap<>();
 	private static List<EnemyShip> ships = new ArrayList<>();
@@ -64,7 +64,7 @@ public class ActiveGameScreen implements Screen {
 	private final OrthogonalTiledMapRenderer renderer;
 	private final World world;
 	private final Box2DDebugRenderer b2dr;
-	private final Player player;
+	public static Player player;
 	public HUD hud;
 	private Table pauseTable;
 	private Table table;
@@ -90,7 +90,7 @@ public class ActiveGameScreen implements Screen {
 		// Initialising box2d physics
 		world = new World(new Vector2(0, 0), true);
 		b2dr = new Box2DDebugRenderer();
-		player = new Player(this, 1.6f, 60f, 0.3f, 60f, camera);
+		player = new Player(this, 1.3f, 3f, 0.3f, 3f, camera);
 
 		// making the Tiled tmx file render as a map
 		maploader = new TmxMapLoader();
@@ -125,6 +125,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 	public static void changeAcceleration(Float percentage) {
 		accel = accel * (1 + (percentage / 100));
+
 	}
 
 	/**
@@ -132,8 +133,8 @@ public class ActiveGameScreen implements Screen {
 	 *
 	 * @param percentage percentage increase
 	 */
-	public static void changeMaxSpeed(Float percentage) {
-		maxSpeed = maxSpeed * (1 + (percentage / 100));
+	public static void changeMaxSpeed(float percentage) {
+		player.changeMaxSpeed(percentage);
 	}
 
 	/**
@@ -280,6 +281,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 
 	public void inputUpdate() {
+		System.out.println(player.getBody().getLinearVelocity().len());
 		if (player.getBody().getLinearVelocity().len() > .5f) {
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) | Gdx.input.isKeyPressed(Input.Keys.A)) {
 				player.setTurnDirection(2);

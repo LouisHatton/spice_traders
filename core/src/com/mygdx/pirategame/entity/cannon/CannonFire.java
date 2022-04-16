@@ -34,6 +34,7 @@ public class CannonFire extends Entity {
 	float speed = 500f;
 	boolean applyForce = false;
 	float rangeMultiplier = 1f;
+	float bulletSpeedLvls;
 
 
 	/**
@@ -47,12 +48,14 @@ public class CannonFire extends Entity {
 	 * @param body     body of origin
 	 * @param velocity velocity of the cannon ball
 	 */
-	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target) {
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target, float bulletSpeedLvls, float rangeMultiplier) {
 		super(screen, x, y);
 		this.velocity = velocity;
+		this.rangeMultiplier = rangeMultiplier;
 		//sets the angle and velocity
 		angle = body.getAngle();
 		this.target = target;
+		this.bulletSpeedLvls = bulletSpeedLvls;
 
 
 
@@ -119,7 +122,7 @@ public class CannonFire extends Entity {
 		}
 
 		if(!applyForce){
-			this.body.applyForceToCenter(this.body.getWorldVector(new Vector2(0, speed)), true);
+			this.body.applyForceToCenter(this.body.getWorldVector(new Vector2(0, speed + (speed * (this.bulletSpeedLvls * 0.15f)))), true);
 			applyForce = true;
 		}
 		setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getHeight() / 2);
