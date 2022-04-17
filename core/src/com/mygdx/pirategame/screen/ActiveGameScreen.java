@@ -281,7 +281,6 @@ public class ActiveGameScreen implements Screen {
 	 */
 
 	public void inputUpdate() {
-		System.out.println(player.getBody().getLinearVelocity().len());
 		if (player.getBody().getLinearVelocity().len() > .5f) {
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT) | Gdx.input.isKeyPressed(Input.Keys.A)) {
 				player.setTurnDirection(2);

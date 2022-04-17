@@ -1,6 +1,7 @@
 package com.mygdx.pirategame.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
@@ -38,6 +39,13 @@ public class Player extends Entity {
 	private float turnSpeed;
 	private float driveDirection;
 	private float driftFactor;
+
+	int amountOfShotsInUltimateFire = 15;
+	int burstAmountForUltimateFire = 2;
+	int burstShotsUF = 0;
+
+	float ultimateBurstCoolDown = 0f;
+	float ultimateBurstOGCoolDown = 0.5f;
 
 	private float maximumSpeed;
 	private float originalSpeed;
@@ -108,6 +116,16 @@ public class Player extends Entity {
 			firingCoolDown -= dt;
 		}
 
+		if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) burstShotsUF = burstAmountForUltimateFire;
+
+		if(ultimateBurstCoolDown <= 0){
+			if(burstShotsUF > 0) {ultimateFirer();
+			System.out.println("pp");}
+		}
+		else{
+			ultimateBurstCoolDown -= Gdx.graphics.getDeltaTime();
+		}
+
 	}
 
 	/**
@@ -167,9 +185,6 @@ public class Player extends Entity {
 	public static void upgradeRange(float multiplier){
 		rangeMultiplier += multiplier;
 	}
-	public static void upgradeResistance(float multiplier){
-		resistanceMultiplier += multiplier;
-	}
 
 	/**
 	 * Called when E is pushed. Causes 1 cannon ball to spawn on both sides of the ships wih their relative velocity
@@ -189,6 +204,14 @@ public class Player extends Entity {
         cannonBalls.add(new CannonFire(screen, getBody().getPosition().x, getBody().getPosition().y, (float) (getBody().getAngle() + Math.PI / 6), 5, getBody().getLinearVelocity()));
         }
          */
+	}
+
+	public void ultimateFirer(){
+		for(int i = 0; i <= amountOfShotsInUltimateFire; i++){
+			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier));
+		}
+		burstShotsUF--;
+		ultimateBurstCoolDown = ultimateBurstOGCoolDown;
 	}
 	public Vector2 getForwardVelocity() {
 		Vector2 currentNormal = this.getBody().getWorldVector(new Vector2(0, 1));

@@ -75,6 +75,35 @@ public class CannonFire extends Entity {
 
 	}
 
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, float target, float bulletSpeedLvls, float rangeMultiplier) {
+		super(screen, x, y);
+		this.velocity = velocity;
+		this.rangeMultiplier = rangeMultiplier;
+		//sets the angle and velocity
+		angle = body.getAngle();
+		this.bulletSpeedLvls = bulletSpeedLvls;
+
+
+
+		//set cannonBall dimensions for the texture
+		cannonBall = new Texture("cannonBall.png");
+		setRegion(cannonBall);
+		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
+		defineEntity();
+
+		//set collision bounds
+		//set sound for fire and play if on
+		fireNoise = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
+		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
+		}
+		this.rotated = true;
+
+		this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y, target);
+
+
+	}
+
 	/**
 	 * Defines the existance, direction, shape and size of a cannonball
 	 */
