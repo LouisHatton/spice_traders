@@ -29,11 +29,11 @@ public class CannonTest {
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
 		EnemyShip enemyShip = new EnemyShip(activeGameScreen, 0, 0, "unaligned_ship.png", "Unaligned");
 
-		CannonFire cannonFire = new CannonFire(activeGameScreen, 0, 0, enemyShip.getBody(), 5, new Vector2(3, 3));
+		CannonFire cannonFire = new CannonFire(activeGameScreen, 0, 0, enemyShip.getBody(), 5, new Vector2(3, 3), 1f, 1f);
 
 		assertFalse("Cannon is spawned destroyed.", cannonFire.isDestroyed());
 
-		cannonFire.update(0.99f); // max delta time to destroy.
+		cannonFire.update(2f); // max delta time to destroy.
 
 		assertTrue("Cannon is not set to destroy", cannonFire.isSetToDestroy());
 

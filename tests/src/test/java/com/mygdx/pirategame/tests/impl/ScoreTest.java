@@ -47,7 +47,7 @@ public class ScoreTest {
 		enemyShip.setToDestroy(true);
 		enemyShip.update(5);
 
-		assertEquals(HUD.getScore(), 20);
-		assertEquals(HUD.getCoins(), 10);
+		assertEquals(20, HUD.getScore());
+		assertEquals(10, HUD.getCoins());
 	}
 }
