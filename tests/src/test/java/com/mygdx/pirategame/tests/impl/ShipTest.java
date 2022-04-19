@@ -1,5 +1,6 @@
 package com.mygdx.pirategame.tests.impl;
 
+import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
@@ -89,5 +90,24 @@ public class ShipTest {
 		activeGameScreen.hud.update(1);
 
 		assertEquals("Health has not regenned.", 99, HUD.getHealth());
+	}
+
+	@Test
+	public void testHUDHealthMultiplier() {
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
+
+		activeGameScreen.update(1);
+		activeGameScreen.hud.update(1);
+
+		assertEquals("Health is not full", 100, HUD.getHealth());
+
+		PirateGame.difficulityMultiplier = 0.5f; // Easy.
+		HUD.changeHealth(-2);
+
+		assertEquals("Health is not 99.", 99, HUD.getHealth());
+
+		activeGameScreen.hud.update(1);
+
+		assertEquals("Health has not regenned.", 100, HUD.getHealth());
 	}
 }
