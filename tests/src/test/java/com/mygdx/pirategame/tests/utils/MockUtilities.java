@@ -1,16 +1,23 @@
 package com.mygdx.pirategame.tests.utils;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
+import com.mygdx.pirategame.entity.Player;
 import com.mygdx.pirategame.pref.AudioPreferences;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Or;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.invocation.InvocationOnMock;
 
@@ -41,7 +48,13 @@ public class MockUtilities {
 
 	public static ActiveGameScreen createScreen() {
 		ActiveGameScreen screen = Mockito.mock(ActiveGameScreen.class);
-		Mockito.when(screen.getWorld()).thenReturn(new World(new Vector2(0, 0), true));
+		World world = new World(new Vector2(0, 0), true);
+
+		Whitebox.setInternalState(screen, "world", world);
+		Whitebox.setInternalState(screen, "camera", new OrthographicCamera());
+		Whitebox.setInternalState(screen, "renderer", Mockito.mock(OrthogonalTiledMapRenderer.class));
+
+		Mockito.when(screen.getWorld()).thenCallRealMethod();
 
 		return screen;
 	}
@@ -69,4 +82,9 @@ public class MockUtilities {
 		return pirateGame;
 	}
 
+	public static Player mockPlayer(ActiveGameScreen activeGameScreen) {
+		Player player = new Player(activeGameScreen, 1, 1, 1, 1, new OrthographicCamera());
+
+		return player;
+	}
 }

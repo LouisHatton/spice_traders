@@ -1,0 +1,42 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TestRunner.runTests" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+    <module name="spice_traders.tests.test" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.mygdx.pirategame.display.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.mygdx.pirategame.entity.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.mygdx.pirategame.listener.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.mygdx.pirategame.pref.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.mygdx.pirategame.screen.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.mygdx.pirategame.utils.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.mygdx.pirategame.tests.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="com.mygdx.pirategame.tests" />
+    <option name="MAIN_CLASS_NAME" value="com.mygdx.pirategame.tests.TestRunner" />
+    <option name="METHOD_NAME" value="runTests" />
+    <option name="TEST_OBJECT" value="method" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

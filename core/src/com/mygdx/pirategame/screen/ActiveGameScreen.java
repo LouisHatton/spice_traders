@@ -435,7 +435,6 @@ public class ActiveGameScreen implements Screen {
 		camera.position.y = player.getBody().getPosition().y;
 		camera.update();
 		renderer.setView(camera);
-
 	}
 
 	/**
