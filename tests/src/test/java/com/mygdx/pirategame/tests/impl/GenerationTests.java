@@ -7,7 +7,6 @@ import com.mygdx.pirategame.utils.Location;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 
 import java.util.Set;
 

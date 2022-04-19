@@ -1,13 +1,10 @@
 package com.mygdx.pirategame.tests.impl;
 
-import apple.laf.JRSUIConstants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
-import com.mygdx.pirategame.entity.Enemy;
 import com.mygdx.pirategame.entity.Player;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
@@ -21,11 +18,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
