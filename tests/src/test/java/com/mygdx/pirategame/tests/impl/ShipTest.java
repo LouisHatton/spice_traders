@@ -109,5 +109,7 @@ public class ShipTest {
 		activeGameScreen.hud.update(1);
 
 		assertEquals("Health has not regenned.", 100, HUD.getHealth());
+
+		PirateGame.difficulityMultiplier = 1f; // Normal for other tests.
 	}
 }
