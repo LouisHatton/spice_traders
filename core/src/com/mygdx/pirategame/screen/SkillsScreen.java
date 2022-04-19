@@ -56,10 +56,7 @@ public class SkillsScreen implements Screen {
 
 		//States.get() checks whether it has already been unlocked. 1 = not unlocked, 0 = unlocked
 		if (states.get(0) == 1 && points >= 100) {
-			//Change acceleration
-			ActiveGameScreen.changeAcceleration(20F);
-			//Change Max speed
-			ActiveGameScreen.changeMaxSpeed(20F);
+
 			states.set(0, 0);
 
 		} else if (states.get(1) == 1 && points >= 200) {
@@ -221,7 +218,4 @@ public class SkillsScreen implements Screen {
 		stage.dispose();
 	}
 }
-
-
-
 

@@ -1,6 +1,7 @@
 package com.mygdx.pirategame.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
@@ -24,7 +25,11 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * @version 1.0
  */
 public class Player extends Entity {
-
+	static float cannonBallSpeedLvl = 0;
+	static float fireRateLvl = 0;
+	static float rangeMultiplier = 0.7f;
+	static float resistanceMultiplier = 0;
+	static boolean fireRateChanged = false;
 	float firingCoolDown = 0.2f;
 	float ogFiringCoolDown = 0.2f;
 	private final Texture ship;
@@ -34,6 +39,13 @@ public class Player extends Entity {
 	private float turnSpeed;
 	private float driveDirection;
 	private float driftFactor;
+
+	int amountOfShotsInUltimateFire = 15;
+	int burstAmountForUltimateFire = 2;
+	int burstShotsUF = 0;
+
+	float ultimateBurstCoolDown = 0f;
+	float ultimateBurstOGCoolDown = 0.5f;
 
 	private float maximumSpeed;
 	private float originalSpeed;
@@ -56,7 +68,7 @@ public class Player extends Entity {
 		this.turnSpeed = turnSpeed;
 		this .turnDirection = 0;
 		this.driveDirection = 0;
-		this.speed = 20f;
+		this.speed = 80f;
 		// Retrieves world data and creates ship texture
 		ship = new Texture("player_ship.png");
 
@@ -79,6 +91,10 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+		if(fireRateChanged){
+			ogFiringCoolDown = ogFiringCoolDown / (fireRateLvl * 0.1f);
+			fireRateChanged = false;
+		}
 		// Updates position and orientation of player
 		setPosition(getBody().getPosition().x - getWidth() / 2f, getBody().getPosition().y - getHeight() / 2f);
 		//float angle = (float) Math.atan2(getBody().getLinearVelocity().y, getBody().getLinearVelocity().x);
@@ -100,6 +116,16 @@ public class Player extends Entity {
 			firingCoolDown -= dt;
 		}
 
+		if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) burstShotsUF = burstAmountForUltimateFire;
+
+		if(ultimateBurstCoolDown <= 0){
+			if(burstShotsUF > 0) {ultimateFirer();
+			System.out.println("pp");}
+		}
+		else{
+			ultimateBurstCoolDown -= Gdx.graphics.getDeltaTime();
+		}
+
 	}
 
 	/**
@@ -110,6 +136,12 @@ public class Player extends Entity {
 		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
 			breakSound.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
+	}
+
+	public void changeMaxSpeed(float percentage){
+		this.maximumSpeed = this.maximumSpeed * (1 + (percentage / 100));
+		this.turnSpeed = this.turnSpeed * (1 + (percentage / 100));
+		this.originalSpeed = this.originalSpeed * (1 + (percentage / 100));
 	}
 
 	/**
@@ -142,6 +174,18 @@ public class Player extends Entity {
 
 	}
 
+	public static void upgradeCannonBallSpeed(){
+		cannonBallSpeedLvl ++;
+	}
+
+	public static void upgradeFireRate(){
+		fireRateLvl ++;
+		fireRateChanged = true;
+	}
+	public static void upgradeRange(float multiplier){
+		rangeMultiplier += multiplier;
+	}
+
 	/**
 	 * Called when E is pushed. Causes 1 cannon ball to spawn on both sides of the ships wih their relative velocity
 	 */
@@ -150,7 +194,7 @@ public class Player extends Entity {
 		Vector3 mouse_position = new Vector3(0,0,0);
 		mouse_position.set(Gdx.input.getX(), Gdx.input.getY(), 0); /** gets mouse position*/
 		cam.unproject(mouse_position);
-		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y)));
+		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y), cannonBallSpeedLvl, rangeMultiplier));
 
 
 		// Cone fire below
@@ -160,6 +204,14 @@ public class Player extends Entity {
         cannonBalls.add(new CannonFire(screen, getBody().getPosition().x, getBody().getPosition().y, (float) (getBody().getAngle() + Math.PI / 6), 5, getBody().getLinearVelocity()));
         }
          */
+	}
+
+	public void ultimateFirer(){
+		for(int i = 0; i <= amountOfShotsInUltimateFire; i++){
+			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier));
+		}
+		burstShotsUF--;
+		ultimateBurstCoolDown = ultimateBurstOGCoolDown;
 	}
 	public Vector2 getForwardVelocity() {
 		Vector2 currentNormal = this.getBody().getWorldVector(new Vector2(0, 1));

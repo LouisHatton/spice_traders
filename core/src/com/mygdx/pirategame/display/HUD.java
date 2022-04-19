@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
@@ -24,13 +25,15 @@ public class HUD implements Disposable {
 
 	public static Stage stage;
 	private static int score;
+	public static float resistanceMultiplier = 100;
+	public static float maxHealth = 100;
 	private static int health;
 	private static Label scoreLabel;
 	private static Label healthLabel;
 	private static Label coinLabel;
 	private static Label pointsText;
 	private static int coins;
-	private static int coinMulti;
+	private static float coinMulti;
 	private final Viewport viewport;
 	private float timeCount;
 	private final Texture hp;
@@ -102,8 +105,24 @@ public class HUD implements Disposable {
 	 * @param value Increase to health
 	 */
 	public static void changeHealth(int value) {
-		health += value;
+		health = (int)(health +((value* (resistanceMultiplier/100)) * PirateGame.difficulityMultiplier ));
 		healthLabel.setText(String.format("%02d", health));
+	}
+
+	public static void upgradResistance(float multiplier){
+		resistanceMultiplier -= multiplier;
+	}
+	public static void upgradMaxHealth(float amount){
+		maxHealth += amount;
+	}
+
+	public static boolean purchase(float value){
+		if(coins >= value){
+			coins -= value;
+			coinLabel.setText(String.format("%03d", coins));
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -113,7 +132,7 @@ public class HUD implements Disposable {
 	 */
 	public static void changeCoins(int value) {
 		if (value > 0) {
-			coins += value * coinMulti;
+			coins = (int)(coins + (value * PirateGame.difficulityMultiplier) * coinMulti);
 			coinLabel.setText(String.format("%03d", coins));
 		}
 	}
@@ -144,7 +163,7 @@ public class HUD implements Disposable {
 	 *
 	 * @param value Factor of coin increase
 	 */
-	public static void changeCoinsMulti(int value) {
+	public static void changeCoinsMulti(float value) {
 		coinMulti = coinMulti * value;
 	}
 
@@ -186,7 +205,7 @@ public class HUD implements Disposable {
 		timeCount += dt;
 		if (timeCount >= 1) {
 			//Regen health every second
-			if (health < 100) {
+			if (health < maxHealth) {
 				health += 1;
 				healthLabel.setText(String.format("%02d", health));
 			}

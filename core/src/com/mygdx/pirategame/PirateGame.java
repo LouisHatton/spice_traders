@@ -19,6 +19,7 @@ import com.mygdx.pirategame.screen.*;
  */
 public class PirateGame extends Game {
 	public static final float PPM = 100;
+	public static float difficulityMultiplier = 0;
 
 	//Bits used in collisions
 	public static final short DEFAULT_BIT = 1;
@@ -32,20 +33,24 @@ public class PirateGame extends Game {
 	//Constant for swapping between screens
 	public final static int MENU = 0;
 	public final static int GAME = 1;
+	public final static int Difficulity = 6;
 	public final static int SKILL = 2;
-	public final static int DEATH = 3;
-	public final static int HELP = 4;
-	public final static int VICTORY = 5;
+	public final static int SHOP = 3;
+	public final static int DEATH = 4;
+	public final static int HELP = 5;
+	public final static int VICTORY = 6;
 	public SpriteBatch batch;
 	public Music song;
 	//Variable for each screen
 	private MainMenu menuScreen;
 	private ActiveGameScreen gameScreen;
 	private SkillsScreen skillTreeScreen;
+	private Shop shopScreen;
 	private DeathScreen deathScreen;
 	private HelpScreen helpScreen;
 	private VictoryScreen victoryScreen;
 	private AudioPreferences options;
+	private DifficulityScreen DifficulityScreen;
 
 	private int currentScreen;
 
@@ -98,6 +103,11 @@ public class PirateGame extends Game {
 				this.setScreen(skillTreeScreen);
 				break;
 
+				case SHOP:
+				if (shopScreen == null) shopScreen = new Shop(this);
+				this.setScreen(shopScreen);
+				break;
+
 			case DEATH:
 				if (deathScreen == null) deathScreen = new DeathScreen(this);
 				this.setScreen(deathScreen);
@@ -113,6 +123,7 @@ public class PirateGame extends Game {
 				if (victoryScreen == null) victoryScreen = new VictoryScreen(this);
 				this.setScreen(victoryScreen);
 				break;
+
 		}//
 	}
 
@@ -157,6 +168,8 @@ public class PirateGame extends Game {
 	public void dispose() {
 		batch.dispose();
 	}
+
+	public float getDifficulity(){return difficulityMultiplier;}
 
 	public int getCurrentScreen() {
 		return currentScreen;

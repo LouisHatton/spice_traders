@@ -1,0 +1,24 @@
+com/mygdx/pirategame/tests/impl/ScoreTest.java
+ com.mygdx.pirategame.tests.impl.ScoreTest
+com/mygdx/pirategame/tests/impl/CoinTest.java
+ com.mygdx.pirategame.tests.impl.CoinTest
+com/mygdx/pirategame/tests/impl/CollegeWallTest.java
+ com.mygdx.pirategame.tests.impl.CollegeWallTest
+com/mygdx/pirategame/tests/impl/DamageTest.java
+ com.mygdx.pirategame.tests.impl.DamageTest
+com/mygdx/pirategame/tests/impl/TileTests.java
+ com.mygdx.pirategame.tests.impl.TileTests
+com/mygdx/pirategame/tests/impl/ShipTest.java
+ com.mygdx.pirategame.tests.impl.ShipTest
+com/mygdx/pirategame/tests/lib/GdxTestRunner.java
+ com.mygdx.pirategame.tests.lib.GdxTestRunner
+com/mygdx/pirategame/tests/impl/CannonTest.java
+ com.mygdx.pirategame.tests.impl.CannonTest
+com/mygdx/pirategame/tests/TestRunner.java
+ com.mygdx.pirategame.tests.TestRunner
+com/mygdx/pirategame/tests/impl/GenerationTests.java
+ com.mygdx.pirategame.tests.impl.GenerationTests
+com/mygdx/pirategame/tests/utils/MockUtilities.java
+ com.mygdx.pirategame.tests.utils.MockUtilities
+com/mygdx/pirategame/tests/impl/AssetTests.java
+ com.mygdx.pirategame.tests.impl.AssetTests

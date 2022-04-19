@@ -31,7 +31,10 @@ public class CannonFire extends Entity {
 	Body body;
 	Vector2 target;
 	boolean rotated = false;
-	float speed = 2f;
+	float speed = 500f;
+	boolean applyForce = false;
+	float rangeMultiplier = 1f;
+	float bulletSpeedLvls;
 
 
 	/**
@@ -45,19 +48,21 @@ public class CannonFire extends Entity {
 	 * @param body     body of origin
 	 * @param velocity velocity of the cannon ball
 	 */
-	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target) {
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target, float bulletSpeedLvls, float rangeMultiplier) {
 		super(screen, x, y);
 		this.velocity = velocity;
+		this.rangeMultiplier = rangeMultiplier;
 		//sets the angle and velocity
 		angle = body.getAngle();
 		this.target = target;
+		this.bulletSpeedLvls = bulletSpeedLvls;
 
 
 
 		//set cannonBall dimensions for the texture
 		cannonBall = new Texture("cannonBall.png");
 		setRegion(cannonBall);
-		setBounds(x, y, 10 / PirateGame.PPM, 10 / PirateGame.PPM);
+		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
 		defineEntity();
 
 		//set collision bounds
@@ -66,6 +71,35 @@ public class CannonFire extends Entity {
 		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
 			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
+
+
+	}
+
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, float target, float bulletSpeedLvls, float rangeMultiplier) {
+		super(screen, x, y);
+		this.velocity = velocity;
+		this.rangeMultiplier = rangeMultiplier;
+		//sets the angle and velocity
+		angle = body.getAngle();
+		this.bulletSpeedLvls = bulletSpeedLvls;
+
+
+
+		//set cannonBall dimensions for the texture
+		cannonBall = new Texture("cannonBall.png");
+		setRegion(cannonBall);
+		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
+		defineEntity();
+
+		//set collision bounds
+		//set sound for fire and play if on
+		fireNoise = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
+		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
+		}
+		this.rotated = true;
+
+		this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y, target);
 
 
 	}
@@ -85,7 +119,7 @@ public class CannonFire extends Entity {
 		//Sets collision boundaries
 		FixtureDef fDef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox((10/ 2f) / PirateGame.PPM, (10 * 12f) / PirateGame.PPM);
+		shape.setAsBox((10/ 2f) / PirateGame.PPM, (10 * 3f) / PirateGame.PPM);
 
 		// setting BIT identifier
 		fDef.filter.categoryBits = PirateGame.CANNON_BIT;
@@ -116,11 +150,10 @@ public class CannonFire extends Entity {
 			getBody().setTransform(getBody().getPosition().x, getBody().getPosition().y, (float)Math.atan2( getBody().getPosition().x-target.x,target.y- getBody().getPosition().y  ));
 		}
 
-		Vector2 direction = new Vector2(this.body.getWorldPoint(new Vector2(0,this.cannonBall.getHeight()))); /**gets the direction the ball is going towards*/
-		Vector2 position = this.body.getPosition();
-		position.x = position.x + (direction.x - position.x) *  (speed / 100f) ; /** changes the direction and slightly teleports the ball so it can travel way faster**/
-		position.y = position.y + (direction.y - position.y) * (speed / 100f);
-		this.body.setTransform(position, this.body.getAngle()); /**moves ball forward**/
+		if(!applyForce){
+			this.body.applyForceToCenter(this.body.getWorldVector(new Vector2(0, speed + (speed * (this.bulletSpeedLvls * 0.15f)))), true);
+			applyForce = true;
+		}
 		setPosition(getBody().getPosition().x - getWidth() / 2, getBody().getPosition().y - getHeight() / 2);
 
 		//If ball is set to destroy and isnt, destroy it
@@ -129,7 +162,7 @@ public class CannonFire extends Entity {
 			destroyed = true;
 		}
 		// determines cannonball range
-		if (stateTime > 0.98f) {
+		if (stateTime > (1f * rangeMultiplier)) {
 			setToDestroy();
 		}
 	}
@@ -139,6 +172,9 @@ public class CannonFire extends Entity {
 	 */
 	public void setToDestroy() {
 		setToDestroy = true;
+	}
+	public void changeRangeMultiplier(float multiplier) {
+		this.rangeMultiplier += multiplier;
 	}
 
 	/**
