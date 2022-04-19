@@ -60,8 +60,9 @@ public class DamageTest {
 		Whitebox.setInternalState(pirateGame, "deathScreen", Mockito.mock(DeathScreen.class));
 
 		Mockito.doCallRealMethod().when(pirateGame).setScreen(Mockito.any(Screen.class));
+		Mockito.doCallRealMethod().when(pirateGame).changeScreen(Mockito.anyInt());
+		Mockito.doCallRealMethod().when(pirateGame).getCurrentScreen();
 		Mockito.doCallRealMethod().when(activeGameScreen).gameOverCheck();
-		Mockito.doCallRealMethod().when(pirateGame).changeScreen(PirateGame.DEATH);
 
 		HUD.changeHealth(-110);
 		activeGameScreen.gameOverCheck();

@@ -521,7 +521,9 @@ public class ActiveGameScreen implements Screen {
 		if (HUD.getHealth() <= 0 || colleges.get("Alcuin").isDestroyed()) {
 			game.changeScreen(PirateGame.DEATH);
 			game.killGame();
+			return;
 		}
+
 		//Win game if all colleges destroyed
 		boolean allDestroyed = colleges.values().stream().allMatch(col -> {
 			if (col.getType().equals(CollegeType.ALCUIN)) {
