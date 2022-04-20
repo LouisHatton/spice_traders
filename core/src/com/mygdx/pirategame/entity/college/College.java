@@ -37,6 +37,11 @@ public class College extends Enemy {
 	private final String currentCollege;
 	private final Array<CollegeFire> cannonBalls;
 	private final CollegeType type;
+	float deathCoolDown = 0;
+	boolean surrended = false;
+	float pointsCoolDown = 0;
+	float ogCoolDown = 1f;
+	boolean died = false;
 
 	/**
 	 * @param screen       Visual data
@@ -98,6 +103,26 @@ public class College extends Enemy {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+		if(deathCoolDown >= 0 && surrended){
+			deathCoolDown -= Gdx.graphics.getDeltaTime();
+			setHealth(1);
+			changeIustDied(true);
+		}
+		else {
+			changeIustDied(false);
+		}
+
+		if(surrended){
+			if(pointsCoolDown <= 0){
+				HUD.changePoints(2);
+				HUD.changeCoins(1);
+				pointsCoolDown = ogCoolDown;
+			}
+			else {
+				pointsCoolDown -= dt;
+			}
+		}
+
 		//If college is set to destroy and isnt, destroy it
 		if (isSetToDestroy() && !isDestroyed()) {
 			getWorld().destroyBody(getBody());
@@ -119,14 +144,28 @@ public class College extends Enemy {
 
 		}
 
-		if (getHealth() <= 0) {
-			setToDestroy(true);
+
+		if(!surrended){
+			this.getBar().update();
+		}
+		else{
+			this.getBar().deathSize();
 		}
 
-		this.getBar().update();
-
 		if (getHealth() <= 0) {
-			setToDestroy(true);
+			if(deathCoolDown > 0) return;
+			if(surrended && !died) {
+				setToDestroy(true);
+				ActiveGameScreen.player.setCollegesCaptured(-1);
+				ActiveGameScreen.player.setCollegesKilled(1);
+				died = true;
+			}
+			if(!surrended) {
+				surrended = true;
+				setHealth(1);
+				ActiveGameScreen.player.setCollegesCaptured(1);
+				deathCoolDown = 0.5f;
+			}
 		}
 		//Update cannon balls
 		for (CollegeFire ball : cannonBalls) {
@@ -189,11 +228,12 @@ public class College extends Enemy {
 	 * Fires cannonballs
 	 */
 	public void fire() {
+		if(surrended) return;
 		cannonBalls.add(new CollegeFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y));
 	}
 
 	public List<EnemyShip> getFleet() {
-		return fleet;
+	  return fleet;
 	}
 
 	public CollegeType getType() {

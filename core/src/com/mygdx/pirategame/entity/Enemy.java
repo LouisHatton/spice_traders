@@ -18,6 +18,7 @@ public abstract class Enemy extends Entity {
 	private int health;
 	private int damage;
 	private HealthBar bar;
+	private boolean justDied = false;
 
 	/**
 	 * Instantiates an enemy
@@ -83,9 +84,12 @@ public abstract class Enemy extends Entity {
 	}
 
 	public void takeDamage(double damage) {
-		this.health -= damage;
+		if(!justDied){
+			this.health -= damage;
+			System.out.println("pp " + health);
+		}
 	}
-
+	public void changeIustDied (boolean input) {this.justDied = input;}
 	public void initHealthBar() {
 		this.bar = new HealthBar(this);
 	}

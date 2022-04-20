@@ -51,6 +51,11 @@ public class Player extends Entity {
 	private float originalSpeed;
 	private float speed;
 
+	public float collegesCaptured = 0;
+	public float boatsKilled = 0;
+	public float collegesKilled = 0;
+
+
 	private Camera cam;
 
 	/**
@@ -286,4 +291,27 @@ public class Player extends Entity {
 	}
 
 
+	public float getCollegesCaptured() {
+		return collegesCaptured;
+	}
+
+	public float getCollegesKilled() {
+		return collegesKilled;
+	}
+
+	public void setCollegesCaptured(float collegesCaptured) {
+		this.collegesCaptured += collegesCaptured;
+	}
+
+	public void setCollegesKilled(float collegesKilled) {
+		this.collegesKilled += collegesKilled;
+	}
+
+	public float getBoatsKilled() {
+		return boatsKilled;
+	}
+
+	public void setBoatsKilled(float boatsKilled) {
+		this.boatsKilled += boatsKilled;
+	}
 }

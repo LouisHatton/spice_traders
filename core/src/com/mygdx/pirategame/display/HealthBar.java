@@ -70,4 +70,8 @@ public class HealthBar {
 		//Changes bar size when damaged
 		healthBar.setSize(healthBar.getWidth() - value, healthBar.getHeight());
 	}
+
+	public void deathSize(){
+		healthBar.setSize(0f,0);
+	}
 }
