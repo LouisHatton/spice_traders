@@ -28,13 +28,14 @@ import java.util.List;
 public class SkillsScreen implements Screen {
 
 	//To store whether buttons are enabled or disabled
-	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1);
-	private static TextButton movement1;
+	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1, 1);
+	private static TextButton bloodied;
 	private final PirateGame parent;
 	private final Stage stage;
-	private TextButton damage1;
-	private TextButton GoldMulti1;
-	private TextButton movement2;
+	private TextButton shield;
+	private TextButton ultimateAbility;
+	private TextButton secondaryAbility;
+	private TextButton critHit;
 
 	/**
 	 * Instantiates a new Skill tree.
@@ -47,6 +48,15 @@ public class SkillsScreen implements Screen {
 		stage = new Stage(new ScreenViewport());
 	}
 
+	public static void unlock(int i){
+		states.set(i, 0);
+	}
+
+
+	public static void lock(int i){
+		states.set(i, 1);
+	}
+
 	/**
 	 * Allows the game to check whether a points threshold has been reached
 	 *
@@ -54,26 +64,15 @@ public class SkillsScreen implements Screen {
 	 */
 	public static void pointsCheck(int points) {
 
-		//States.get() checks whether it has already been unlocked. 1 = not unlocked, 0 = unlocked
-		if (states.get(0) == 1 && points >= 100) {
 
-			states.set(0, 0);
+		 if (states.get(3) == 1 && points >= 500) {
 
-		} else if (states.get(1) == 1 && points >= 200) {
-			//Change multiplier
-			HUD.changeCoinsMulti(2);
-			states.set(1, 0);
-		} else if (states.get(2) == 1 && points >= 300) {
-			//Change acceleration
-			ActiveGameScreen.changeAcceleration(20F);
-			//Change Max speed
-			ActiveGameScreen.changeMaxSpeed(20F);
-			states.set(2, 0);
-
-		} else if (states.get(3) == 1 && points >= 400) {
-			//Increase damage
-			ActiveGameScreen.changeDamage(5);
 			states.set(3, 0);
+
+		}
+		 else if (states.get(4) == 1 && points >= 1000) {
+
+			states.set(4, 0);
 		}
 	}
 
@@ -100,33 +99,35 @@ public class SkillsScreen implements Screen {
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 		//create skill tree buttons
-		movement1 = new TextButton("Movement Speed + 20%", skin);
+		bloodied = new TextButton("Bloodied", skin);
 
 		//Sets enabled or disabled
 		if (states.get(0) == 1) {
-			movement1.setDisabled(true);
+			bloodied.setDisabled(true);
 		}
-		GoldMulti1 = new TextButton("Gold Multiplier x2", skin);
+		critHit = new TextButton("Crit Hit", skin);
 		if (states.get(1) == 1) {
-			GoldMulti1.setDisabled(true);
+			critHit.setDisabled(true);
 		}
-		movement2 = new TextButton("Movement Speed + 20%", skin);
+		shield = new TextButton("Shield", skin);
 		if (states.get(2) == 1) {
-			movement2.setDisabled(true);
+			shield.setDisabled(true);
 		}
 
-		damage1 = new TextButton("Damage + 5", skin);
+		secondaryAbility = new TextButton("Secondary Ability", skin);
 
 		if (states.get(3) == 1) {
-			damage1.setDisabled(true);
+			secondaryAbility.setDisabled(true);
 
 		}
 
-		//Point unlock labels
-		final Label unlock100 = new Label("100 points", skin);
-		final Label unlock200 = new Label("200 points", skin);
-		final Label unlock300 = new Label("300 points", skin);
-		final Label unlock400 = new Label("400 points", skin);
+		ultimateAbility = new TextButton("Ultimate Ability", skin);
+
+		if (states.get(4) == 1) {
+			ultimateAbility.setDisabled(true);
+
+		}
+
 
 		//Return Button
 		TextButton backButton = new TextButton("Return", skin);
@@ -140,17 +141,20 @@ public class SkillsScreen implements Screen {
 		});
 
 		//add buttons and labels to main table
-		table.add(movement1);
-		table.add(unlock100);
+		table.add(bloodied);
+
 		table.row().pad(10, 0, 10, 0);
-		table.add(GoldMulti1);
-		table.add(unlock200);
+		table.add(critHit);
+
 		table.row().pad(10, 0, 10, 0);
-		table.add(movement2);
-		table.add(unlock300);
+		table.add(shield);
+
 		table.row().pad(10, 0, 10, 0);
-		table.add(damage1);
-		table.add(unlock400);
+		table.add(secondaryAbility);
+
+		table.row().pad(10, 0, 10, 0);
+		table.add(ultimateAbility);
+
 		table.top();
 
 		//add return button
@@ -172,6 +176,8 @@ public class SkillsScreen implements Screen {
 		// tell our stage to do actions and draw itself
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		stage.draw();
+
+
 	}
 
 	/**

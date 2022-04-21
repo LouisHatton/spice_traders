@@ -1,5 +1,6 @@
 package com.mygdx.pirategame.entity;
 
+import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.display.HealthBar;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 
@@ -19,7 +20,7 @@ public abstract class Enemy extends Entity {
 	private int damage;
 	private HealthBar bar;
 	private boolean justDied = false;
-
+	private float maxHealth = 100;
 	/**
 	 * Instantiates an enemy
 	 *
@@ -33,6 +34,7 @@ public abstract class Enemy extends Entity {
 		this.setToDestroy = false;
 		this.destroyed = false;
 		this.health = 100;
+		this.maxHealth = 100f;
 	}
 
 	public abstract void update(float dt);
@@ -84,10 +86,23 @@ public abstract class Enemy extends Entity {
 	}
 
 	public void takeDamage(double damage) {
+		float multiplier = 1f;
+		if(Player.isBloodied){
+			if(HUD.getHealth() == HUD.maxHealth){
+				multiplier = 1f;
+			}
+			else{
+				multiplier = 1 + ((1 - (HUD.getHealth()/HUD.maxHealth) * HUD.bloodyAmount));
+			}
+		}
+
 		if(!justDied){
-			this.health -= damage;
+			this.health -= damage * multiplier;
 			System.out.println("pp " + health);
 		}
+
+		this.getBar().update();
+		this.getBar().setHealth(health/maxHealth);
 	}
 	public void changeIustDied (boolean input) {this.justDied = input;}
 	public void initHealthBar() {

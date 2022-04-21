@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.pirategame.PirateGame;
+import com.mygdx.pirategame.entity.Player;
 import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
@@ -42,6 +43,8 @@ public class HUD implements Disposable {
 	private final Image hpImg;
 	private final Image box;
 	private final Image coin;
+
+	public static float bloodyAmount = 0.5f;
 
 	/**
 	 * Retrieves information and displays it in the hud
@@ -105,6 +108,9 @@ public class HUD implements Disposable {
 	 * @param value Increase to health
 	 */
 	public static void changeHealth(int value) {
+		if(value < 0 && Player.protectedTimer > 0) return;
+
+
 		health = (int)(health +((value* (resistanceMultiplier/100)) * PirateGame.difficulityMultiplier ));
 		healthLabel.setText(String.format("%02d", health));
 	}
@@ -215,7 +221,6 @@ public class HUD implements Disposable {
 			timeCount = 0;
 
 			//Check if a points boundary is met
-			SkillsScreen.pointsCheck(score);
 		}
 	}
 

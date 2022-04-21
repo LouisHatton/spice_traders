@@ -21,6 +21,8 @@ public class HealthBar {
 	private final Sprite healthBar;
 	private final Texture image;
 
+	private float healthbarLength;
+
 	private final Enemy owner;
 
 	/**
@@ -36,6 +38,8 @@ public class HealthBar {
 		//Sets size of the health bar
 		healthBar.setScale(0.0155f);
 		healthBar.setSize(healthBar.getWidth(), healthBar.getHeight() - 2f);
+
+		healthbarLength = healthBar.getWidth();
 
 		//Sets location of bar
 		healthBar.setX(this.owner.getBody().getPosition().x - 0.68f);
@@ -69,6 +73,10 @@ public class HealthBar {
 	public void changeHealth(float value) {
 		//Changes bar size when damaged
 		healthBar.setSize(healthBar.getWidth() - value, healthBar.getHeight());
+	}
+
+	public void setHealth(float amount){
+		healthBar.setSize(healthbarLength * amount, healthBar.getHeight());
 	}
 
 	public void deathSize(){

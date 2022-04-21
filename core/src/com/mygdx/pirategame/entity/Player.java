@@ -15,8 +15,10 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.pirategame.PirateGame;
+import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
+import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
  * Creates the class of the player. Everything that involves actions coming from the player boat
@@ -40,6 +42,8 @@ public class Player extends Entity {
 	private float driveDirection;
 	private float driftFactor;
 
+	public static boolean isBloodied = false;
+
 	int amountOfShotsInUltimateFire = 15;
 	int burstAmountForUltimateFire = 2;
 	int burstShotsUF = 0;
@@ -57,6 +61,13 @@ public class Player extends Entity {
 
 
 	private Camera cam;
+
+	public static boolean shieldEnabled = false;
+	public float shieldCoolDown = 0f;
+	public float shieldCoolDownOG = 5f;
+	public static float protectedTimer = 0f;
+	public float protectTime = 2f;
+
 
 	/**
 	 * Instantiates a new Player. Constructor only called once per game
@@ -96,6 +107,22 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+		if(shieldEnabled){
+			if(protectedTimer > 0){
+				protectedTimer -= dt;
+			}
+			if(Gdx.input.isKeyJustPressed(Input.Keys.E) && shieldCoolDown <= 0){
+				protectedTimer = protectTime;
+				shieldCoolDown = shieldCoolDownOG;
+			}
+			else if(shieldCoolDown > 0) {
+				shieldCoolDown -= dt;
+			}
+		}
+
+
+
+
 		if(fireRateChanged){
 			ogFiringCoolDown = ogFiringCoolDown / (fireRateLvl * 0.1f);
 			fireRateChanged = false;
@@ -124,8 +151,9 @@ public class Player extends Entity {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) burstShotsUF = burstAmountForUltimateFire;
 
 		if(ultimateBurstCoolDown <= 0){
-			if(burstShotsUF > 0) {ultimateFirer();
-			System.out.println("pp");}
+			if(burstShotsUF > 0) {
+				ultimateFirer();
+			}
 		}
 		else{
 			ultimateBurstCoolDown -= Gdx.graphics.getDeltaTime();
@@ -212,6 +240,7 @@ public class Player extends Entity {
 	}
 
 	public void ultimateFirer(){
+		if(HUD.getScore() < 1000) return;
 		for(int i = 0; i <= amountOfShotsInUltimateFire; i++){
 			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier));
 		}
@@ -301,10 +330,12 @@ public class Player extends Entity {
 
 	public void setCollegesCaptured(float collegesCaptured) {
 		this.collegesCaptured += collegesCaptured;
+		updateStats();
 	}
 
 	public void setCollegesKilled(float collegesKilled) {
 		this.collegesKilled += collegesKilled;
+		updateStats();
 	}
 
 	public float getBoatsKilled() {
@@ -313,5 +344,23 @@ public class Player extends Entity {
 
 	public void setBoatsKilled(float boatsKilled) {
 		this.boatsKilled += boatsKilled;
+		updateStats();
+	}
+
+	void updateStats(){
+		if(boatsKilled > 15){
+			SkillsScreen.unlock(2);
+			shieldEnabled = true;
+		}
+		if(collegesKilled >= 1){
+			SkillsScreen.unlock(0);
+			isBloodied = true;
+		}
+		if(collegesCaptured >= 1){
+			SkillsScreen.unlock(1);
+		}
+		else{
+			SkillsScreen.lock(1);
+		}
 	}
 }

@@ -72,6 +72,7 @@ public class EnemyShip extends Enemy {
 			//Change player coins and points
 			HUD.changePoints(20);
 			HUD.changeCoins(10);
+			ActiveGameScreen.player.setBoatsKilled(1);
 		} else if (!isDestroyed()) {
 			//Update position and angle of ship
 			setPosition(getBody().getPosition().x - getWidth() / 2f, getBody().getPosition().y - getHeight() / 2f);
@@ -144,7 +145,6 @@ public class EnemyShip extends Enemy {
 		}
 		//Deal with the damage
 		takeDamage(getDamage());
-		getBar().changeHealth(getDamage());
 		HUD.changePoints(5);
 	}
 
