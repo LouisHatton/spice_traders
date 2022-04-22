@@ -81,6 +81,7 @@ public class SkillsScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
 		// Create a table that fills the screen
@@ -100,6 +101,13 @@ public class SkillsScreen implements Screen {
 
 		//create skill tree buttons
 		bloodied = new TextButton("Bloodied", skin);
+		bloodied.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+				parent.changeScreen(PirateGame.BLOODIED);
+			}
+		});
 
 		//Sets enabled or disabled
 		if (states.get(0) == 1) {

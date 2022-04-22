@@ -215,6 +215,13 @@ public class Player extends Entity {
 		fireRateLvl ++;
 		fireRateChanged = true;
 	}
+
+
+	public void burstShot(){
+
+	}
+
+
 	public static void upgradeRange(float multiplier){
 		rangeMultiplier += multiplier;
 	}

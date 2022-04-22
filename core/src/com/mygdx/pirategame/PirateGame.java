@@ -39,6 +39,11 @@ public class PirateGame extends Game {
 	public final static int DEATH = 4;
 	public final static int HELP = 5;
 	public final static int VICTORY = 6;
+	public final static int BLOODIED = 7;
+	public final static int SHIELD = 8;
+	public final static int CRIT = 9;
+	public final static int ULTIMATE = 10;
+	public final static int BURST = 11;
 	public SpriteBatch batch;
 	public Music song;
 	//Variable for each screen
@@ -51,6 +56,7 @@ public class PirateGame extends Game {
 	private VictoryScreen victoryScreen;
 	private AudioPreferences options;
 	private DifficulityScreen DifficulityScreen;
+	private bloodiedInfo bloodyScreen;
 
 	private int currentScreen;
 
@@ -102,6 +108,12 @@ public class PirateGame extends Game {
 				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this);
 				this.setScreen(skillTreeScreen);
 				break;
+
+			case BLOODIED:
+				if (bloodyScreen == null) bloodyScreen = new bloodiedInfo(this);
+				this.setScreen(bloodyScreen);
+				break;
+
 
 				case SHOP:
 				if (shopScreen == null) shopScreen = new Shop(this);
