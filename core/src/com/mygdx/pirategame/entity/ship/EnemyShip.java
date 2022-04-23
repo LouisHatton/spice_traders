@@ -4,12 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Enemy;
+import com.mygdx.pirategame.entity.cannon.CannonFire;
+import com.mygdx.pirategame.entity.college.version.cannonBallManager;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 /**
@@ -26,6 +32,18 @@ public class EnemyShip extends Enemy {
 	private Texture enemyShip;
 	private final Sound destroy;
 	private final Sound hit;
+	public Rectangle detectBox;
+	public Rectangle shootBox;
+	public Rectangle stoppingDistanceBox;
+	public Rectangle leaveBox;
+	private Array<CannonFire> cannonBalls = new Array<CannonFire>();
+
+
+	public boolean isFollowing = false;
+	Body body;
+	private float maxLinearSpeed = 5;
+	private float firingCoolDown = 0;
+	private float ogFiringCoolDown = 0.5f;
 
 	/**
 	 * Instantiates enemy ship
@@ -38,6 +56,8 @@ public class EnemyShip extends Enemy {
 	 */
 	public EnemyShip(ActiveGameScreen screen, float x, float y, String path, String assignment) {
 		super(screen, x, y);
+
+
 		enemyShip = new Texture(path);
 		//Assign college
 		college = assignment;
@@ -49,9 +69,18 @@ public class EnemyShip extends Enemy {
 		setRegion(enemyShip);
 		setOrigin(32 / PirateGame.PPM, 55 / PirateGame.PPM);
 		defineEntity();
+
+
+		this.detectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 11,11);
+		this.stoppingDistanceBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 4,4);
+		this.shootBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 6,6);
+		this.leaveBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 18,18);
+		setBody(body);
 		super.initHealthBar();
 
 		setDamage(20);
+
+		body.setLinearDamping(1);
 	}
 
 	/**
@@ -61,13 +90,30 @@ public class EnemyShip extends Enemy {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+		// Updates cannonball data
+		for (CannonFire ball : cannonBalls) {
+			ball.update(dt);
+			if (ball.isDestroyed())
+				cannonBalls.removeValue(ball, true);
+		}
+
+
+		 if(firingCoolDown > 0){
+			firingCoolDown -= dt;
+		}
+
+
+		this.detectBox.setPosition(this.body.getPosition());
+		this.stoppingDistanceBox.setPosition(this.body.getPosition());
+		this.shootBox.setPosition(this.body.getPosition());
+		this.leaveBox.setPosition(this.body.getPosition());
 		//If ship is set to destroy and isnt, destroy it
 		if (isSetToDestroy() && !isDestroyed()) {
 			//Play death noise
 			if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
 				destroy.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 			}
-			getWorld().destroyBody(getBody());
+			getWorld().destroyBody(body);
 			setDestroyed(true);
 			//Change player coins and points
 			HUD.changePoints(20);
@@ -75,23 +121,54 @@ public class EnemyShip extends Enemy {
 			ActiveGameScreen.player.setBoatsKilled(1);
 		} else if (!isDestroyed()) {
 			//Update position and angle of ship
-			setPosition(getBody().getPosition().x - getWidth() / 2f, getBody().getPosition().y - getHeight() / 2f);
-			float angle = (float) Math.atan2(getBody().getLinearVelocity().y, getBody().getLinearVelocity().x);
-			getBody().setTransform(getBody().getWorldCenter(), angle - ((float) Math.PI) / 2.0f);
-			setRotation((float) (getBody().getAngle() * 180 / Math.PI));
+			setPosition(body.getPosition().x - getWidth() / 2f, body.getPosition().y - getHeight() / 2f);
+			float angle = (float) Math.atan2(body.getLinearVelocity().y, body.getLinearVelocity().x);
+			if(this.detectBox.overlaps(ActiveGameScreen.player.hitBox) || isFollowing){
+				if(ActiveGameScreen.player.numberOfShipsFollowing < ActiveGameScreen.player.maxNumberOfShipsFollowing){
+					if(!isFollowing)ActiveGameScreen.player.numberOfShipsFollowing++;
+					isFollowing = true;
+				}
+				if(!isFollowing) return;
+				if(!this.stoppingDistanceBox.overlaps(ActiveGameScreen.player.hitBox)){
+					followPlayer();
+				}
+				else{
+					if (firingCoolDown <= 0) {
+						shootPlayer();
+						firingCoolDown = ogFiringCoolDown;
+					}
+				}
+				if(this.shootBox.overlaps(ActiveGameScreen.player.hitBox)){
+					if (firingCoolDown <= 0) {
+						shootPlayer();
+						firingCoolDown = ogFiringCoolDown;
+					}
+				}
+				if(!this.leaveBox.overlaps(ActiveGameScreen.player.hitBox)){
+					isFollowing = false;
+					ActiveGameScreen.player.numberOfShipsFollowing --;
+				}
+
+			}
+			else{
+				//body.setTransform(body.getWorldCenter(), angle - ((float) Math.PI) / 2.0f);
+			}
+
+			setRotation((float) (body.getAngle() * 180 / Math.PI));
 			//Update health bar
 			getBar().update();
 		}
 		if (getHealth() <= 0) {
+			if(isFollowing) {ActiveGameScreen.player.numberOfShipsFollowing --; isFollowing = false;}
 			setToDestroy(true);
 		}
 
 		// below code is to move the ship to a coordinate (target)
 		//Vector2 target = new Vector2(960 / PirateGame.PPM, 2432 / PirateGame.PPM);
-		//target.sub(getBody().getPosition());
+		//target.sub(body.getPosition());
 		//target.nor();
 		//float speed = 1.5f;
-		//getBody().setLinearVelocity(target.scl(speed));
+		//body.setLinearVelocity(target.scl(speed));
 	}
 
 	/**
@@ -117,7 +194,7 @@ public class EnemyShip extends Enemy {
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(getX(), getY());
 		bdef.type = BodyDef.BodyType.DynamicBody;
-		setBody(getWorld().createBody(bdef));
+		body = getWorld().createBody(bdef);
 
 		//Sets collision boundaries
 		FixtureDef fdef = new FixtureDef();
@@ -129,7 +206,7 @@ public class EnemyShip extends Enemy {
 		fdef.filter.maskBits = PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT | PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT;
 		fdef.shape = shape;
 		fdef.restitution = 0.7f;
-		getBody().createFixture(fdef).setUserData(this);
+		body.createFixture(fdef).setUserData(this);
 	}
 
 	/**
@@ -158,5 +235,16 @@ public class EnemyShip extends Enemy {
 		college = alignment;
 		enemyShip = new Texture(path);
 		setRegion(enemyShip);
+	}
+
+	public void followPlayer(){
+		Body target = ActiveGameScreen.player.getBody();
+		if(this.getBody().getLinearVelocity().len() < maxLinearSpeed) this.body.applyForceToCenter(this.body.getWorldVector(new Vector2(0, 3)), true);
+		float newOrientation = (float)Math.atan2( this.body.getPosition().x- target.getPosition().x, target.getPosition().y- this.body.getPosition().y  );
+		body.setTransform(body.getPosition(), newOrientation);
+	}
+	public void shootPlayer(){
+		cannonBallManager.insert(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, ActiveGameScreen.player.getBody().getPosition(), 0, 0.7f, PirateGame.PLAYER_BIT, PirateGame.COLLEGEFIRE_BIT));
+
 	}
 }

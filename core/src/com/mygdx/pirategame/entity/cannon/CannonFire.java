@@ -35,7 +35,7 @@ public class CannonFire extends Entity {
 	boolean applyForce = false;
 	float rangeMultiplier = 1f;
 	float bulletSpeedLvls;
-
+	short maskbit;
 
 	/**
 	 * Instantiates cannon fire
@@ -48,7 +48,7 @@ public class CannonFire extends Entity {
 	 * @param body     body of origin
 	 * @param velocity velocity of the cannon ball
 	 */
-	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target, float bulletSpeedLvls, float rangeMultiplier) {
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short CatBit) {
 		super(screen, x, y);
 		this.velocity = velocity;
 		this.rangeMultiplier = rangeMultiplier;
@@ -56,6 +56,7 @@ public class CannonFire extends Entity {
 		angle = body.getAngle();
 		this.target = target;
 		this.bulletSpeedLvls = bulletSpeedLvls;
+		this.maskbit = maskBit;
 
 
 
@@ -63,7 +64,7 @@ public class CannonFire extends Entity {
 		cannonBall = new Texture("cannonBall.png");
 		setRegion(cannonBall);
 		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
-		defineEntity();
+		defineEntity(maskBit, CatBit);
 
 		//set collision bounds
 		//set sound for fire and play if on
@@ -75,7 +76,7 @@ public class CannonFire extends Entity {
 
 	}
 
-	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, float target, float bulletSpeedLvls, float rangeMultiplier) {
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, float target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short CatBit) {
 		super(screen, x, y);
 		this.velocity = velocity;
 		this.rangeMultiplier = rangeMultiplier;
@@ -84,12 +85,12 @@ public class CannonFire extends Entity {
 		this.bulletSpeedLvls = bulletSpeedLvls;
 
 
-
+		this.maskbit = maskBit;
 		//set cannonBall dimensions for the texture
 		cannonBall = new Texture("cannonBall.png");
 		setRegion(cannonBall);
 		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
-		defineEntity();
+		defineEntity(maskBit, CatBit);
 
 		//set collision bounds
 		//set sound for fire and play if on
@@ -107,8 +108,8 @@ public class CannonFire extends Entity {
 	/**
 	 * Defines the existance, direction, shape and size of a cannonball
 	 */
-	@Override
-	public void defineEntity() {
+
+	public void defineEntity(short maskBit, short catBit) {
 		//sets the body definitions
 		BodyDef bDef = new BodyDef();
 		bDef.position.set(getX(), getY());
@@ -122,9 +123,9 @@ public class CannonFire extends Entity {
 		shape.setAsBox((10/ 2f) / PirateGame.PPM, (10 * 3f) / PirateGame.PPM);
 
 		// setting BIT identifier
-		fDef.filter.categoryBits = PirateGame.CANNON_BIT;
+		fDef.filter.categoryBits = catBit;
 		// determining what this BIT can collide with
-		fDef.filter.maskBits = PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT;
+		fDef.filter.maskBits = maskBit;
 		fDef.shape = shape;
 		fDef.isSensor = true;
 		getBody().createFixture(fDef).setUserData(this);
@@ -182,6 +183,11 @@ public class CannonFire extends Entity {
 	 */
 	public boolean isDestroyed() {
 		return destroyed;
+	}
+
+	@Override
+	public void defineEntity() {
+
 	}
 
 	@Override

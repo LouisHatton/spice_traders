@@ -25,6 +25,7 @@ import com.mygdx.pirategame.entity.Player;
 import com.mygdx.pirategame.entity.coin.Coin;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
+import com.mygdx.pirategame.entity.college.version.cannonBallManager;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.listener.WorldContactListener;
 import com.mygdx.pirategame.utils.Location;
@@ -68,6 +69,11 @@ public class ActiveGameScreen implements Screen {
 	public HUD hud;
 	private Table pauseTable;
 	private Table table;
+
+	private Box2DDebugRenderer debugger;
+
+
+
 
 	/**
 	 * Initialises the Game Screen,
@@ -116,6 +122,10 @@ public class ActiveGameScreen implements Screen {
 
 		//Setting stage
 		stage = new Stage(new ScreenViewport());
+
+
+
+
 	}
 
 	/**
@@ -163,6 +173,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		debugger = new Box2DDebugRenderer();
 		Gdx.input.setInputProcessor(stage);
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
@@ -268,7 +279,7 @@ public class ActiveGameScreen implements Screen {
 				Gdx.app.exit();
 			}
 		});
-		//renderer.render(world, camera.combined.scl());
+
 	}
 
 	/**
@@ -390,6 +401,8 @@ public class ActiveGameScreen implements Screen {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+
+
 		inputUpdate();
 		processInput();
 		handleDirft();
@@ -445,6 +458,8 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void render(float dt) {
+
+
 		if(gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);
@@ -484,9 +499,10 @@ public class ActiveGameScreen implements Screen {
 				}
 			}
 
+
 			ship.draw(game.batch);
 		}
-
+		cannonBallManager.update(dt, game.batch);
 		game.batch.end();
 		HUD.stage.draw();
 
@@ -494,6 +510,8 @@ public class ActiveGameScreen implements Screen {
 		stage.draw();
 		//Checks game over conditions
 		gameOverCheck();
+		debugger.render(world, camera.combined.scl(PirateGame.PPM));
+
 	}
 
 	/**
@@ -668,6 +686,7 @@ public class ActiveGameScreen implements Screen {
 		b2dr.dispose();
 		hud.dispose();
 		stage.dispose();
+		debugger.dispose();
 	}
 
 	public HUD getHud() {
@@ -676,5 +695,11 @@ public class ActiveGameScreen implements Screen {
 
 	public List<EnemyShip> getShips() {
 		return ships;
+	}
+
+	public static void chasePlayer(EnemyShip enemy){
+
+
+
 	}
 }

@@ -42,7 +42,7 @@ public class ScoreTest {
 		MockUtilities.createDefaultScoreAndPoints();
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
 
-		EnemyShip enemyShip = new EnemyShip(activeGameScreen, 0, 0, "unaligned_ship.png", "Unaligned");
+		EnemyShip enemyShip = new EnemyShip(activeGameScreen, 0, 0, "unaligned_ship.png", "Unaligned" );
 
 		enemyShip.setToDestroy(true);
 		enemyShip.update(5);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,6 +19,7 @@ import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
+import com.mygdx.pirategame.screen.DifficulityScreen;
 import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
@@ -41,6 +43,8 @@ public class Player extends Entity {
 	private float turnSpeed;
 	private float driveDirection;
 	private float driftFactor;
+
+	public Rectangle hitBox;
 
 	public static boolean isBloodied = false;
 
@@ -67,6 +71,10 @@ public class Player extends Entity {
 	public float shieldCoolDownOG = 5f;
 	public static float protectedTimer = 0f;
 	public float protectTime = 2f;
+
+	public static float normalNumberOfShips = 4;
+	public static float numberOfShipsFollowing = 0;
+	public static float maxNumberOfShipsFollowing = 4;
 
 
 	/**
@@ -99,6 +107,9 @@ public class Player extends Entity {
 
 		// Sets cannonball array
 		cannonBalls = new Array<>();
+
+
+		this.hitBox = new Rectangle(getBody().getPosition().x, getBody().getPosition().y, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
 	}
 
 	/**
@@ -107,6 +118,11 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+
+		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficulityMultiplier;
+		System.out.println(numberOfShipsFollowing);
+
+		this.hitBox.setPosition(this.getBody().getPosition());
 		if(shieldEnabled){
 			if(protectedTimer > 0){
 				protectedTimer -= dt;
@@ -234,7 +250,7 @@ public class Player extends Entity {
 		Vector3 mouse_position = new Vector3(0,0,0);
 		mouse_position.set(Gdx.input.getX(), Gdx.input.getY(), 0); /** gets mouse position*/
 		cam.unproject(mouse_position);
-		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y), cannonBallSpeedLvl, rangeMultiplier));
+		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y), cannonBallSpeedLvl, rangeMultiplier, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT ));
 
 
 		// Cone fire below
@@ -249,7 +265,8 @@ public class Player extends Entity {
 	public void ultimateFirer(){
 		if(HUD.getScore() < 1000) return;
 		for(int i = 0; i <= amountOfShotsInUltimateFire; i++){
-			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier));
+			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT ));
+
 		}
 		burstShotsUF--;
 		ultimateBurstCoolDown = ultimateBurstOGCoolDown;

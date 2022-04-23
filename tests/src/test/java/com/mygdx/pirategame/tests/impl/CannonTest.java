@@ -1,6 +1,7 @@
 package com.mygdx.pirategame.tests.impl;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
@@ -29,7 +30,7 @@ public class CannonTest {
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
 		EnemyShip enemyShip = new EnemyShip(activeGameScreen, 0, 0, "unaligned_ship.png", "Unaligned");
 
-		CannonFire cannonFire = new CannonFire(activeGameScreen, 0, 0, enemyShip.getBody(), 5, new Vector2(3, 3), 1f, 1f);
+		CannonFire cannonFire = new CannonFire(activeGameScreen, 0, 0, enemyShip.getBody(), 5, new Vector2(3, 3), 1f, 1f, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT );
 
 		assertFalse("Cannon is spawned destroyed.", cannonFire.isDestroyed());
 

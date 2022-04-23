@@ -60,7 +60,7 @@ public class bloodiedInfo implements Screen {
             }
         });
 
-        
+
 
 
         table.top();
