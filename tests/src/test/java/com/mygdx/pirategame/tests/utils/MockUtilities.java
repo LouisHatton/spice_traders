@@ -48,8 +48,9 @@ public class MockUtilities {
 		Whitebox.setInternalState(screen, "world", world);
 		Whitebox.setInternalState(screen, "camera", new OrthographicCamera());
 		Whitebox.setInternalState(screen, "renderer", Mockito.mock(OrthogonalTiledMapRenderer.class));
-
 		Mockito.when(screen.getWorld()).thenCallRealMethod();
+
+		Whitebox.setInternalState(screen, "player", mockPlayer(screen));
 
 		return screen;
 	}
