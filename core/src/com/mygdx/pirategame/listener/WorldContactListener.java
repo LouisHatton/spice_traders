@@ -35,73 +35,25 @@ public class WorldContactListener implements ContactListener {
 		// Fixes contact to an entity
 		switch (cDef) {
 			case PirateGame.COIN_BIT | PirateGame.PLAYER_BIT:
-				if (fixA.getFilterData().categoryBits == PirateGame.COIN_BIT) {
-					((Entity) fixA.getUserData()).onContact();
-				} else {
-					((Entity) fixB.getUserData()).onContact();
-				}
+				this.handlePlayerAndCoin(fixA, fixB);
 				break;
 			case PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT:
-				if (fixA.getFilterData().categoryBits == PirateGame.DEFAULT_BIT) {
-					if (fixA.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixA.getUserData().getClass())) {
-						((InteractiveTileObject) fixA.getUserData()).onContact();
-						((Player) fixB.getUserData()).playBreakSound();
-					}
-				} else {
-					if (fixB.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixB.getUserData().getClass())) {
-						((InteractiveTileObject) fixB.getUserData()).onContact();
-					}
-				}
+				this.handleWallAndPlayer(fixA, fixB);
 				break;
 			case PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT:
-				if (fixA.getFilterData().categoryBits == PirateGame.ENEMY_BIT) {
-					((Enemy) fixA.getUserData()).onContact();
-				} else {
-					((Enemy) fixB.getUserData()).onContact();
-				}
+				this.handleEnemyAndPlayer(fixA, fixB);
 				break;
 			case PirateGame.COLLEGE_BIT | PirateGame.CANNON_BIT:
-				if (fixA.getFilterData().categoryBits == PirateGame.COLLEGE_BIT) {
-					if (fixA.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixA.getUserData().getClass())) {
-						((InteractiveTileObject) fixA.getUserData()).onContact();
-						((CannonFire) fixB.getUserData()).setToDestroy();
-					}
-				} else {
-					if (fixB.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixB.getUserData().getClass())) {
-						((InteractiveTileObject) fixB.getUserData()).onContact();
-						((CannonFire) fixA.getUserData()).setToDestroy();
-					}
-				}
+				this.handleCollegeAndCannon(fixA, fixB);
 				break;
 			case PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT:
-				if (fixA.getFilterData().categoryBits == PirateGame.ENEMY_BIT) {
-					((Enemy) fixA.getUserData()).onContact();
-					((CannonFire) fixB.getUserData()).setToDestroy();
-				} else {
-					((Enemy) fixB.getUserData()).onContact();
-					((CannonFire) fixA.getUserData()).setToDestroy();
-				}
+				this.handleEnemyAndCannon(fixA, fixB);
 				break;
-
-				case PirateGame.PLAYER_BIT | PirateGame.CANNON_BIT:
-				if (fixA.getFilterData().categoryBits == PirateGame.PLAYER_BIT) {
-					HUD.changeHealth(-15);
-					((CannonFire) fixB.getUserData()).setToDestroy();
-				} else {
-					HUD.changeHealth(-15);
-					((CannonFire) fixA.getUserData()).setToDestroy();
-				}
+			case PirateGame.PLAYER_BIT | PirateGame.CANNON_BIT:
+				this.handlePlayerAndCannon(fixA, fixB);
 				break;
 			case PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT:
-				if (fixA.getFilterData().categoryBits == PirateGame.COLLEGEFIRE_BIT) {
-				HUD.changeHealth(-15);
-					if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixA.getUserData()).setToDestroy();
-					else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixA.getUserData()).setToDestroy();
-				} else {
-					HUD.changeHealth(-15);
-					if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixB.getUserData()).setToDestroy();
-					else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixB.getUserData()).setToDestroy();
-				}
+				this.handleCollegeFireAndPlayer(fixA, fixB);
 				break;
 		}
 	}
@@ -113,8 +65,6 @@ public class WorldContactListener implements ContactListener {
 	 */
 	@Override
 	public void endContact(Contact contact) {
-		// Displays contact message
-		Gdx.app.log("End Contact", "");
 	}
 
 	/**
@@ -126,7 +76,6 @@ public class WorldContactListener implements ContactListener {
 	 */
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-
 	}
 
 	/**
@@ -139,5 +88,80 @@ public class WorldContactListener implements ContactListener {
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 
+	}
+
+	public void handlePlayerAndCoin(Fixture fixA, Fixture fixB) {
+		if (fixA.getFilterData().categoryBits == PirateGame.COIN_BIT) {
+			((Entity) fixA.getUserData()).onContact();
+		} else {
+			((Entity) fixB.getUserData()).onContact();
+		}
+	}
+
+	public void handleWallAndPlayer(Fixture fixA, Fixture fixB) {
+		if (fixA.getFilterData().categoryBits == PirateGame.DEFAULT_BIT) {
+			if (fixA.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixA.getUserData().getClass())) {
+				((InteractiveTileObject) fixA.getUserData()).onContact();
+				((Player) fixB.getUserData()).playBreakSound();
+			}
+		} else {
+			if (fixB.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixB.getUserData().getClass())) {
+				((InteractiveTileObject) fixB.getUserData()).onContact();
+			}
+		}
+	}
+
+	public void handleEnemyAndPlayer(Fixture fixA, Fixture fixB) {
+		if (fixA.getFilterData().categoryBits == PirateGame.ENEMY_BIT) {
+			((Enemy) fixA.getUserData()).onContact();
+		} else {
+			((Enemy) fixB.getUserData()).onContact();
+		}
+	}
+
+	public void handleCollegeAndCannon(Fixture fixA, Fixture fixB) {
+		if (fixA.getFilterData().categoryBits == PirateGame.COLLEGE_BIT) {
+			if (fixA.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixA.getUserData().getClass())) {
+				((InteractiveTileObject) fixA.getUserData()).onContact();
+				((CannonFire) fixB.getUserData()).setToDestroy();
+			}
+		} else {
+			if (fixB.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixB.getUserData().getClass())) {
+				((InteractiveTileObject) fixB.getUserData()).onContact();
+				((CannonFire) fixA.getUserData()).setToDestroy();
+			}
+		}
+	}
+
+	public void handleEnemyAndCannon(Fixture fixA, Fixture fixB) {
+		if (fixA.getFilterData().categoryBits == PirateGame.ENEMY_BIT) {
+			((Enemy) fixA.getUserData()).onContact();
+			((CannonFire) fixB.getUserData()).setToDestroy();
+		} else {
+			((Enemy) fixB.getUserData()).onContact();
+			((CannonFire) fixA.getUserData()).setToDestroy();
+		}
+	}
+
+	public void handlePlayerAndCannon(Fixture fixA, Fixture fixB) {
+		if (fixA.getFilterData().categoryBits == PirateGame.PLAYER_BIT) {
+			HUD.changeHealth(-15);
+			((CannonFire) fixB.getUserData()).setToDestroy();
+		} else {
+			HUD.changeHealth(-15);
+			((CannonFire) fixA.getUserData()).setToDestroy();
+		}
+	}
+
+	public void handleCollegeFireAndPlayer(Fixture fixA, Fixture fixB) {
+		if (fixA.getFilterData().categoryBits == PirateGame.COLLEGEFIRE_BIT) {
+			HUD.changeHealth(-15);
+			if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixA.getUserData()).setToDestroy();
+			else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixA.getUserData()).setToDestroy();
+		} else {
+			HUD.changeHealth(-15);
+			if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixB.getUserData()).setToDestroy();
+			else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixB.getUserData()).setToDestroy();
+		}
 	}
 }

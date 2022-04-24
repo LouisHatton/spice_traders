@@ -17,14 +17,14 @@ import com.mygdx.pirategame.display.HUD;
 import java.util.Arrays;
 import java.util.List;
 
-public class bloodiedInfo implements Screen {
+public class BloodiedScreen implements Screen {
 
 
     private final PirateGame parent;
     private final Stage stage;
 
 
-    public bloodiedInfo(PirateGame pirateGame) {
+    public BloodiedScreen(PirateGame pirateGame) {
         parent = pirateGame;
         stage = new Stage(new ScreenViewport());
     }

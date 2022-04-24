@@ -26,7 +26,7 @@ import java.util.List;
  * @author Sam Pearson
  * @version 1.0
  */
-public class Shop implements Screen {
+public class ShopScreen implements Screen {
 
     //To store whether buttons are enabled or disabled
     private static TextButton movement1;
@@ -77,7 +77,7 @@ public class Shop implements Screen {
      * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
      */
 //In the constructor, the parent and stage are set. Also the states list is set
-    public Shop(PirateGame pirateGame) {
+    public ShopScreen(PirateGame pirateGame) {
         parent = pirateGame;
         stage = new Stage(new ScreenViewport());
     }

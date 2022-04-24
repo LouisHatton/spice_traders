@@ -11,10 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Player;
+import com.mygdx.pirategame.entity.college.College;
+import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.pref.AudioPreferences;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MockUtilities {
 
@@ -72,6 +79,10 @@ public class MockUtilities {
 		Mockito.when(activeGameScreen.generateCoins(Mockito.anyInt())).thenCallRealMethod();
 		Mockito.when(activeGameScreen.generateShips(Mockito.anyInt())).thenCallRealMethod();
 		Mockito.when(activeGameScreen.generateRandomLocations(Mockito.anyInt())).thenCallRealMethod();
+		Mockito.when(activeGameScreen.getCollege(Mockito.anyString())).thenCallRealMethod();
+
+		Set<College> colleges = Arrays.stream(CollegeType.values()).map(type -> new College(activeGameScreen, type)).collect(Collectors.toSet());
+		Whitebox.setInternalState(activeGameScreen, "colleges", colleges.stream().collect(Collectors.toMap(col -> col.getType().getName(), col -> col)));
 
 		pirateGame.setScreen(activeGameScreen); // game screen.
 

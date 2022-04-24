@@ -5,7 +5,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
+import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
+import org.junit.runners.Suite;
 import org.mockito.internal.util.collections.Sets;
 
 import java.util.Set;
@@ -21,7 +23,8 @@ public class TestRunner {
 			CannonTest.class,
 			CollegeWallTest.class,
 			GenerationTests.class,
-			DamageTest.class
+			DamageTest.class,
+			ListenerTest.class
 	);
 
 	@Test

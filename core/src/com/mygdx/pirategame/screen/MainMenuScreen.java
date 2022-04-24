@@ -18,7 +18,7 @@ import com.mygdx.pirategame.PirateGame;
  * @author Sam Pearson
  * @version 1.0
  */
-public class MainMenu implements Screen {
+public class MainMenuScreen implements Screen {
 
 	private final PirateGame parent;
 	private final Stage stage;
@@ -28,7 +28,7 @@ public class MainMenu implements Screen {
 	 *
 	 * @param PirateGame the main starting body of the game. Where screen swapping is carried out.
 	 */
-	public MainMenu(PirateGame PirateGame) {
+	public MainMenuScreen(PirateGame PirateGame) {
 		parent = PirateGame;
 		stage = new Stage(new ScreenViewport());
 	}

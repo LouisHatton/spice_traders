@@ -2,7 +2,6 @@ package com.mygdx.pirategame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.pirategame.pref.AudioPreferences;
@@ -47,16 +46,16 @@ public class PirateGame extends Game {
 	public SpriteBatch batch;
 	public Music song;
 	//Variable for each screen
-	private MainMenu menuScreen;
+	private MainMenuScreen menuScreen;
 	private ActiveGameScreen gameScreen;
 	private SkillsScreen skillTreeScreen;
-	private Shop shopScreen;
+	private ShopScreen shopScreen;
 	private DeathScreen deathScreen;
 	private HelpScreen helpScreen;
 	private VictoryScreen victoryScreen;
 	private AudioPreferences options;
 	private DifficulityScreen DifficulityScreen;
-	private bloodiedInfo bloodyScreen;
+	private BloodiedScreen bloodyScreen;
 
 	private int currentScreen;
 
@@ -69,7 +68,7 @@ public class PirateGame extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		//Set starting screen
-		MainMenu mainMenu = new MainMenu(this);
+		MainMenuScreen mainMenu = new MainMenuScreen(this);
 		setScreen(mainMenu);
 		//Create options
 		options = new AudioPreferences();
@@ -94,7 +93,7 @@ public class PirateGame extends Game {
 
 		switch (screen) {
 			case MENU:
-				if (menuScreen == null) menuScreen = new MainMenu(this);
+				if (menuScreen == null) menuScreen = new MainMenuScreen(this);
 				this.setScreen(menuScreen);
 				break;
 
@@ -110,13 +109,13 @@ public class PirateGame extends Game {
 				break;
 
 			case BLOODIED:
-				if (bloodyScreen == null) bloodyScreen = new bloodiedInfo(this);
+				if (bloodyScreen == null) bloodyScreen = new BloodiedScreen(this);
 				this.setScreen(bloodyScreen);
 				break;
 
 
 				case SHOP:
-				if (shopScreen == null) shopScreen = new Shop(this);
+				if (shopScreen == null) shopScreen = new ShopScreen(this);
 				this.setScreen(shopScreen);
 				break;
 
