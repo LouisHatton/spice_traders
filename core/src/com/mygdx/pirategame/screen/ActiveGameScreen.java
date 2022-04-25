@@ -97,6 +97,8 @@ public class ActiveGameScreen implements Screen {
 	private Sprite test2 = new Sprite(new Texture("tile_04.png"));
 	private Sprite test3 = new Sprite(new Texture("tile_04.png"));
 
+	float zoomAmount = 0;
+
 
 	/**
 	 * Initialises the Game Screen,
@@ -109,7 +111,7 @@ public class ActiveGameScreen implements Screen {
 		ActiveGameScreen.game = game;
 		// Initialising camera and extendable viewport for viewing game
 		camera = new OrthographicCamera();
-		camera.zoom = 0.0155f;
+		camera.zoom = 0.0155f * 2f;
 		viewport = new ScreenViewport(camera);
 		camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
@@ -348,10 +350,10 @@ public class ActiveGameScreen implements Screen {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-			if(camera.zoom < 2)camera.zoom += 0.02f/100;
+			if(camera.zoom <  0.0155f * 2)camera.zoom += 0.02f/100;
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-			if(camera.zoom > 1)camera.zoom -= 0.02f;
+			if(camera.zoom > 0.0155f)camera.zoom -= 0.02f/100;
 		}
 
 
@@ -437,7 +439,10 @@ public class ActiveGameScreen implements Screen {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
-
+		if(zoomAmount < 0.0155f){
+			camera.zoom -= 0.0005f;
+			zoomAmount += 0.0005f;
+		}
 
 		inputUpdate();
 		processInput();
@@ -494,8 +499,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void render(float dt) {
-		System.out.println(player.hitBox.overlaps(BoundsAL));
-		EnemyAiManager.update(dt);
+
 		if(gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);
@@ -506,6 +510,8 @@ public class ActiveGameScreen implements Screen {
 			table.setVisible(true);
 			pauseTable.setVisible(false);
 		}
+
+		EnemyAiManager.update(dt);
 
 		Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -530,8 +536,9 @@ public class ActiveGameScreen implements Screen {
 		for (EnemyShip ship : ships) {
 			if (!Objects.equals(ship.college, "Unaligned")) {
 				//Flips a colleges allegence if their college is destroyed
-				if (colleges.get(ship.college).isDestroyed()) {
+				if (colleges.get(ship.college).isDestroyed() || colleges.get(ship.college).isCaptured()) {
 					ship.updateTexture("Alcuin", "alcuin_ship.png");
+					//College.updateTexture("alcuin_flag.png");
 				}
 			}
 

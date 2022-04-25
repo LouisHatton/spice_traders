@@ -76,6 +76,9 @@ public class Player extends Entity {
 	public static float numberOfShipsFollowing = 0;
 	public static float maxNumberOfShipsFollowing = 4;
 
+	Sprite shield = new Sprite(new Texture("bubble.png"));
+
+
 
 	/**
 	 * Instantiates a new Player. Constructor only called once per game
@@ -96,6 +99,7 @@ public class Player extends Entity {
 		// Retrieves world data and creates ship texture
 		ship = new Texture("player_ship.png");
 
+
 		// Defines a player, and the players position on screen and world
 		setBounds(0, 0, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
 		setRegion(ship);
@@ -110,6 +114,7 @@ public class Player extends Entity {
 
 
 		this.hitBox = new Rectangle(getBody().getPosition().x, getBody().getPosition().y, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
+		shield.setSize(2f,2f);
 	}
 
 	/**
@@ -118,13 +123,24 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+
 		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
 		System.out.println(numberOfShipsFollowing);
+
+		shield.setCenter(this.getBody().getPosition().x, this.getBody().getPosition().y);
+
+
+		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
+		//System.out.println(numberOfShipsFollowing);
+
 
 		this.hitBox.setPosition(this.getBody().getPosition());
 		if(shieldEnabled){
 			if(protectedTimer > 0){
 				protectedTimer -= dt;
+				if(shield.getHeight() < 2.7f){
+					shield.setSize(shield.getWidth() + 0.1f, shield.getHeight() + 0.1f);
+				}
 			}
 			if(Gdx.input.isKeyJustPressed(Input.Keys.E) && shieldCoolDown <= 0){
 				protectedTimer = protectTime;
@@ -132,6 +148,9 @@ public class Player extends Entity {
 			}
 			else if(shieldCoolDown > 0) {
 				shieldCoolDown -= dt;
+				if(protectedTimer <= 0){
+					shield.setSize(2f,2f);
+				}
 			}
 		}
 
@@ -338,6 +357,9 @@ public class Player extends Entity {
 	public void draw(Batch batch) {
 		// Draws player and cannonballs
 		super.draw(batch);
+
+		if(protectedTimer > 0) shield.draw(batch);
+
 		for (CannonFire ball : cannonBalls)
 			ball.draw(batch);
 	}

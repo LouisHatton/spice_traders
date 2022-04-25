@@ -100,6 +100,8 @@ public class HUD implements Disposable {
 		stage.addActor(table3);
 		stage.addActor(table2);
 		stage.addActor(table1);
+
+
 	}
 
 	/**

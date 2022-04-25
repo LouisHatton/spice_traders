@@ -3,6 +3,9 @@ package com.mygdx.pirategame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -22,6 +25,8 @@ public class MainMenuScreen implements Screen {
 
 	private final PirateGame parent;
 	private final Stage stage;
+	public static Sprite background = new Sprite(new Texture(Gdx.files.internal("background.PNG")));;
+	static SpriteBatch batch = new SpriteBatch();
 
 	/**
 	 * Instantiates a new Main menu.
@@ -38,6 +43,7 @@ public class MainMenuScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		background.setSize(1920,1080);
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
 		// Create a table for the buttons
@@ -108,10 +114,17 @@ public class MainMenuScreen implements Screen {
 	 */
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		renderBackground();
 		stage.draw();
+	}
+
+	public static void renderBackground(){
+		batch.begin();
+		background.draw(batch);
+		batch.end();
 	}
 
 	/**

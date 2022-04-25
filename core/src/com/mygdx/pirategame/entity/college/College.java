@@ -32,7 +32,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class College extends Enemy {
 
 	private List<EnemyShip> fleet = new ArrayList<>();
-	private final Texture enemyCollege;
+	private static Texture enemyCollege;
 	private final String currentCollege;
 	private final Array<CollegeFire> cannonBalls;
 	private final CollegeType type;
@@ -76,6 +76,10 @@ public class College extends Enemy {
 			}
 			fleet.add(new EnemyShip(screen, ranX, ranY, college.getShipTexture(), college.getName()));
 		}
+	}
+
+	public static void updateTexture(String path) {
+		enemyCollege = new Texture(path);
 	}
 
 	/**
@@ -241,6 +245,10 @@ public class College extends Enemy {
 
 	public Array<CollegeFire> getCannonBalls() {
 		return cannonBalls;
+	}
+
+	public boolean isCaptured() {
+		return surrended;
 	}
 }
 

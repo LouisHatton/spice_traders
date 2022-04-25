@@ -4,7 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,11 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 
+import static com.mygdx.pirategame.screen.MainMenuScreen.renderBackground;
+
+
 public class DifficultyScreen implements Screen {
+
+
     private final Screen parent;
     private final com.mygdx.pirategame.PirateGame pirateGame;
     private final Stage stage;
-
     String textForDiff = " ";
 
     public DifficultyScreen(PirateGame pirateGame, Screen parent) {
@@ -121,11 +128,15 @@ public class DifficultyScreen implements Screen {
 
     @Override
     public void render(float dt) {
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        if(pirateGame.getDifficulty() == 0) renderBackground();
+
         stage.draw();
     }
+
+
 
 
     @Override
