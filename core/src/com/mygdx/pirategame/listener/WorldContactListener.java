@@ -150,21 +150,21 @@ public class WorldContactListener implements ContactListener {
 
 	public void handlePlayerAndCannon(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.PLAYER_BIT) {
-			HUD.changeHealth(-15);
+			HUD.changeHealth(-10);
 			((CannonFire) fixB.getUserData()).setToDestroy();
 		} else {
-			HUD.changeHealth(-15);
+			HUD.changeHealth(-10);
 			((CannonFire) fixA.getUserData()).setToDestroy();
 		}
 	}
 
 	public void handleCollegeFireAndPlayer(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.COLLEGEFIRE_BIT) {
-			HUD.changeHealth(-15);
+			HUD.changeHealth(-10);
 			if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixA.getUserData()).setToDestroy();
 			else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixA.getUserData()).setToDestroy();
 		} else {
-			HUD.changeHealth(-15);
+			HUD.changeHealth(-10);
 			if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixB.getUserData()).setToDestroy();
 			else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixB.getUserData()).setToDestroy();
 		}
