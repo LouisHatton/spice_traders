@@ -21,6 +21,9 @@ public abstract class Enemy extends Entity {
 	private HealthBar bar;
 	private boolean justDied = false;
 	private float maxHealth = 100;
+
+	public String college;
+
 	/**
 	 * Instantiates an enemy
 	 *
@@ -107,5 +110,9 @@ public abstract class Enemy extends Entity {
 	public void changeIustDied (boolean input) {this.justDied = input;}
 	public void initHealthBar() {
 		this.bar = new HealthBar(this);
+	}
+
+	public void setCollege(String college){
+		this.college = college;
 	}
 }

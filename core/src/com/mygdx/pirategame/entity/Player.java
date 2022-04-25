@@ -19,7 +19,7 @@ import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
-import com.mygdx.pirategame.screen.DifficultyScreen;
+import com.mygdx.pirategame.screen.ShopScreen;
 import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
@@ -59,9 +59,9 @@ public class Player extends Entity {
 	private float originalSpeed;
 	private float speed;
 
-	public float collegesCaptured = 0;
-	public float boatsKilled = 0;
-	public float collegesKilled = 0;
+	public static float collegesCaptured = 0;
+	public static float boatsKilled = 0;
+	public static float collegesKilled = 0;
 
 
 	private Camera cam;
@@ -118,7 +118,6 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
-
 		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
 		System.out.println(numberOfShipsFollowing);
 
@@ -376,9 +375,15 @@ public class Player extends Entity {
 			SkillsScreen.unlock(2);
 			shieldEnabled = true;
 		}
+		else{
+			SkillsScreen.lock(2);
+		}
 		if(collegesKilled >= 1){
 			SkillsScreen.unlock(0);
 			isBloodied = true;
+		}
+		else{
+			SkillsScreen.lock(0);
 		}
 		if(collegesCaptured >= 1){
 			SkillsScreen.unlock(1);
@@ -386,5 +391,16 @@ public class Player extends Entity {
 		else{
 			SkillsScreen.lock(1);
 		}
+	}
+
+	public static void resetStats(){
+		normalNumberOfShips = 4;
+		numberOfShipsFollowing = 0;
+		maxNumberOfShipsFollowing = 4;
+		collegesCaptured = 0;
+		boatsKilled = 0;
+		collegesKilled = 0;
+		PirateGame.difficultyMultiplier = 1;
+		ShopScreen.resetStats();
 	}
 }

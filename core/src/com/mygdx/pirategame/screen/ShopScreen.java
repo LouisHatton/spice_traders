@@ -40,32 +40,32 @@ public class ShopScreen implements Screen {
     private TextButton resistance;
     private TextButton bulletSpeed;
 
-    private float damage1Price = 200f;
-    private float health1Price = 150f;
-    private float dps1Price = 200f;
-    private float range1Price = 200f;
-    private float GoldMulti1Price = 50f;
-    private float resistancePrice = 150f;
-    private float bulletSpeedPrice = 200f;
-    private float movement1Price = 175f;
+    private static float damage1Price = 200f;
+    private static float health1Price = 150f;
+    private static float dps1Price = 200f;
+    private static float range1Price = 200f;
+    private static float GoldMulti1Price = 50f;
+    private static float resistancePrice = 150f;
+    private static float bulletSpeedPrice = 200f;
+    private static float movement1Price = 175f;
 
     public float percentPerPurchase = 15f;
 
 
 
     //The skin for the actors
-    Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+    static Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 
     //Point unlock labels
-    Label bulletSpeedLabel = new Label(bulletSpeedPrice + " Gold", skin);
-    Label dps1Label = new Label(dps1Price + " Gold", skin);
-    Label range1Label = new Label(range1Price + " Gold", skin);
-    Label resistanceLabel = new Label(resistancePrice + " Gold", skin);
-    Label damage1Label = new Label(damage1Price + " Gold", skin);
-    Label movement1Label = new Label(movement1Price + " Gold", skin);
-    Label health1Label = new Label(health1Price + " Gold", skin);
-    Label GoldMulti1Label = new Label(GoldMulti1Price + " Gold", skin);
+    static Label bulletSpeedLabel = new Label(bulletSpeedPrice + " Gold", skin);
+    static Label dps1Label = new Label(dps1Price + " Gold", skin);
+    static Label range1Label = new Label(range1Price + " Gold", skin);
+    static Label resistanceLabel = new Label(resistancePrice + " Gold", skin);
+    static Label damage1Label = new Label(damage1Price + " Gold", skin);
+    static Label movement1Label = new Label(movement1Price + " Gold", skin);
+    static Label health1Label = new Label(health1Price + " Gold", skin);
+    static Label GoldMulti1Label = new Label(GoldMulti1Price + " Gold", skin);
 
     Label currentGold = new Label(" Gold: " + HUD.getCoins() , skin);
 
@@ -352,6 +352,25 @@ public class ShopScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public static void resetStats(){
+        damage1Price = 200f;
+        health1Price = 150f;
+        dps1Price = 200f;
+        range1Price = 200f;
+        GoldMulti1Price = 50f;
+        resistancePrice = 150f;
+        bulletSpeedPrice = 200f;
+        movement1Price = 175f;
+        bulletSpeedLabel.setText(bulletSpeedPrice + " Gold");
+        dps1Label.setText(dps1Price + " Gold");
+        range1Label.setText(range1Price + " Gold");
+        resistanceLabel.setText(resistancePrice + " Gold");
+        damage1Label.setText(damage1Price + " Gold");
+        movement1Label.setText(movement1Price + " Gold");
+        health1Label.setText(health1Price + " Gold");
+        GoldMulti1Label.setText(GoldMulti1Price + " Gold");
     }
 }
 

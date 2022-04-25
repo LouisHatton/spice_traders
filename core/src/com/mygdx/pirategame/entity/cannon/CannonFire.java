@@ -37,6 +37,8 @@ public class CannonFire extends Entity {
 	float bulletSpeedLvls;
 	short maskbit;
 
+	public String college;
+
 	/**
 	 * Instantiates cannon fire
 	 * Determines general cannonball data
@@ -57,6 +59,35 @@ public class CannonFire extends Entity {
 		this.target = target;
 		this.bulletSpeedLvls = bulletSpeedLvls;
 		this.maskbit = maskBit;
+
+
+
+		//set cannonBall dimensions for the texture
+		cannonBall = new Texture("cannonBall.png");
+		setRegion(cannonBall);
+		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
+		defineEntity(maskBit, CatBit);
+
+		//set collision bounds
+		//set sound for fire and play if on
+		fireNoise = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
+		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
+		}
+
+
+	}
+
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short CatBit, String college) {
+		super(screen, x, y);
+		this.velocity = velocity;
+		this.rangeMultiplier = rangeMultiplier;
+		//sets the angle and velocity
+		angle = body.getAngle();
+		this.target = target;
+		this.bulletSpeedLvls = bulletSpeedLvls;
+		this.maskbit = maskBit;
+		this.college = college;
 
 
 

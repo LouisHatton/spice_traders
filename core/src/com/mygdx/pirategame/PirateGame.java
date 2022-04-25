@@ -20,6 +20,7 @@ public class PirateGame extends Game {
 	public static final float PPM = 100;
 	public static float difficultyMultiplier = 1;
 
+
 	//Bits used in collisions
 	public static final short DEFAULT_BIT = 1;
 	public static final short PLAYER_BIT = 2;

@@ -228,7 +228,7 @@ public class College extends Enemy {
 	 */
 	public void fire() {
 		if(surrended) return;
-		cannonBalls.add(new CollegeFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y));
+		cannonBalls.add(new CollegeFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, currentCollege));
 	}
 
 	public List<EnemyShip> getFleet() {

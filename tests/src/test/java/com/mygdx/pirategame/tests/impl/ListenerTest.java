@@ -136,7 +136,7 @@ public class ListenerTest {
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
 
 		Player player = MockUtilities.mockPlayer(activeGameScreen);
-		CollegeFire collegeFire = new CollegeFire(activeGameScreen, 0, 0);
+		CollegeFire collegeFire = new CollegeFire(activeGameScreen, 0, 0, "Alcuin");
 
 		Fixture fixtureA = mockFixture(PirateGame.COLLEGEFIRE_BIT, collegeFire);
 		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, player);

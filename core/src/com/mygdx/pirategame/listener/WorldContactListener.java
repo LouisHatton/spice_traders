@@ -34,6 +34,9 @@ public class WorldContactListener implements ContactListener {
 
 		// Fixes contact to an entity
 		switch (cDef) {
+			case PirateGame.COLLEGEFIRE_BIT | PirateGame.ENEMY_BIT:
+				break;
+
 			case PirateGame.COIN_BIT | PirateGame.PLAYER_BIT:
 				this.handlePlayerAndCoin(fixA, fixB);
 				break;
@@ -55,6 +58,8 @@ public class WorldContactListener implements ContactListener {
 			case PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT:
 				this.handleCollegeFireAndPlayer(fixA, fixB);
 				break;
+
+
 		}
 	}
 

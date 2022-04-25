@@ -49,13 +49,14 @@ public class DamageTest {
 		List<EnemyShip> generatedShips = activeGameScreen.generateShips(10);
 
 		Whitebox.setInternalState(activeGameScreen, "ships", generatedShips);
-		Mockito.when(activeGameScreen.getShips()).thenCallRealMethod();
+		//Mockito.doCallRealMethod().when(ActiveGameScreen.getShips());
 
-		assertTrue("Ships not default damage!", activeGameScreen.getShips().stream().allMatch(enemyShip -> enemyShip.getDamage() == 20));
+		assertEquals(ActiveGameScreen.getShips().size(), 10);
+		assertTrue("Ships not default damage!", ActiveGameScreen.getShips().stream().allMatch(enemyShip -> enemyShip.getDamage() == 20));
 
 		ActiveGameScreen.changeDamage(5);
 
-		assertTrue("Ships damage not updated!", activeGameScreen.getShips().stream().allMatch(enemyShip -> enemyShip.getDamage() == 25));
+		assertTrue("Ships damage not updated!", ActiveGameScreen.getShips().stream().allMatch(enemyShip -> enemyShip.getDamage() == 25));
 	}
 
 	@Test
