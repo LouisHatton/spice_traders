@@ -19,7 +19,6 @@ import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -90,8 +89,6 @@ public class MockUtilities {
 	}
 
 	public static Player mockPlayer(ActiveGameScreen activeGameScreen) {
-		Player player = new Player(activeGameScreen, 1, 1, 1, 1, new OrthographicCamera());
-
-		return player;
+		return new Player(activeGameScreen, 1, 1, 1, 1, new OrthographicCamera());
 	}
 }

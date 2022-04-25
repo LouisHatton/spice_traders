@@ -15,14 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 
-public class DifficulityScreen implements Screen {
+public class DifficultyScreen implements Screen {
     private final Screen parent;
     private final com.mygdx.pirategame.PirateGame pirateGame;
     private final Stage stage;
 
     String textForDiff = " ";
 
-    public DifficulityScreen(PirateGame pirateGame, Screen parent) {
+    public DifficultyScreen(PirateGame pirateGame, Screen parent) {
         this.pirateGame = pirateGame;
         this.parent = parent;
         stage = new Stage(new ScreenViewport());
@@ -41,14 +41,14 @@ public class DifficulityScreen implements Screen {
         //The skin for the actors
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-        if(pirateGame.getDifficulity() != 0){
-            if(pirateGame.getDifficulity() == 0.5f) textForDiff = "Easy";
-            if(pirateGame.getDifficulity() == 1) textForDiff = "Normal";
-            if(pirateGame.getDifficulity() == 1.5) textForDiff = "Hard";
-            if(pirateGame.getDifficulity() == 2) textForDiff = "Impossible";
-            Label difficulityMsg = new Label("Current Difficulity is " + textForDiff, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-            difficulityMsg.setFontScale(1.3f);
-            table.add(difficulityMsg).center();
+        if(pirateGame.getDifficulty() != 0){
+            if(pirateGame.getDifficulty() == 0.5f) textForDiff = "Easy";
+            if(pirateGame.getDifficulty() == 1) textForDiff = "Normal";
+            if(pirateGame.getDifficulty() == 1.5) textForDiff = "Hard";
+            if(pirateGame.getDifficulty() == 2) textForDiff = "Impossible";
+            Label difficultyMsg = new Label("Current Difficulty is " + textForDiff, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+            difficultyMsg.setFontScale(1.3f);
+            table.add(difficultyMsg).center();
             stage.addActor(table);
             table.row();
             table.row();
@@ -79,7 +79,7 @@ public class DifficulityScreen implements Screen {
 
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                PirateGame.difficulityMultiplier = 0.5f;
+                PirateGame.difficultyMultiplier = 0.5f;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });
@@ -87,7 +87,7 @@ public class DifficulityScreen implements Screen {
         Normal.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                PirateGame.difficulityMultiplier = 1f;
+                PirateGame.difficultyMultiplier = 1f;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });
@@ -95,7 +95,7 @@ public class DifficulityScreen implements Screen {
         Hard.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                PirateGame.difficulityMultiplier = 1.5f;
+                PirateGame.difficultyMultiplier = 1.5f;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });
@@ -103,7 +103,7 @@ public class DifficulityScreen implements Screen {
         Impossible.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                PirateGame.difficulityMultiplier = 2f;
+                PirateGame.difficultyMultiplier = 2f;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });

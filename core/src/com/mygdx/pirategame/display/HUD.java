@@ -111,7 +111,7 @@ public class HUD implements Disposable {
 		if(value < 0 && Player.protectedTimer > 0) return;
 
 
-		health = (int)(health +((value* (resistanceMultiplier/100)) * PirateGame.difficulityMultiplier ));
+		health = (int)(health +((value* (resistanceMultiplier/100)) * PirateGame.difficultyMultiplier ));
 		healthLabel.setText(String.format("%02d", health));
 	}
 
@@ -138,7 +138,7 @@ public class HUD implements Disposable {
 	 */
 	public static void changeCoins(int value) {
 		if (value > 0) {
-			coins = (int)(coins + (value * PirateGame.difficulityMultiplier) * coinMulti);
+			coins = (int)(coins + (value * PirateGame.difficultyMultiplier) * coinMulti);
 			coinLabel.setText(String.format("%03d", coins));
 		}
 	}

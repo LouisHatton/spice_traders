@@ -101,7 +101,7 @@ public class ShipTest {
 
 		assertEquals("Health is not full", 100, HUD.getHealth());
 
-		PirateGame.difficulityMultiplier = 0.5f; // Easy.
+		PirateGame.difficultyMultiplier = 0.5f; // Easy.
 		HUD.changeHealth(-2);
 
 		assertEquals("Health is not 99.", 99, HUD.getHealth());
@@ -110,6 +110,6 @@ public class ShipTest {
 
 		assertEquals("Health has not regenned.", 100, HUD.getHealth());
 
-		PirateGame.difficulityMultiplier = 1f; // Normal for other tests.
+		PirateGame.difficultyMultiplier = 1f; // Normal for other tests.
 	}
 }

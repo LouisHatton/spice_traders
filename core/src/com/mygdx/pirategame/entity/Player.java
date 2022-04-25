@@ -19,7 +19,7 @@ import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
-import com.mygdx.pirategame.screen.DifficulityScreen;
+import com.mygdx.pirategame.screen.DifficultyScreen;
 import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
@@ -119,7 +119,7 @@ public class Player extends Entity {
 	 */
 	public void update(float dt) {
 
-		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficulityMultiplier;
+		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
 		System.out.println(numberOfShipsFollowing);
 
 		this.hitBox.setPosition(this.getBody().getPosition());

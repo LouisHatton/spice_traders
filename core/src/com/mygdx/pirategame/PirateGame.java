@@ -18,7 +18,7 @@ import com.mygdx.pirategame.screen.*;
  */
 public class PirateGame extends Game {
 	public static final float PPM = 100;
-	public static float difficulityMultiplier = 1;
+	public static float difficultyMultiplier = 1;
 
 	//Bits used in collisions
 	public static final short DEFAULT_BIT = 1;
@@ -32,7 +32,6 @@ public class PirateGame extends Game {
 	//Constant for swapping between screens
 	public final static int MENU = 0;
 	public final static int GAME = 1;
-	public final static int Difficulity = 6;
 	public final static int SKILL = 2;
 	public final static int SHOP = 3;
 	public final static int DEATH = 4;
@@ -43,6 +42,7 @@ public class PirateGame extends Game {
 	public final static int CRIT = 9;
 	public final static int ULTIMATE = 10;
 	public final static int BURST = 11;
+	public final static int DIFFICULTY = 12;
 	public SpriteBatch batch;
 	public Music song;
 	//Variable for each screen
@@ -54,7 +54,7 @@ public class PirateGame extends Game {
 	private HelpScreen helpScreen;
 	private VictoryScreen victoryScreen;
 	private AudioPreferences options;
-	private DifficulityScreen DifficulityScreen;
+	private DifficultyScreen difficultyScreen;
 	private BloodiedScreen bloodyScreen;
 
 	private int currentScreen;
@@ -113,8 +113,7 @@ public class PirateGame extends Game {
 				this.setScreen(bloodyScreen);
 				break;
 
-
-				case SHOP:
+			case SHOP:
 				if (shopScreen == null) shopScreen = new ShopScreen(this);
 				this.setScreen(shopScreen);
 				break;
@@ -122,7 +121,6 @@ public class PirateGame extends Game {
 			case DEATH:
 				if (deathScreen == null) deathScreen = new DeathScreen(this);
 				this.setScreen(deathScreen);
-				System.out.println("Setting screen.." + this.getScreen() + " and " + deathScreen);
 				break;
 
 			case HELP:
@@ -133,6 +131,11 @@ public class PirateGame extends Game {
 			case VICTORY:
 				if (victoryScreen == null) victoryScreen = new VictoryScreen(this);
 				this.setScreen(victoryScreen);
+				break;
+
+			case DIFFICULTY:
+				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.screen);
+				this.setScreen(difficultyScreen);
 				break;
 
 		}//
@@ -180,7 +183,7 @@ public class PirateGame extends Game {
 		batch.dispose();
 	}
 
-	public float getDifficulity(){return difficulityMultiplier;}
+	public float getDifficulty(){return difficultyMultiplier;}
 
 	public int getCurrentScreen() {
 		return currentScreen;

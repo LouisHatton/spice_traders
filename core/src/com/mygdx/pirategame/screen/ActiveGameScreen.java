@@ -72,9 +72,6 @@ public class ActiveGameScreen implements Screen {
 
 	private Box2DDebugRenderer debugger;
 
-
-
-
 	/**
 	 * Initialises the Game Screen,
 	 * generates the world data and data for entities that exist upon it,
@@ -181,7 +178,7 @@ public class ActiveGameScreen implements Screen {
 		final TextButton pauseButton = new TextButton("Pause", skin);
 		final TextButton skill = new TextButton("Skill Tree", skin);
 		final TextButton shop = new TextButton("Shop", skin);
-		final TextButton changeDiff = new TextButton("Change Difficulity", skin);
+		final TextButton changeDiff = new TextButton("Change Difficulty", skin);
 
 		//PAUSE MENU BUTTONS
 		final TextButton start = new TextButton("Resume", skin);
@@ -254,7 +251,7 @@ public class ActiveGameScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
-				game.setScreen(new DifficulityScreen(game, game.getScreen()));
+				game.setScreen(new DifficultyScreen(game, game.getScreen()));
 			}
 		});
 		start.addListener(new ChangeListener() {
@@ -321,7 +318,7 @@ public class ActiveGameScreen implements Screen {
 
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			System.out.println(PirateGame.difficulityMultiplier);
+			System.out.println(PirateGame.difficultyMultiplier);
 			if (gameStatus == GAME_PAUSED) {
 				resume();
 				table.setVisible(true);

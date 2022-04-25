@@ -5,9 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
-import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
-import org.junit.runners.Suite;
 import org.mockito.internal.util.collections.Sets;
 
 import java.util.Set;
@@ -16,7 +14,7 @@ public class TestRunner {
 
 	private final static Set<Class<?>> TESTS_TO_RUN = Sets.newSet(
 			AssetTests.class,
-			TileTests.class,
+			ScreenTest.class,
 			ScoreTest.class,
 			ShipTest.class,
 			CoinTest.class,
@@ -24,7 +22,8 @@ public class TestRunner {
 			CollegeWallTest.class,
 			GenerationTests.class,
 			DamageTest.class,
-			ListenerTest.class
+			ListenerTest.class,
+			ScreenTest.class
 	);
 
 	@Test
