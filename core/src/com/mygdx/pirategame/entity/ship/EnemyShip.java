@@ -79,7 +79,7 @@ public class EnemyShip extends Enemy {
 		this.enemyDetectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 1f,1f);
 		this.stoppingDistanceBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 4,4);
 		this.shootBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 6,6);
-		this.leaveBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 18,18);
+		this.leaveBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 17,17);
 		setBody(body);
 		super.initHealthBar();
 
@@ -115,10 +115,10 @@ public class EnemyShip extends Enemy {
 		}
 
 
-		this.detectBox.setPosition(this.body.getPosition());
-		this.stoppingDistanceBox.setPosition(this.body.getPosition());
-		this.shootBox.setPosition(this.body.getPosition());
-		this.leaveBox.setPosition(this.body.getPosition());
+		this.detectBox.setCenter(this.body.getPosition());
+		this.stoppingDistanceBox.setCenter(this.body.getPosition());
+		this.shootBox.setCenter(this.body.getPosition());
+		this.leaveBox.setCenter(this.body.getPosition());
 		//If ship is set to destroy and isnt, destroy it
 		if (isSetToDestroy() && !isDestroyed()) {
 			//Play death noise

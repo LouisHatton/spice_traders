@@ -145,7 +145,7 @@ public class ActiveGameScreen implements Screen {
 
 
 		BoundsG.setCenter(1760 / PirateGame.PPM,6767 / PirateGame.PPM);
-		BoundsAL.setCenter(6304/PirateGame.PPM,1199/PirateGame.PPM);
+		BoundsAL.setCenter(5304/PirateGame.PPM,899/PirateGame.PPM);
 		BoundsC.setCenter(6240 / PirateGame.PPM,6703 / PirateGame.PPM);
 		BoundsC.setSize(35.5f,50.5f);
 		BoundsAL.setSize(35.5f,50.5f);
