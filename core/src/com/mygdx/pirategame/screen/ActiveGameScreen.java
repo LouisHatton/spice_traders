@@ -484,6 +484,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void render(float dt) {
+		System.out.println(player.hitBox.overlaps(BoundsAL));
 		EnemyAiManager.update(dt);
 		if(gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
@@ -504,7 +505,6 @@ public class ActiveGameScreen implements Screen {
 
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
-		test1.draw(game.batch);
 		// Order determines layering
 
 		//Renders coins
