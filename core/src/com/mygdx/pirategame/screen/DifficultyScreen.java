@@ -29,6 +29,8 @@ public class DifficultyScreen implements Screen {
     private final Stage stage;
     String textForDiff = " ";
 
+    boolean difficultySet = false;
+
     public DifficultyScreen(PirateGame pirateGame, Screen parent) {
         this.pirateGame = pirateGame;
         this.parent = parent;
@@ -48,7 +50,7 @@ public class DifficultyScreen implements Screen {
         //The skin for the actors
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-        if(pirateGame.getDifficulty() != 0){
+        if(PirateGame.difficultySet){
             if(pirateGame.getDifficulty() == 0.5f) textForDiff = "Easy";
             if(pirateGame.getDifficulty() == 1) textForDiff = "Normal";
             if(pirateGame.getDifficulty() == 1.5) textForDiff = "Hard";
@@ -87,6 +89,7 @@ public class DifficultyScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 PirateGame.difficultyMultiplier = 0.5f;
+                PirateGame.difficultySet = true;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });
@@ -95,6 +98,7 @@ public class DifficultyScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 PirateGame.difficultyMultiplier = 1f;
+                PirateGame.difficultySet = true;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });
@@ -103,6 +107,7 @@ public class DifficultyScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 PirateGame.difficultyMultiplier = 1.5f;
+                PirateGame.difficultySet = true;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });
@@ -111,6 +116,7 @@ public class DifficultyScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 PirateGame.difficultyMultiplier = 2f;
+                PirateGame.difficultySet = true;
                 pirateGame.changeScreen(PirateGame.GAME);
             }
         });
@@ -129,7 +135,7 @@ public class DifficultyScreen implements Screen {
     @Override
     public void render(float dt) {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        if(pirateGame.getDifficulty() == 0) {
+        if(!PirateGame.difficultySet) {
             Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             renderBackground();

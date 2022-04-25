@@ -422,6 +422,7 @@ public class Player extends Entity {
 		boatsKilled = 0;
 		collegesKilled = 0;
 		PirateGame.difficultyMultiplier = 0;
+		PirateGame.difficultySet = false;
 		ShopScreen.resetStats();
 		HUD.respawnProtection = 4f;
 	}

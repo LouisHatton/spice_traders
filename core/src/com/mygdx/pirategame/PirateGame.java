@@ -45,6 +45,7 @@ public class PirateGame extends Game {
 	public final static int BURST = 11;
 	public final static int DIFFICULTY = 12;
 	public final static int SETTINGS = 13;
+	public static boolean difficultySet = false;
 
 	public SpriteBatch batch;
 	public Music song;
