@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.pirategame.PirateGame;
-import com.mygdx.pirategame.screen.ActiveGameScreen;
-import com.mygdx.pirategame.screen.BloodiedScreen;
-import com.mygdx.pirategame.screen.SkillsScreen;
+import com.mygdx.pirategame.screen.*;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import org.junit.BeforeClass;
@@ -30,6 +28,11 @@ public class ButtonTests {
 	public void testButton() {
 		PirateGame pirateGame = MockUtilities.createGameAndScreen();
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
+		Whitebox.setInternalState(pirateGame, "shopScreen", Mockito.mock(ShopScreen.class));
+		Whitebox.setInternalState(pirateGame, "settingsScreen", Mockito.mock(SettingsScreen.class));
+		Whitebox.setInternalState(pirateGame, "difficultyScreen", Mockito.mock(DifficultyScreen.class));
 
 		Whitebox.setInternalState(activeGameScreen, "stage", Mockito.mock(Stage.class));
 		Mockito.doCallRealMethod().when(activeGameScreen).show();
