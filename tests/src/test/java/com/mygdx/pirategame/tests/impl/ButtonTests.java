@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.pirategame.PirateGame;
+import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.screen.*;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
@@ -22,6 +24,11 @@ public class ButtonTests {
 	public static void mockGraphics() {
 		Gdx.gl20 = Mockito.mock(GL20.class);
 		Gdx.gl = Gdx.gl20;
+	}
+
+	@BeforeEach
+	public void init() {
+		MockUtilities.createDefaultScoreAndPoints();
 	}
 
 	@Test(expected = Test.None.class)
@@ -99,6 +106,34 @@ public class ButtonTests {
 
 		deathScreen.getReturnButton().toggle();
 
+		assertTrue(true); // no errors occur.
+	}
+
+	@Test(expected = Test.None.class)
+	public void testShopButtons() {
+		PirateGame pirateGame = MockUtilities.createGame();
+		ShopScreen shopScreen = new ShopScreen(pirateGame, Mockito.mock(Stage.class));
+
+		Whitebox.setInternalState(pirateGame, "menuScreen", Mockito.mock(MainMenuScreen.class));
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
+		Whitebox.setInternalState(pirateGame, "gameScreen", Mockito.mock(ActiveGameScreen.class));
+
+		Whitebox.setInternalState(pirateGame, "shopScreen", shopScreen);
+
+		HUD.setCoins(100000);
+		shopScreen.show();
+
+		shopScreen.getResistanceButton().toggle();
+		shopScreen.getBulletSpeedButton().toggle();
+		shopScreen.getRangeButton().toggle();
+		shopScreen.getDamageButton().toggle();
+		shopScreen.getHealthButton().toggle();
+		shopScreen.getMovementButton().toggle();
+		shopScreen.getBackButton().toggle();
+		shopScreen.getDpsButton().toggle();
+		shopScreen.getGoldMultiplierButton().toggle();
+
+		ShopScreen.resetStats();
 		assertTrue(true); // no errors occur.
 	}
 }

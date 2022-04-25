@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.pref.AudioPreferences;
 import com.mygdx.pirategame.screen.*;
 
@@ -120,7 +122,7 @@ public class PirateGame extends Game {
 				break;
 
 			case SHOP:
-				if (shopScreen == null) shopScreen = new ShopScreen(this);
+				if (shopScreen == null) shopScreen = new ShopScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(shopScreen);
 				break;
 

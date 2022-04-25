@@ -29,16 +29,8 @@ import java.util.List;
 public class ShopScreen implements Screen {
 
     //To store whether buttons are enabled or disabled
-    private static TextButton movement1;
     private final PirateGame parent;
     private final Stage stage;
-    private TextButton damage1;
-    private TextButton health1;
-    private TextButton dps1;
-    private TextButton range1;
-    private TextButton GoldMulti1;
-    private TextButton resistance;
-    private TextButton bulletSpeed;
 
     private static float damage1Price = 200f;
     private static float health1Price = 150f;
@@ -71,15 +63,27 @@ public class ShopScreen implements Screen {
 
     final Table Other = new Table();
     Table table = new Table();
+
+    private TextButton bulletSpeedButton;
+    private TextButton dpsButton;
+    private TextButton rangeButton;
+    private TextButton resistanceButton;
+    private TextButton damageButton;
+    private TextButton movementButton;
+    private TextButton healthButton;
+    private TextButton goldMultiplierButton;
+    private TextButton backButton;
+
+
     /**
      * Instantiates a new Skill tree.
      *
      * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
      */
 //In the constructor, the parent and stage are set. Also the states list is set
-    public ShopScreen(PirateGame pirateGame) {
+    public ShopScreen(PirateGame pirateGame, Stage stage) {
         parent = pirateGame;
-        stage = new Stage(new ScreenViewport());
+        this.stage = stage;
     }
 
     /**
@@ -120,8 +124,8 @@ public class ShopScreen implements Screen {
 
 
 
-        bulletSpeed = new TextButton("Increase Bullet Speed", skin);
-        bulletSpeed.addListener(new ChangeListener() {
+        this.bulletSpeedButton = new TextButton("Increase Bullet Speed", skin);
+        this.bulletSpeedButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(bulletSpeedPrice)){
@@ -134,8 +138,9 @@ public class ShopScreen implements Screen {
 
             }
         });
-        dps1 = new TextButton("Increase Fire Rate", skin);
-        dps1.addListener(new ChangeListener() {
+
+        this.dpsButton = new TextButton("Increase Fire Rate", skin);
+        this.dpsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(dps1Price)){
@@ -145,13 +150,12 @@ public class ShopScreen implements Screen {
                     dps1Label.setText(dps1Price + " Gold");
                     currentGold.setText(" Gold: " + HUD.getCoins());
                 }
-
-
             }
         });
-        range1 = new TextButton("Increase Bullet Range", skin);
 
-        range1.addListener(new ChangeListener() {
+        this.rangeButton = new TextButton("Increase Bullet Range", skin);
+
+        this.rangeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(range1Price)){
@@ -161,13 +165,11 @@ public class ShopScreen implements Screen {
                     range1Label.setText(range1Price + " Gold");
                     currentGold.setText(" Gold: " + HUD.getCoins());
                 }
-
-
             }
         });
-        resistance = new TextButton("Increase Resistance", skin);
 
-        resistance.addListener(new ChangeListener() {
+        this.resistanceButton = new TextButton("Increase Resistance", skin);
+        this.resistanceButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(resistancePrice)){
@@ -181,9 +183,9 @@ public class ShopScreen implements Screen {
 
             }
         });
-        damage1 = new TextButton("Increase Damage", skin);
 
-        damage1.addListener(new ChangeListener() {
+        this.damageButton = new TextButton("Increase Damage", skin);
+        this.damageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(damage1Price)){
@@ -197,8 +199,9 @@ public class ShopScreen implements Screen {
 
             }
         });
-        movement1 = new TextButton("Increase Movement Speed", skin);
-        movement1.addListener(new ChangeListener() {
+
+        this.movementButton = new TextButton("Increase Movement Speed", skin);
+        this.movementButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(movement1Price)){
@@ -213,9 +216,9 @@ public class ShopScreen implements Screen {
 
             }
         });
-        health1 = new TextButton("Increase Health", skin);
 
-        health1.addListener(new ChangeListener() {
+        this.healthButton = new TextButton("Increase Health", skin);
+        this.healthButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(health1Price)){
@@ -229,8 +232,9 @@ public class ShopScreen implements Screen {
 
             }
         });
-        GoldMulti1 = new TextButton("Increase Gold multiplier", skin);
-        GoldMulti1.addListener(new ChangeListener() {
+
+        this.goldMultiplierButton = new TextButton("Increase Gold multiplier", skin);
+        this.goldMultiplierButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(HUD.purchase(GoldMulti1Price)){
@@ -240,8 +244,6 @@ public class ShopScreen implements Screen {
                     GoldMulti1Label.setText(GoldMulti1Price + " Gold");
                     currentGold.setText(" Gold: " + HUD.getCoins());
                 }
-
-
             }
         });
 
@@ -249,47 +251,44 @@ public class ShopScreen implements Screen {
 
 
         //Return Button
-        TextButton backButton = new TextButton("Return", skin);
-
-        currentGold.setText(" Gold: " + HUD.getCoins());
-
-        backButton.addListener(new ChangeListener() {
+        this.backButton = new TextButton("Return", skin);
+        this.backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
                 parent.changeScreen(PirateGame.GAME); //Return to game
             }
         });
 
+        currentGold.setText(" Gold: " + HUD.getCoins());
 
         //add buttons and labels to main table
-        table.add(bulletSpeed);
+        table.add(this.bulletSpeedButton);
         table.add(bulletSpeedLabel);
         table.row().pad(10, 0, 10, 0);
-        table.add(dps1);
+        table.add(this.dpsButton);
         table.add(dps1Label);
         table.row().pad(10, 0, 10, 0);
-        table.add(range1);
+        table.add(this.rangeButton);
         table.add(range1Label);
         table.row().pad(10, 0, 10, 0);
-        table.add(resistance);
+        table.add(this.resistanceButton);
         table.add(resistanceLabel);
         table.row().pad(10, 0, 10, 0);
-        table.add(damage1);
+        table.add(this.damageButton);
         table.add(damage1Label);
         table.row().pad(10, 0, 10, 0);
-        table.add(movement1);
+        table.add(this.movementButton);
         table.add(movement1Label);
         table.row().pad(10, 0, 10, 0);
-        table.add(health1);
+        table.add(this.healthButton);
         table.add(health1Label);
         table.row().pad(10, 0, 10, 0);
-        table.add(GoldMulti1);
+        table.add(this.goldMultiplierButton);
         table.add(GoldMulti1Label);
         table.top();
 
         //add return button
-        Other.add(backButton);
+        Other.add(this.backButton);
         Other.add(currentGold);
         Other.bottom().left();
     }
@@ -371,6 +370,42 @@ public class ShopScreen implements Screen {
         movement1Label.setText(movement1Price + " Gold");
         health1Label.setText(health1Price + " Gold");
         GoldMulti1Label.setText(GoldMulti1Price + " Gold");
+    }
+
+    public TextButton getBulletSpeedButton() {
+        return bulletSpeedButton;
+    }
+
+    public TextButton getDpsButton() {
+        return dpsButton;
+    }
+
+    public TextButton getRangeButton() {
+        return rangeButton;
+    }
+
+    public TextButton getResistanceButton() {
+        return resistanceButton;
+    }
+
+    public TextButton getDamageButton() {
+        return damageButton;
+    }
+
+    public TextButton getMovementButton() {
+        return movementButton;
+    }
+
+    public TextButton getHealthButton() {
+        return healthButton;
+    }
+
+    public TextButton getGoldMultiplierButton() {
+        return goldMultiplierButton;
+    }
+
+    public TextButton getBackButton() {
+        return backButton;
     }
 }
 
