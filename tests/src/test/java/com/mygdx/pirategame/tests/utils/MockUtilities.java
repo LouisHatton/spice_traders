@@ -1,5 +1,6 @@
 package com.mygdx.pirategame.tests.utils;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -43,6 +44,10 @@ public class MockUtilities {
 
 		Whitebox.setInternalState(pirateGame, "options", audioPreferences);
 		Mockito.when(pirateGame.getPreferences()).thenReturn(audioPreferences);
+		Mockito.doCallRealMethod().when(pirateGame).setScreen(Mockito.any(Screen.class));
+		Mockito.doCallRealMethod().when(pirateGame).changeScreen(Mockito.anyInt());
+		Mockito.doCallRealMethod().when(pirateGame).getScreen();
+		Mockito.doCallRealMethod().when(pirateGame).getCurrentScreen();
 
 		return pirateGame;
 	}
@@ -64,6 +69,7 @@ public class MockUtilities {
 	public static PirateGame createGameAndScreen() {
 		PirateGame pirateGame = createGame();
 		ActiveGameScreen activeGameScreen = createScreen();
+		PirateGame.difficultyMultiplier = 1f;
 
 		Whitebox.setInternalState(pirateGame, "gameScreen", activeGameScreen);
 		Mockito.when(pirateGame.getScreen()).thenReturn(activeGameScreen);

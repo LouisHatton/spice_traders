@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
+import com.mygdx.pirategame.screen.BloodiedScreen;
+import com.mygdx.pirategame.screen.SkillsScreen;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import org.junit.BeforeClass;
@@ -49,6 +51,28 @@ public class ButtonTests {
 		activeGameScreen.getOptionsButton().toggle();
 		activeGameScreen.getDifficultyButton().toggle();
 		activeGameScreen.getExitButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
+
+	@Test(expected = Test.None.class)
+	public void testBloodiedButton() {
+		PirateGame pirateGame = MockUtilities.createGame();
+		BloodiedScreen bloodiedScreen = Mockito.mock(BloodiedScreen.class);
+
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
+		Whitebox.setInternalState(bloodiedScreen, "stage", Mockito.mock(Stage.class));
+		Whitebox.setInternalState(bloodiedScreen, "parent", pirateGame);
+		Mockito.doCallRealMethod().when(bloodiedScreen).show();
+		Mockito.when(bloodiedScreen.getReturnButton()).thenCallRealMethod();
+
+
+		Whitebox.setInternalState(pirateGame, "bloodyScreen", bloodiedScreen);
+
+		pirateGame.changeScreen(PirateGame.BLOODIED);
+		bloodiedScreen.show();
+
+		bloodiedScreen.getReturnButton().toggle();
 
 		assertTrue(true); // no errors occur.
 	}

@@ -76,8 +76,10 @@ public class ShipTest {
 
 	@Test
 	public void testHUDHealthRegen() {
-		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
 
+		PirateGame.difficultyMultiplier = 1;
 		activeGameScreen.update(1);
 		activeGameScreen.hud.update(1);
 

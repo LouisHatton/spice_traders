@@ -23,6 +23,7 @@ public class BloodiedScreen implements Screen {
     private final PirateGame parent;
     private final Stage stage;
 
+    private TextButton returnButton;
 
     public BloodiedScreen(PirateGame pirateGame) {
         parent = pirateGame;
@@ -50,12 +51,11 @@ public class BloodiedScreen implements Screen {
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
         //Return Button
-        TextButton backButton = new TextButton("Return", skin);
+        this.returnButton = new TextButton("Return", skin);
 
-        backButton.addListener(new ChangeListener() {
+        this.returnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
                 parent.changeScreen(PirateGame.SKILL); //Return to game
             }
         });
@@ -66,7 +66,7 @@ public class BloodiedScreen implements Screen {
         table.top();
 
         //add return button
-        Other.add(backButton);
+        Other.add(this.returnButton);
         Other.bottom().left();
     }
 
@@ -121,6 +121,10 @@ public class BloodiedScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public TextButton getReturnButton() {
+        return returnButton;
     }
 }
 

@@ -64,6 +64,7 @@ public class DamageTest {
 		PirateGame pirateGame = MockUtilities.createGameAndScreen();
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
 
+		PirateGame.difficultyMultiplier = 1;
 		Whitebox.setInternalState(pirateGame, "deathScreen", Mockito.mock(DeathScreen.class));
 
 		Mockito.doCallRealMethod().when(pirateGame).setScreen(Mockito.any(Screen.class));

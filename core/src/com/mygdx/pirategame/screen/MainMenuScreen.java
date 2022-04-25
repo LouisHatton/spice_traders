@@ -26,7 +26,7 @@ public class MainMenuScreen implements Screen {
 	private final PirateGame parent;
 	private final Stage stage;
 	public static Sprite background = new Sprite(new Texture(Gdx.files.internal("background.PNG")));;
-	static SpriteBatch batch = new SpriteBatch();
+	private static SpriteBatch batch;
 
 	/**
 	 * Instantiates a new Main menu.
@@ -36,6 +36,7 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen(PirateGame PirateGame) {
 		parent = PirateGame;
 		stage = new Stage(new ScreenViewport());
+		batch = new SpriteBatch();
 	}
 
 	/**
