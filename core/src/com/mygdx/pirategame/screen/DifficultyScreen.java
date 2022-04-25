@@ -128,10 +128,16 @@ public class DifficultyScreen implements Screen {
 
     @Override
     public void render(float dt) {
-        Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        if(pirateGame.getDifficulty() == 0) renderBackground();
+        if(pirateGame.getDifficulty() == 0) {
+            Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            renderBackground();
+        }
+        else{
+            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        }
 
         stage.draw();
     }
