@@ -34,6 +34,34 @@ public class WorldContactListener implements ContactListener {
 
 		// Fixes contact to an entity
 		switch (cDef) {
+			case PirateGame.COLLEGEFIRE_BIT | PirateGame.ENEMY_BIT:
+				if (fixA.getFilterData().categoryBits == PirateGame.COLLEGEFIRE_BIT) {
+
+
+					if(fixA.getUserData() instanceof CollegeFire){
+						if(((Enemy) fixB.getUserData()).college == ((CollegeFire) fixA.getUserData()).college) return;
+						((CollegeFire) fixA.getUserData()).setToDestroy();
+
+					}
+					else if(fixA.getUserData() instanceof CannonFire){
+						if(((Enemy) fixB.getUserData()).college == ((CannonFire) fixA.getUserData()).college) return;
+						((CannonFire) fixA.getUserData()).setToDestroy();
+					}
+					((Enemy) fixB.getUserData()).onContact();
+				} else {
+
+					if(fixB.getUserData() instanceof CollegeFire){
+						if(((Enemy) fixA.getUserData()).college == ((CollegeFire) fixB.getUserData()).college) return;
+						((CollegeFire) fixB.getUserData()).setToDestroy();
+					}
+					else if(fixB.getUserData() instanceof CannonFire){
+						if(((Enemy) fixA.getUserData()).college == ((CannonFire) fixB.getUserData()).college) return;
+						((CannonFire) fixB.getUserData()).setToDestroy();
+					}
+					((Enemy) fixA.getUserData()).onContact();
+				}
+				break;
+
 			case PirateGame.COIN_BIT | PirateGame.PLAYER_BIT:
 				if (fixA.getFilterData().categoryBits == PirateGame.COIN_BIT) {
 					((Entity) fixA.getUserData()).onContact();
@@ -99,10 +127,12 @@ public class WorldContactListener implements ContactListener {
 					else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixA.getUserData()).setToDestroy();
 				} else {
 					HUD.changeHealth(-15);
-					if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixB.getUserData()).setToDestroy();
-					else if(fixA.getUserData() instanceof CannonFire)  ((CannonFire) fixB.getUserData()).setToDestroy();
+					if(fixB.getUserData() instanceof CollegeFire)((CollegeFire) fixB.getUserData()).setToDestroy();
+					else if(fixB.getUserData() instanceof CannonFire)  ((CannonFire) fixB.getUserData()).setToDestroy();
 				}
 				break;
+
+
 		}
 	}
 
@@ -114,7 +144,7 @@ public class WorldContactListener implements ContactListener {
 	@Override
 	public void endContact(Contact contact) {
 		// Displays contact message
-		Gdx.app.log("End Contact", "");
+		//Gdx.app.log("End Contact", "");
 	}
 
 	/**

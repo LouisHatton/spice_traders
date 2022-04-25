@@ -3,11 +3,16 @@ package com.mygdx.pirategame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -26,6 +31,7 @@ import com.mygdx.pirategame.entity.coin.Coin;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.entity.college.version.cannonBallManager;
+import com.mygdx.pirategame.entity.ship.EnemyAiManager;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.listener.WorldContactListener;
 import com.mygdx.pirategame.utils.Location;
@@ -71,6 +77,18 @@ public class ActiveGameScreen implements Screen {
 	private Table table;
 
 	private Box2DDebugRenderer debugger;
+
+	public static Rectangle BoundsAL = new Rectangle();
+	public static Rectangle BoundsC = new Rectangle();
+	public static Rectangle BoundsG = new Rectangle();
+
+	ShapeRenderer shapeRenderer = new ShapeRenderer();
+
+	private Sprite test = new Sprite(new Texture("tile_04.png"));
+	private Sprite test1 = new Sprite(new Texture("tile_04.png"));
+	private Sprite test2 = new Sprite(new Texture("tile_04.png"));
+	private Sprite test3 = new Sprite(new Texture("tile_04.png"));
+
 
 
 
@@ -126,6 +144,13 @@ public class ActiveGameScreen implements Screen {
 
 
 
+		BoundsG.setCenter(1760 / PirateGame.PPM,6767 / PirateGame.PPM);
+		BoundsAL.setCenter(6304/PirateGame.PPM,1199/PirateGame.PPM);
+		BoundsC.setCenter(6240 / PirateGame.PPM,6703 / PirateGame.PPM);
+		BoundsC.setSize(35.5f,50.5f);
+		BoundsAL.setSize(35.5f,50.5f);
+		BoundsG.setSize(35.5f,50.5f);
+
 	}
 
 	/**
@@ -173,6 +198,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+
 		debugger = new Box2DDebugRenderer();
 		Gdx.input.setInputProcessor(stage);
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -312,7 +338,7 @@ public class ActiveGameScreen implements Screen {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-			if(camera.zoom < 2)camera.zoom += 0.02f;
+			if(camera.zoom < 2)camera.zoom += 0.02f/100;
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
 			if(camera.zoom > 1)camera.zoom -= 0.02f;
@@ -458,8 +484,9 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void render(float dt) {
-
-
+		EnemyAiManager.update(dt);
+		test1.setSize(BoundsAL.width, BoundsAL.height);
+		test1.setCenter(BoundsAL.x, BoundsAL.y);
 		if(gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);
@@ -479,6 +506,7 @@ public class ActiveGameScreen implements Screen {
 
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
+		test1.draw(game.batch);
 		// Order determines layering
 
 		//Renders coins
@@ -501,6 +529,7 @@ public class ActiveGameScreen implements Screen {
 
 
 			ship.draw(game.batch);
+
 		}
 		cannonBallManager.update(dt, game.batch);
 		game.batch.end();
@@ -511,7 +540,6 @@ public class ActiveGameScreen implements Screen {
 		//Checks game over conditions
 		gameOverCheck();
 		debugger.render(world, camera.combined.scl(PirateGame.PPM));
-
 	}
 
 	/**
@@ -564,6 +592,9 @@ public class ActiveGameScreen implements Screen {
 	public void gameOverCheck() {
 		//Lose game if ship on 0 health or Alcuin is destroyed
 		if (HUD.getHealth() <= 0 || colleges.get("Alcuin").isDestroyed()) {
+			player.resetStats();
+
+
 			game.changeScreen(PirateGame.DEATH);
 			game.killGame();
 			return;
@@ -693,7 +724,7 @@ public class ActiveGameScreen implements Screen {
 		return hud;
 	}
 
-	public List<EnemyShip> getShips() {
+	public static List<EnemyShip> getShips() {
 		return ships;
 	}
 

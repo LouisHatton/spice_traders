@@ -19,7 +19,7 @@ import com.mygdx.pirategame.screen.*;
  */
 public class PirateGame extends Game {
 	public static final float PPM = 100;
-	public static float difficulityMultiplier = 1;
+	public static float difficulityMultiplier = 0;
 
 	//Bits used in collisions
 	public static final short DEFAULT_BIT = 1;

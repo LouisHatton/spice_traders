@@ -26,6 +26,8 @@ public class CollegeFire extends Entity {
 	private boolean setToDestroy;
 	private final Vector2 playerPos;
 
+	public String college;
+
 	/**
 	 * Defines player position
 	 * Defines cannonballs
@@ -34,9 +36,9 @@ public class CollegeFire extends Entity {
 	 * @param x      x position of player
 	 * @param y      y position of player
 	 */
-	public CollegeFire(ActiveGameScreen screen, float x, float y) {
+	public CollegeFire(ActiveGameScreen screen, float x, float y, String college) {
 		super(screen, x, y);
-
+		this.college = college;
 		playerPos = screen.getPlayerPos();
 		cannonBall = new Texture("cannonBall.png");
 		//Set the position and size of the ball
