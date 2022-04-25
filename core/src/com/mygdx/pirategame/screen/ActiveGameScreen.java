@@ -485,8 +485,6 @@ public class ActiveGameScreen implements Screen {
 	@Override
 	public void render(float dt) {
 		EnemyAiManager.update(dt);
-		test1.setSize(BoundsAL.width, BoundsAL.height);
-		test1.setCenter(BoundsAL.x, BoundsAL.y);
 		if(gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);
