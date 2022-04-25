@@ -76,6 +76,14 @@ public class ActiveGameScreen implements Screen {
 	private Table pauseTable;
 	private Table table;
 
+	private TextButton pauseButton;
+	private TextButton skillButton;
+	private TextButton shopButton;
+	private TextButton difficultyButton;
+	private TextButton startButton;
+	private TextButton optionsButton;
+	private TextButton exitButton;
+
 	private Box2DDebugRenderer debugger;
 
 	public static Rectangle BoundsAL = new Rectangle();
@@ -148,6 +156,7 @@ public class ActiveGameScreen implements Screen {
 		BoundsAL.setSize(35.5f,50.5f);
 		BoundsG.setSize(35.5f,50.5f);
 
+		debugger = new Box2DDebugRenderer();
 	}
 
 	/**
@@ -195,21 +204,19 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
-
-		debugger = new Box2DDebugRenderer();
 		Gdx.input.setInputProcessor(stage);
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 		//GAME BUTTONS
-		final TextButton pauseButton = new TextButton("Pause", skin);
-		final TextButton skill = new TextButton("Skill Tree", skin);
-		final TextButton shop = new TextButton("Shop", skin);
-		final TextButton changeDiff = new TextButton("Change Difficulty", skin);
+		this.pauseButton = new TextButton("Pause", skin);
+		this.skillButton = new TextButton("Skill Tree", skin);
+		this.shopButton = new TextButton("Shop", skin);
+		this.difficultyButton = new TextButton("Change Difficulty", skin);
 
 		//PAUSE MENU BUTTONS
-		final TextButton start = new TextButton("Resume", skin);
-		final TextButton options = new TextButton("Options", skin);
-		TextButton exit = new TextButton("Exit", skin);
+		this.startButton = new TextButton("Resume", skin);
+		this.optionsButton = new TextButton("Options", skin);
+		this.exitButton = new TextButton("Exit", skin);
 
 
 		//Create main table and pause tables
@@ -236,21 +243,21 @@ public class ActiveGameScreen implements Screen {
 		table.row().pad(10, 0, 10, 0);
 		table.left().top();
 
-		pauseTable.add(start).fillX().uniformX();
+		pauseTable.add(this.startButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
-		pauseTable.add(skill).fillX().uniformX();
+		pauseTable.add(this.skillButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
-		pauseTable.add(shop).fillX().uniformX();
+		pauseTable.add(this.shopButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
-		pauseTable.add(changeDiff).fillX().uniformX();
+		pauseTable.add(this.difficultyButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
-		pauseTable.add(options).fillX().uniformX();
+		pauseTable.add(this.optionsButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
-		pauseTable.add(exit).fillX().uniformX();
+		pauseTable.add(this.exitButton).fillX().uniformX();
 		pauseTable.center();
 
 
-		pauseButton.addListener(new ChangeListener() {
+		this.pauseButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				table.setVisible(false);
@@ -259,28 +266,32 @@ public class ActiveGameScreen implements Screen {
 
 			}
 		});
-		skill.addListener(new ChangeListener() {
+
+		this.skillButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
 				game.changeScreen(PirateGame.SKILL);
 			}
 		});
-		shop.addListener(new ChangeListener() {
+
+		this.shopButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
 				game.changeScreen(PirateGame.SHOP);
 			}
 		});
-		changeDiff.addListener(new ChangeListener() {
+
+		this.difficultyButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
-				game.setScreen(new DifficultyScreen(game, game.getScreen()));
+				game.changeScreen(PirateGame.DIFFICULTY);
 			}
 		});
-		start.addListener(new ChangeListener() {
+
+		this.startButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
@@ -288,15 +299,17 @@ public class ActiveGameScreen implements Screen {
 				resume();
 			}
 		});
-		options.addListener(new ChangeListener() {
+
+		this.optionsButton.addListener(new ChangeListener() {
 								@Override
 								public void changed(ChangeEvent event, Actor actor) {
 									pauseTable.setVisible(false);
-									game.setScreen(new SettingsScreen(game, game.getScreen()));
+									game.changeScreen(PirateGame.SETTINGS);
 								}
 							}
 		);
-		exit.addListener(new ChangeListener() {
+
+		this.exitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.exit();
@@ -725,7 +738,33 @@ public class ActiveGameScreen implements Screen {
 
 	public static void chasePlayer(EnemyShip enemy){
 
+	}
 
+	public TextButton getPauseButton() {
+		return pauseButton;
+	}
 
+	public TextButton getSkillButton() {
+		return skillButton;
+	}
+
+	public TextButton getShopButton() {
+		return shopButton;
+	}
+
+	public TextButton getDifficultyButton() {
+		return difficultyButton;
+	}
+
+	public TextButton getStartButton() {
+		return startButton;
+	}
+
+	public TextButton getOptionsButton() {
+		return optionsButton;
+	}
+
+	public TextButton getExitButton() {
+		return exitButton;
 	}
 }

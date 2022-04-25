@@ -44,6 +44,8 @@ public class PirateGame extends Game {
 	public final static int ULTIMATE = 10;
 	public final static int BURST = 11;
 	public final static int DIFFICULTY = 12;
+	public final static int SETTINGS = 13;
+
 	public SpriteBatch batch;
 	public Music song;
 	//Variable for each screen
@@ -57,6 +59,8 @@ public class PirateGame extends Game {
 	private AudioPreferences options;
 	private DifficultyScreen difficultyScreen;
 	private BloodiedScreen bloodyScreen;
+	private SettingsScreen settingsScreen;
+
 
 	private int currentScreen;
 
@@ -137,6 +141,12 @@ public class PirateGame extends Game {
 			case DIFFICULTY:
 				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.screen);
 				this.setScreen(difficultyScreen);
+				break;
+
+			case SETTINGS:
+				if (settingsScreen == null) settingsScreen = new SettingsScreen(this, this.screen);
+				this.setScreen(settingsScreen);
+
 				break;
 
 		}//

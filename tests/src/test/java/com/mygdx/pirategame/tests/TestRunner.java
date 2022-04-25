@@ -23,7 +23,8 @@ public class TestRunner {
 			GenerationTests.class,
 			DamageTest.class,
 			ListenerTest.class,
-			ScreenTest.class
+			ScreenTest.class,
+			ButtonTests.class
 	);
 
 	@Test
