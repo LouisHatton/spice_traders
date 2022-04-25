@@ -79,4 +79,26 @@ public class ButtonTests {
 
 		assertTrue(true); // no errors occur.
 	}
+
+	@Test(expected = Test.None.class)
+	public void testDeathButton() {
+		PirateGame pirateGame = MockUtilities.createGame();
+		DeathScreen deathScreen = Mockito.mock(DeathScreen.class);
+
+		Whitebox.setInternalState(pirateGame, "menuScreen", Mockito.mock(MainMenuScreen.class));
+		Whitebox.setInternalState(deathScreen, "stage", Mockito.mock(Stage.class));
+		Whitebox.setInternalState(deathScreen, "parent", pirateGame);
+		Mockito.doCallRealMethod().when(deathScreen).show();
+		Mockito.when(deathScreen.getReturnButton()).thenCallRealMethod();
+
+
+		Whitebox.setInternalState(pirateGame, "deathScreen", deathScreen);
+
+		pirateGame.changeScreen(PirateGame.DEATH);
+		deathScreen.show();
+
+		deathScreen.getReturnButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
 }

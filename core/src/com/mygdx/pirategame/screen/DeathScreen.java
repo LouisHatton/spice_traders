@@ -27,6 +27,8 @@ public class DeathScreen implements Screen {
 	private final PirateGame parent;
 	private final Stage stage;
 
+	private TextButton returnButton;
+
 	/**
 	 * Creates a new screen
 	 *
@@ -60,10 +62,10 @@ public class DeathScreen implements Screen {
 		stage.addActor(table);
 
 		//Creat button
-		TextButton backButton = new TextButton("Return To Menu", skin);
+		this.returnButton = new TextButton("Return To Menu", skin);
 
 		//Return to main menu and kill screen
-		backButton.addListener(new ChangeListener() {
+		this.returnButton.addListener(new ChangeListener() {
 			/**
 			 * Switches screen
 			 * Returns to menu
@@ -78,7 +80,7 @@ public class DeathScreen implements Screen {
 			}
 		});
 
-		table2.add(backButton).fillX().uniformX();
+		table2.add(this.returnButton).fillX().uniformX();
 		table2.bottom();
 
 		stage.addActor(table2);
@@ -145,5 +147,9 @@ public class DeathScreen implements Screen {
 	 */
 	@Override
 	public void dispose() {
+	}
+
+	public TextButton getReturnButton() {
+		return returnButton;
 	}
 }
