@@ -44,6 +44,8 @@ public class HUD implements Disposable {
 	private final Image box;
 	private final Image coin;
 
+	public static float respawnProtection = 4f;
+
 	public static float bloodyAmount = 0.5f;
 
 	/**
@@ -110,6 +112,7 @@ public class HUD implements Disposable {
 	 * @param value Increase to health
 	 */
 	public static void changeHealth(int value) {
+		if(respawnProtection > 0) return;
 		if(value < 0 && Player.protectedTimer > 0) return;
 
 
@@ -210,6 +213,11 @@ public class HUD implements Disposable {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+		if(respawnProtection >= 0){
+			respawnProtection -= dt;
+		}
+
+
 		timeCount += dt;
 		if (timeCount >= 1) {
 			//Regen health every second

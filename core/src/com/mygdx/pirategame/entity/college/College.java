@@ -80,6 +80,7 @@ public class College extends Enemy {
 
 	public static void updateTexture(String path) {
 		enemyCollege = new Texture(path);
+
 	}
 
 	/**

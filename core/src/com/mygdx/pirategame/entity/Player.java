@@ -125,7 +125,6 @@ public class Player extends Entity {
 	public void update(float dt) {
 
 		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
-		System.out.println(numberOfShipsFollowing);
 
 		shield.setCenter(this.getBody().getPosition().x, this.getBody().getPosition().y);
 
@@ -422,7 +421,8 @@ public class Player extends Entity {
 		collegesCaptured = 0;
 		boatsKilled = 0;
 		collegesKilled = 0;
-		PirateGame.difficultyMultiplier = 1;
+		PirateGame.difficultyMultiplier = 0;
 		ShopScreen.resetStats();
+		HUD.respawnProtection = 4f;
 	}
 }

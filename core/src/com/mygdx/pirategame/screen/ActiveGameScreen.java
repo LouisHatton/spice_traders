@@ -530,6 +530,7 @@ public class ActiveGameScreen implements Screen {
 
 		//Renders colleges
 		player.draw(game.batch);
+
 		colleges.values().forEach(col -> col.draw(game.batch));
 
 		//Updates all ships
@@ -538,7 +539,7 @@ public class ActiveGameScreen implements Screen {
 				//Flips a colleges allegence if their college is destroyed
 				if (colleges.get(ship.college).isDestroyed() || colleges.get(ship.college).isCaptured()) {
 					ship.updateTexture("Alcuin", "alcuin_ship.png");
-					//College.updateTexture("alcuin_flag.png");
+					//colleges.updateTexture("surender_flag.png");
 				}
 			}
 
