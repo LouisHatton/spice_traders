@@ -75,7 +75,7 @@ public class DisablingrayScreen implements Screen {
         percentage = ((currentCollegesCaptured/ collegesCapturedObjective) );
         percentage = percentage * 100;
 
-        if(collegesCapturedObjective == currentCollegesCaptured){
+        if(collegesCapturedObjective <= currentCollegesCaptured){
             percentage = 100;
             completion = "- Completed!";
         }

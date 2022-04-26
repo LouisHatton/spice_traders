@@ -46,6 +46,10 @@ public class Player extends Entity {
 
 	public Rectangle hitBox;
 
+	public static boolean healBubble = false;
+	public static boolean burstHeal = false;
+	public static boolean bursted = false;
+
 	public static boolean isBloodied = false;
 
 	int amountOfShotsInUltimateFire = 15;
@@ -68,7 +72,7 @@ public class Player extends Entity {
 
 	public static boolean shieldEnabled = false;
 	public float shieldCoolDown = 0f;
-	public float shieldCoolDownOG = 5f;
+	public float shieldCoolDownOG = 8f;
 	public static float protectedTimer = 0f;
 	public float protectTime = 2f;
 
@@ -137,6 +141,10 @@ public class Player extends Entity {
 		if(shieldEnabled){
 			if(protectedTimer > 0){
 				protectedTimer -= dt;
+				if(!bursted && burstHeal){
+					HUD.changeHealth((int)(HUD.maxHealth * 0.10f));
+					bursted = true;
+				}
 				if(shield.getHeight() < 2.7f){
 					shield.setSize(shield.getWidth() + 0.1f, shield.getHeight() + 0.1f);
 				}
@@ -144,6 +152,7 @@ public class Player extends Entity {
 			if(Gdx.input.isKeyJustPressed(Input.Keys.E) && shieldCoolDown <= 0){
 				protectedTimer = protectTime;
 				shieldCoolDown = shieldCoolDownOG;
+				bursted = false;
 			}
 			else if(shieldCoolDown > 0) {
 				shieldCoolDown -= dt;
@@ -395,6 +404,24 @@ public class Player extends Entity {
 		if(boatsKilled >= 5){
 			SkillsScreen.unlock(2);
 			shieldEnabled = true;
+
+			if(boatsKilled >= 7){
+				protectTime = 3f;
+			}
+			if(boatsKilled >= 9){
+				burstHeal = true;
+			}
+			if(boatsKilled >= 11){
+				protectTime = 4f;
+			}
+			if(boatsKilled >= 13){
+				shieldCoolDown = 7;
+			}
+			if(boatsKilled >= 15){
+				healBubble = true;
+			}
+
+
 		}
 		else{
 			SkillsScreen.lock(2);

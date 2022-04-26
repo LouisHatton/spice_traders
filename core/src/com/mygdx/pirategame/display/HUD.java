@@ -114,6 +114,16 @@ public class HUD implements Disposable {
 	public static void changeHealth(int value) {
 		if(respawnProtection > 0) return;
 		if(value < 0 && Player.protectedTimer > 0) return;
+		if(value > 0 ) {
+			if(health + value > maxHealth){
+				health = (int) maxHealth;
+				healthLabel.setText(String.format("%02d", health));
+				return;
+			}
+			health += value;
+			healthLabel.setText(String.format("%02d", health));
+			return;
+		}
 
 
 		health = (int)(health +((value* (resistanceMultiplier/100)) * PirateGame.difficultyMultiplier ));
@@ -217,8 +227,10 @@ public class HUD implements Disposable {
 			respawnProtection -= dt;
 		}
 
-
-		timeCount += dt;
+		if(Player.protectedTimer > 0 && Player.healBubble){
+			timeCount += dt * 3;
+		}
+			timeCount += dt;
 		if (timeCount >= 1) {
 			//Regen health every second
 			if (health < maxHealth) {

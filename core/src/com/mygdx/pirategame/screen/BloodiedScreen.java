@@ -81,7 +81,7 @@ public class BloodiedScreen implements Screen {
         percentage = ((currentCollegesKilled / collegesKilledObjective) );
         percentage = percentage * 100;
 
-        if(collegesKilledObjective == currentCollegesKilled){
+        if(collegesKilledObjective <= currentCollegesKilled){
             percentage = 100;
             completion = "- Completed!";
         }

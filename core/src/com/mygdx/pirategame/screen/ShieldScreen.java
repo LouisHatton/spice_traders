@@ -121,11 +121,11 @@ public class ShieldScreen implements Screen {
         lvl2ButtonLabel = new Label("Extend shield duration to 3 seconds", skin);
         lvl1ButtonLabel2 = new Label("Destroy 5 ships", skin);
         lvl2ButtonLabel2 = new Label("Destroy 7 ships", skin);
-        lvl3ButtonLabel = new Label("Decrease cool down from 8 to 7", skin);
+        lvl3ButtonLabel = new Label("When shield is used instantly gain 10% of the player back", skin);
         lvl4ButtonLabel = new Label("Extend shield duration to 4 seconds", skin);
         lvl3ButtonLabel2 = new Label("Destroy 9 ships", skin);
         lvl4ButtonLabel2 = new Label("Destroy 11 ships", skin);
-        lvl5ButtonLabel = new Label("Decrease cool down from 7 seconds to 6", skin);
+        lvl5ButtonLabel = new Label("Decrease cool down from 8 seconds to 7", skin);
         lvl6ButtonLabel = new Label("When bubble is active healing is increased by 300%", skin);
         lvl5ButtonLabel2 = new Label("Destroy 13 ships", skin);
         lvl6ButtonLabel2 = new Label("Destroy 15 ships", skin);
@@ -156,7 +156,7 @@ public class ShieldScreen implements Screen {
             lvl6Button.setDisabled(false);
         }
 
-        if(boatsKilledObjective == boatsKilled){
+        if(boatsKilledObjective <= boatsKilled){
             percentage = 100;
             completion = "- Completed!";
         }
