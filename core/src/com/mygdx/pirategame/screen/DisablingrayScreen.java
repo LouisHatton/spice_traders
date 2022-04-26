@@ -2,7 +2,6 @@ package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,17 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
-import com.mygdx.pirategame.display.HUD;
-import jdk.jfr.Percentage;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class BloodiedScreen implements Screen {
+public class DisablingrayScreen implements Screen {
 
 
-    private float currentCollegesKilled = 0;
-    private int collegesKilledObjective = 1;
+    private float currentCollegesCaptured= 0;
+    private int collegesCapturedObjective = 1;
     private float percentage = 0;
     private final PirateGame parent;
     private final Stage stage;
@@ -45,7 +39,7 @@ public class BloodiedScreen implements Screen {
 
     Image progressBar;
 
-    public BloodiedScreen(PirateGame pirateGame) {
+    public DisablingrayScreen(PirateGame pirateGame) {
         parent = pirateGame;
         stage = new Stage(new ScreenViewport());
     }
@@ -76,12 +70,12 @@ public class BloodiedScreen implements Screen {
         progressBar =  new Image(new Sprite(new Texture("blank.PNG")));
 
 
-        currentCollegesKilled = ActiveGameScreen.player.getCollegesKilled();
-        collegesKilledObjective = 2;
-        percentage = ((currentCollegesKilled / collegesKilledObjective) );
+        currentCollegesCaptured = ActiveGameScreen.player.getCollegesCaptured();
+        collegesCapturedObjective = 2;
+        percentage = ((currentCollegesCaptured/ collegesCapturedObjective) );
         percentage = percentage * 100;
 
-        if(collegesKilledObjective == currentCollegesKilled){
+        if(collegesCapturedObjective == currentCollegesCaptured){
             percentage = 100;
             completion = "- Completed!";
         }
@@ -106,23 +100,23 @@ public class BloodiedScreen implements Screen {
         lvl1Button = new TextButton("Level 1 - Base ability", skin);
         lvl2Button = new TextButton("Level 2 - Max Level", skin);
 
-        lvl1ButtonLabel = new Label("Damage increases as health decreases", skin);
-        lvl2ButtonLabel = new Label("Maximum damage multiplier increases from 50% to 75% more damage", skin);
-        lvl1ButtonLabel2 = new Label("Destroy 1 college", skin);
-        lvl2ButtonLabel2 = new Label("Destroy 2 colleges", skin);
-        Title = new Label("Bloodied", skin);
+        lvl1ButtonLabel = new Label("On button press E creates a ray that stops all ships from targeting the player for 3 seconds (6 second cool down)", skin);
+        lvl2ButtonLabel = new Label("The ships that are targeting the player will lose 50% of their health when this ability is activated (drops cool down from 6 to 5)", skin);
+        lvl1ButtonLabel2 = new Label("Capture 1 college", skin);
+        lvl2ButtonLabel2 = new Label("Capture 2 colleges", skin);
+        Title = new Label("Disabling Ray", skin);
 
 
-        int collegesKilledPercever = (int) currentCollegesKilled;
-        int collegesKilledObjectivePercever = (int) collegesKilledObjective;
+        int collegesKilledPercever = (int) currentCollegesCaptured;
+        int collegesKilledObjectivePercever = (int) collegesCapturedObjective;
         int percentagePercever = (int) percentage;
 
-        progressBarLabel = new Label(" Progress : Colleges Destroyed: " + collegesKilledPercever + " / " + collegesKilledObjectivePercever , skin);
-        percentageLabel = new Label( "         " + percentagePercever + " % " + completion, skin);
+        progressBarLabel = new Label(" Progress : Colleges Captured: " + collegesKilledPercever + " / " + collegesKilledObjectivePercever , skin);
+        percentageLabel = new Label(percentagePercever + " % " + completion, skin);
 
 
 
-        if(currentCollegesKilled < 2){
+        if(currentCollegesCaptured < 2){
             lvl2Button.setDisabled(true);
         }else{
             lvl2Button.setDisabled(false);
@@ -144,8 +138,8 @@ public class BloodiedScreen implements Screen {
         table.add(lvl2ButtonLabel);
         table.row().pad(20, 0, 20, 0);
         table.add(progressBarLabel);
-        table.add(progressBar).left().pad(20, 8, 0 ,20);
-        table.add(percentageLabel).padLeft(10).padRight(10);
+        table.add(progressBar).left().pad(20, 8, 0 ,8);
+        table.add(percentageLabel);
 
 
 

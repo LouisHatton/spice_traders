@@ -35,7 +35,7 @@ public class SkillsScreen implements Screen {
 	private TextButton shield;
 	private TextButton ultimateAbility;
 	private TextButton secondaryAbility;
-	private TextButton critHit;
+	private TextButton disablingRay;
 
 	Table table = new Table();
 	final Table Other = new Table();
@@ -121,9 +121,17 @@ public class SkillsScreen implements Screen {
 		if (states.get(0) == 1) {
 			bloodied.setDisabled(true);
 		}
-		critHit = new TextButton("Crit Hit", skin);
+		disablingRay = new TextButton("Disabling Ray", skin);
+		disablingRay.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+				parent.changeScreen(PirateGame.DISABLINGRAY);
+			}
+		});
+
 		if (states.get(1) == 1) {
-			critHit.setDisabled(true);
+			disablingRay.setDisabled(true);
 		}
 		shield = new TextButton("Shield", skin);
 		if (states.get(2) == 1) {
@@ -160,7 +168,7 @@ public class SkillsScreen implements Screen {
 		table.add(bloodied);
 
 		table.row().pad(10, 0, 10, 0);
-		table.add(critHit);
+		table.add(disablingRay);
 
 		table.row().pad(10, 0, 10, 0);
 		table.add(shield);

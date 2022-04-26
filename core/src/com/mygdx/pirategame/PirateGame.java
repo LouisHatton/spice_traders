@@ -47,6 +47,7 @@ public class PirateGame extends Game {
 	public final static int BURST = 11;
 	public final static int DIFFICULTY = 12;
 	public final static int SETTINGS = 13;
+	public final static int DISABLINGRAY = 14;
 	public static boolean difficultySet = false;
 
 	public SpriteBatch batch;
@@ -62,6 +63,7 @@ public class PirateGame extends Game {
 	private AudioPreferences options;
 	private DifficultyScreen difficultyScreen;
 	private BloodiedScreen bloodyScreen;
+	private DisablingrayScreen disablingrayScreen;
 	private SettingsScreen settingsScreen;
 
 
@@ -119,6 +121,11 @@ public class PirateGame extends Game {
 			case BLOODIED:
 				if (bloodyScreen == null) bloodyScreen = new BloodiedScreen(this);
 				this.setScreen(bloodyScreen);
+				break;
+
+			case DISABLINGRAY:
+				if (disablingrayScreen == null) disablingrayScreen = new DisablingrayScreen(this);
+				this.setScreen(disablingrayScreen);
 				break;
 
 			case SHOP:
