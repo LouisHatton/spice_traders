@@ -37,6 +37,9 @@ public class SkillsScreen implements Screen {
 	private TextButton secondaryAbility;
 	private TextButton critHit;
 
+	Table table = new Table();
+	final Table Other = new Table();
+
 	/**
 	 * Instantiates a new Skill tree.
 	 *
@@ -81,19 +84,24 @@ public class SkillsScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		table.reset();
+		table.clearChildren();
+		table.clear();
+		Other.clear();
+		Other.clearChildren();
+		Other.reset();
 
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
-		// Create a table that fills the screen
-		Table table = new Table();
+
+
 		table.setFillParent(true);
 		stage.addActor(table);
 
 
-		// Table for the return button
-		final Table Other = new Table();
 		Other.setFillParent(true);
 		stage.addActor(Other);
+
 
 
 		//The skin for the actors

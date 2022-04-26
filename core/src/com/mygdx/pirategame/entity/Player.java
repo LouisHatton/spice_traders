@@ -401,6 +401,7 @@ public class Player extends Entity {
 		}
 		if(collegesKilled >= 1){
 			SkillsScreen.unlock(0);
+			if(collegesKilled >= 2) HUD.bloodyAmount = 0.75f;
 			isBloodied = true;
 		}
 		else{

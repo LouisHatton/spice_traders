@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
+import jdk.jfr.Percentage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +39,10 @@ public class BloodiedScreen implements Screen {
     private Label progressBarLabel;
     private Label percentageLabel;
 
+    Table table = new Table();
+    Table titleTable = new Table();
+    final Table Other = new Table();
+
     Image progressBar;
 
     public BloodiedScreen(PirateGame pirateGame) {
@@ -48,6 +53,26 @@ public class BloodiedScreen implements Screen {
 
     @Override
     public void show() {
+        table.reset();
+        table.clearChildren();
+        table.clear();
+        titleTable.reset();
+        titleTable.clearChildren();
+        titleTable.clear();
+        Other.clear();
+        Other.clearChildren();
+        Other.reset();
+        table.setFillParent(true);
+        titleTable.setFillParent(true);
+        Other.setFillParent(true);
+        stage.addActor(titleTable);
+        stage.addActor(table);
+        stage.addActor(Other);
+
+
+        String completion = "";
+
+
         progressBar =  new Image(new Sprite(new Texture("blank.PNG")));
 
 
@@ -56,25 +81,12 @@ public class BloodiedScreen implements Screen {
         percentage = ((currentCollegesKilled / collegesKilledObjective) );
         percentage = percentage * 100;
 
-
+        if(collegesKilledObjective == currentCollegesKilled){
+            percentage = 100;
+            completion = "- Completed!";
+        }
         progressBar.scaleBy(500 * (percentage/100),22);
-
-        //Set the input processor
         Gdx.input.setInputProcessor(stage);
-        // Create a table that fills the screen
-        Table table = new Table();
-        Table titleTable = new Table();
-        titleTable.setFillParent(true);
-        stage.addActor(titleTable);
-        table.setFillParent(true);
-        stage.addActor(table);
-
-
-        // Table for the return button
-        final Table Other = new Table();
-        Other.setFillParent(true);
-        stage.addActor(Other);
-
 
         //The skin for the actors
         Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -106,9 +118,15 @@ public class BloodiedScreen implements Screen {
         int percentagePercever = (int) percentage;
 
         progressBarLabel = new Label(" Progress : Colleges Destroyed: " + collegesKilledPercever + " / " + collegesKilledObjectivePercever , skin);
-        percentageLabel = new Label(percentagePercever + " % ", skin);
+        percentageLabel = new Label(percentagePercever + " % " + completion, skin);
 
 
+
+        if(currentCollegesKilled < 2){
+            lvl2Button.setDisabled(true);
+        }else{
+            lvl2Button.setDisabled(false);
+        }
 
 
         titleTable.center().top();
@@ -127,7 +145,7 @@ public class BloodiedScreen implements Screen {
         table.row().pad(20, 0, 20, 0);
         table.add(progressBarLabel);
         table.add(progressBar).left().pad(20, 8, 0 ,8);
-        table.add(percentageLabel);
+        table.add(percentageLabel).padLeft(10).padRight(10);
 
 
 
