@@ -134,6 +134,16 @@ public class SkillsScreen implements Screen {
 			disablingRay.setDisabled(true);
 		}
 		shield = new TextButton("Shield", skin);
+		shield.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+				parent.changeScreen(PirateGame.SHIELD);
+			}
+		});
+
+
+
 		if (states.get(2) == 1) {
 			shield.setDisabled(true);
 		}

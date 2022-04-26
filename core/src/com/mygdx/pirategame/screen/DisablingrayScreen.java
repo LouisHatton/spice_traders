@@ -100,7 +100,7 @@ public class DisablingrayScreen implements Screen {
         lvl1Button = new TextButton("Level 1 - Base ability", skin);
         lvl2Button = new TextButton("Level 2 - Max Level", skin);
 
-        lvl1ButtonLabel = new Label("On button press E creates a ray that stops all ships from targeting the player for 3 seconds (6 second cool down)", skin);
+        lvl1ButtonLabel = new Label("On button press (left Shift) creates a ray that stops all ships from targeting the player for 3 seconds (6 second cool down)", skin);
         lvl2ButtonLabel = new Label("The ships that are targeting the player will lose 50% of their health when this ability is activated (drops cool down from 6 to 5)", skin);
         lvl1ButtonLabel2 = new Label("Capture 1 college", skin);
         lvl2ButtonLabel2 = new Label("Capture 2 colleges", skin);
@@ -132,7 +132,7 @@ public class DisablingrayScreen implements Screen {
         table.add(lvl1ButtonLabel2).padLeft(10);
         table.add(lvl1Button).padLeft(10);
         table.add(lvl1ButtonLabel);
-        table.row().pad(10, 0, 10, 0);
+        table.row().pad(20, 0, 20, 0);
         table.add(lvl2ButtonLabel2).padLeft(10);
         table.add(lvl2Button).padLeft(10);
         table.add(lvl2ButtonLabel);

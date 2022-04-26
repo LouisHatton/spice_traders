@@ -392,7 +392,7 @@ public class Player extends Entity {
 	}
 
 	void updateStats(){
-		if(boatsKilled > 15){
+		if(boatsKilled >= 5){
 			SkillsScreen.unlock(2);
 			shieldEnabled = true;
 		}

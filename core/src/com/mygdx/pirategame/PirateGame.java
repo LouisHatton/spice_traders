@@ -42,7 +42,6 @@ public class PirateGame extends Game {
 	public final static int VICTORY = 6;
 	public final static int BLOODIED = 7;
 	public final static int SHIELD = 8;
-	public final static int CRIT = 9;
 	public final static int ULTIMATE = 10;
 	public final static int BURST = 11;
 	public final static int DIFFICULTY = 12;
@@ -65,6 +64,7 @@ public class PirateGame extends Game {
 	private BloodiedScreen bloodyScreen;
 	private DisablingrayScreen disablingrayScreen;
 	private SettingsScreen settingsScreen;
+	private ShieldScreen shieldScreen;
 
 
 	private int currentScreen;
@@ -126,6 +126,11 @@ public class PirateGame extends Game {
 			case DISABLINGRAY:
 				if (disablingrayScreen == null) disablingrayScreen = new DisablingrayScreen(this);
 				this.setScreen(disablingrayScreen);
+				break;
+
+			case SHIELD:
+				if (shieldScreen == null) shieldScreen = new ShieldScreen(this);
+				this.setScreen(shieldScreen);
 				break;
 
 			case SHOP:
