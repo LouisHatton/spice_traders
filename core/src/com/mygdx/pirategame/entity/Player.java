@@ -32,7 +32,6 @@ public class Player extends Entity {
 	static float cannonBallSpeedLvl = 0;
 	static float fireRateLvl = 0;
 	static float rangeMultiplier = 0.7f;
-	static float resistanceMultiplier = 0;
 	static boolean fireRateChanged = false;
 	float firingCoolDown = 0.2f;
 	float ogFiringCoolDown = 0.2f;
@@ -57,7 +56,7 @@ public class Player extends Entity {
 	public static int amountOfShotsInUltimateFire = 10;
 	public static int burstAmountForUltimateFire = 1;
 	int burstShotsUF = 0;
-	float ultimateAmount = 0;
+	public static float ultimateAmount = 0;
 	public static float ultimateAmountMultiplier = 1f;
 
 	float ultimateBurstCoolDown = 0f;
@@ -85,6 +84,8 @@ public class Player extends Entity {
 	public static float maxNumberOfShipsFollowing = 4;
 
 	Sprite shield = new Sprite(new Texture("bubble.png"));
+
+	float ultimateTimer = 0.5f;
 
 
 
@@ -131,6 +132,17 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+		if(ultimateTimer < 0){
+			ultimateAmount += 1 * ultimateAmountMultiplier;
+			ultimateTimer = 0.5f;
+		}
+		else{
+			ultimateTimer -= dt;
+		}
+
+		if(!ultimateFirerEnabled) ultimateAmount = 100;
+
+		System.out.println(ultimateAmount);
 
 		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
 
@@ -158,7 +170,7 @@ public class Player extends Entity {
 				shieldCoolDown = shieldCoolDownOG;
 				bursted = false;
 			}
-			else if(shieldCoolDown > 0) {
+			if(shieldCoolDown > 0) {
 				shieldCoolDown -= dt;
 				if(protectedTimer <= 0){
 					shield.setSize(2f,2f);
@@ -194,7 +206,10 @@ public class Player extends Entity {
 			firingCoolDown -= dt;
 		}
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.Q)) burstShotsUF = burstAmountForUltimateFire;
+		if(Gdx.input.isKeyJustPressed(Input.Keys.Q) && ultimateAmount >= 100 && ultimateFirerEnabled) {
+			burstShotsUF = burstAmountForUltimateFire;
+			ultimateAmount = 0;
+		}
 
 		if(ultimateBurstCoolDown <= 0){
 			if(burstShotsUF > 0) {
@@ -419,7 +434,7 @@ public class Player extends Entity {
 				protectTime = 4f;
 			}
 			if(boatsKilled >= 13){
-				shieldCoolDown = 7;
+				shieldCoolDownOG = 7;
 			}
 			if(boatsKilled >= 15){
 				healBubble = true;

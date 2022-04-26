@@ -131,6 +131,7 @@ public class EnemyShip extends Enemy {
 			HUD.changePoints(20);
 			HUD.changeCoins(10);
 			ActiveGameScreen.player.setBoatsKilled(1);
+			ActiveGameScreen.player.ultimateAmount += 5 * ActiveGameScreen.player.ultimateAmountMultiplier;
 		} else if (!isDestroyed()) {
 			//Update position and angle of ship
 			setPosition(body.getPosition().x - getWidth() / 2f, body.getPosition().y - getHeight() / 2f);

@@ -120,6 +120,7 @@ public class College extends Enemy {
 			if(pointsCoolDown <= 0){
 				HUD.changePoints(2);
 				HUD.changeCoins(1);
+				ActiveGameScreen.player.ultimateAmount += 1 * ActiveGameScreen.player.ultimateAmountMultiplier;
 				pointsCoolDown = ogCoolDown;
 			}
 			else {
@@ -140,6 +141,7 @@ public class College extends Enemy {
 			if (!currentCollege.equals("alcuin_flag.png")) {
 				HUD.changePoints(100);
 				HUD.changeCoins(ThreadLocalRandom.current().nextInt(10));
+				ActiveGameScreen.player.ultimateAmount += 20 * ActiveGameScreen.player.ultimateAmountMultiplier;
 			}
 		}
 		//If not destroyed, update the college position
