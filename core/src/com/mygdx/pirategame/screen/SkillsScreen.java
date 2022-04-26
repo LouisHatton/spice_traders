@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
+import com.mygdx.pirategame.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,12 +69,12 @@ public class SkillsScreen implements Screen {
 	public static void pointsCheck(int points) {
 
 
-		 if (states.get(3) == 1 && points >= 500) {
+		 if (states.get(3) == 1 && points >= 200) {
 
 			states.set(3, 0);
 
 		}
-		 else if (states.get(4) == 1 && points >= 1000) {
+		 else if (states.get(4) == 1 && points >= 500) {
 
 			states.set(4, 0);
 		}
@@ -150,12 +151,28 @@ public class SkillsScreen implements Screen {
 
 		secondaryAbility = new TextButton("Secondary Ability", skin);
 
+		secondaryAbility.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+				parent.changeScreen(PirateGame.BURST);
+			}
+		});
+
 		if (states.get(3) == 1) {
 			secondaryAbility.setDisabled(true);
 
 		}
 
 		ultimateAbility = new TextButton("Ultimate Ability", skin);
+
+		ultimateAbility.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+
+				parent.changeScreen(PirateGame.ULTIMATE);
+			}
+		});
 
 		if (states.get(4) == 1) {
 			ultimateAbility.setDisabled(true);
@@ -174,22 +191,50 @@ public class SkillsScreen implements Screen {
 			}
 		});
 
+
+
+
+
+
+
+
+
 		//add buttons and labels to main table
+		if(ActiveGameScreen.player.getCollegesKilled() == 0) {
+			Label bloodiedLabel = new Label("Destroy a college to unlock ", skin);
+			table.add(bloodiedLabel);
+		}
 		table.add(bloodied);
 
 		table.row().pad(10, 0, 10, 0);
+		if(ActiveGameScreen.player.getCollegesCaptured() == 0) {
+			Label disablingRayLabel = new Label("Capture a college to unlock ", skin);
+			table.add(disablingRayLabel);
+		}
 		table.add(disablingRay);
 
 		table.row().pad(10, 0, 10, 0);
+		if(ActiveGameScreen.player.getBoatsKilled() < 5) {
+			Label shieldLabel = new Label("Destroy 5 Ships to unlock ", skin);
+			table.add(shieldLabel);
+		}
 		table.add(shield);
 
 		table.row().pad(10, 0, 10, 0);
+		if(HUD.getScore() < 200) {
+			Label secondaryLabel = new Label("Gather 200 Score to unlock ", skin);
+			table.add(secondaryLabel);
+		}
 		table.add(secondaryAbility);
 
 		table.row().pad(10, 0, 10, 0);
+		if(HUD.getScore() < 500) {
+			Label ultimateLabel = new Label("Gather 500 Score to unlock ", skin);
+			table.add(ultimateLabel);
+		}
 		table.add(ultimateAbility);
 
-		table.top();
+		table.center();
 
 		//add return button
 		Other.add(backButton);

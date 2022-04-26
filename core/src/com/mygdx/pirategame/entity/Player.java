@@ -50,11 +50,15 @@ public class Player extends Entity {
 	public static boolean burstHeal = false;
 	public static boolean bursted = false;
 
+	public static boolean ultimateFirerEnabled = false;
+
 	public static boolean isBloodied = false;
 
-	int amountOfShotsInUltimateFire = 15;
-	int burstAmountForUltimateFire = 2;
+	public static int amountOfShotsInUltimateFire = 10;
+	public static int burstAmountForUltimateFire = 1;
 	int burstShotsUF = 0;
+	float ultimateAmount = 0;
+	public static float ultimateAmountMultiplier = 1f;
 
 	float ultimateBurstCoolDown = 0f;
 	float ultimateBurstOGCoolDown = 0.5f;
@@ -289,7 +293,7 @@ public class Player extends Entity {
 	}
 
 	public void ultimateFirer(){
-		if(HUD.getScore() < 1000) return;
+		if(!ultimateFirerEnabled) return;
 		for(int i = 0; i <= amountOfShotsInUltimateFire; i++){
 			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT ));
 

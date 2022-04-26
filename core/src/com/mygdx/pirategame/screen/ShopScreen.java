@@ -285,7 +285,7 @@ public class ShopScreen implements Screen {
         table.row().pad(10, 0, 10, 0);
         table.add(this.goldMultiplierButton);
         table.add(GoldMulti1Label);
-        table.top();
+        table.center();
 
         //add return button
         Other.add(this.backButton);

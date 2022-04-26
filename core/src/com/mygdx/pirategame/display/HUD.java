@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.Player;
+import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.screen.SkillsScreen;
 
 /**
@@ -177,6 +178,40 @@ public class HUD implements Disposable {
 		scoreLabel.setText(String.format("%03d", score));
 		//Check if a points boundary is met
 		SkillsScreen.pointsCheck(score);
+
+		if(score >= 200){
+
+		}
+		if(score >= 400){
+
+		}
+		if(score >= 500){
+			ActiveGameScreen.player.ultimateFirerEnabled = true;
+		}
+		if(score >= 600){
+
+		}
+		if(score >= 650){
+			ActiveGameScreen.player.ultimateAmountMultiplier = 1.5f;
+		}
+		if(score >= 800){
+			ActiveGameScreen.player.amountOfShotsInUltimateFire = 15;
+		}
+		if(score >= 950){
+			ActiveGameScreen.player.ultimateAmountMultiplier = 2f;
+		}
+		if(score >= 1000){
+
+		}
+		if(score >= 1100){
+			ActiveGameScreen.player.amountOfShotsInUltimateFire = 20;
+		}
+		if(score >= 1200){
+
+		}
+		if(score >= 1250){
+			ActiveGameScreen.player.burstAmountForUltimateFire = 2;
+		}
 	}
 
 	/**

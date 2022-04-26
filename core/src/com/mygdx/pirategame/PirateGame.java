@@ -65,6 +65,8 @@ public class PirateGame extends Game {
 	private DisablingrayScreen disablingrayScreen;
 	private SettingsScreen settingsScreen;
 	private ShieldScreen shieldScreen;
+	private UltimateScreen ultimateScreen;
+	private BurstScreen burstScreen;
 
 
 	private int currentScreen;
@@ -131,6 +133,14 @@ public class PirateGame extends Game {
 			case SHIELD:
 				if (shieldScreen == null) shieldScreen = new ShieldScreen(this);
 				this.setScreen(shieldScreen);
+				break;
+			case ULTIMATE:
+				if (ultimateScreen == null) ultimateScreen = new UltimateScreen(this);
+				this.setScreen(ultimateScreen);
+				break;
+			case BURST:
+				if (burstScreen == null) burstScreen = new BurstScreen(this);
+				this.setScreen(burstScreen);
 				break;
 
 			case SHOP:
