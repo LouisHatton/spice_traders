@@ -84,6 +84,7 @@ public class Player extends Entity {
 	public static float maxNumberOfShipsFollowing = 4;
 
 	Sprite shield = new Sprite(new Texture("bubble.png"));
+	Sprite emp = new Sprite(new Texture("EMP.png"));
 
 	float ultimateTimer = 0.5f;
 
@@ -93,6 +94,11 @@ public class Player extends Entity {
 	public static boolean rayLvl2 = false;
 	public static boolean stopFollowing = false;
 	float rayActiveFor = 0;
+
+	boolean empExplosion = false;
+	float empExplosionCooldown = 0;
+	float empExplosionCooldownOG = 0.4f;
+	boolean empSet = false;
 
 
 
@@ -139,6 +145,26 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+		emp.setCenter(getBody().getPosition().x, getBody().getPosition().y);
+		if(empExplosion){
+			if(!empSet){
+
+				empExplosionCooldown = empExplosionCooldownOG;
+				emp.setSize(0.5f, 0.5f);
+				empSet = true;
+			}
+			empExplosionCooldown -= dt;
+
+			if(empExplosionCooldown <= 0){
+				empExplosion = false;
+			}
+			emp.setSize(emp.getWidth() + (emp.getWidth()/2), emp.getHeight() + (emp.getHeight()/2));
+	}
+
+
+
+
+
 		if(rayEnabled){
 			if(stopFollowing){
 				rayActiveFor -= dt;
@@ -151,6 +177,9 @@ public class Player extends Entity {
 				stopFollowing = true;
 				rayActiveFor = 3f;
 				System.out.println("Activated");
+
+				empExplosion = true;
+				empSet = false;
 			}
 			if(disablingRayCooldown >= 0){
 				disablingRayCooldown -= dt;
@@ -414,6 +443,7 @@ public class Player extends Entity {
 		super.draw(batch);
 
 		if(protectedTimer > 0) shield.draw(batch);
+		if(empExplosion) emp.draw(batch);
 
 		for (CannonFire ball : cannonBalls)
 			ball.draw(batch);
