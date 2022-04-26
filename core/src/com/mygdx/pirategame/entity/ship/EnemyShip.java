@@ -97,8 +97,14 @@ public class EnemyShip extends Enemy {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
-
 		getBar().update();
+		if(ActiveGameScreen.player.stopFollowing && isFollowing){
+			isFollowing = false;
+			ActiveGameScreen.player.numberOfShipsFollowing = 0;
+			if(ActiveGameScreen.player.rayLvl2){
+				takeDamage(getMaxHealth()/2);
+			}
+		}
 		if(college == "Alcuin" && isFollowing){
 			isFollowing = false;
 			ActiveGameScreen.player.numberOfShipsFollowing --;
@@ -136,7 +142,7 @@ public class EnemyShip extends Enemy {
 			//Update position and angle of ship
 			setPosition(body.getPosition().x - getWidth() / 2f, body.getPosition().y - getHeight() / 2f);
 			float angle = (float) Math.atan2(body.getLinearVelocity().y, body.getLinearVelocity().x);
-			if((this.detectBox.overlaps(ActiveGameScreen.player.hitBox) || isFollowing) && college != "Alcuin"){
+			if((this.detectBox.overlaps(ActiveGameScreen.player.hitBox) || isFollowing) && college != "Alcuin" && !ActiveGameScreen.player.stopFollowing){
 				if(ActiveGameScreen.player.numberOfShipsFollowing < ActiveGameScreen.player.maxNumberOfShipsFollowing){
 					if(!isFollowing)ActiveGameScreen.player.numberOfShipsFollowing++;
 					isFollowing = true;

@@ -87,6 +87,13 @@ public class Player extends Entity {
 
 	float ultimateTimer = 0.5f;
 
+	float disablingRayCooldown = 0f;
+	public static float disablingRayCooldownOg = 6f;
+	public boolean rayEnabled = false;
+	public static boolean rayLvl2 = false;
+	public static boolean stopFollowing = false;
+	float rayActiveFor = 0;
+
 
 
 	/**
@@ -132,6 +139,27 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+		if(rayEnabled){
+			if(stopFollowing){
+				rayActiveFor -= dt;
+				if(rayActiveFor <= 0){
+					stopFollowing = false;
+				}
+			}
+			if(Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && disablingRayCooldown <= 0){
+				disablingRayCooldown = disablingRayCooldownOg;
+				stopFollowing = true;
+				rayActiveFor = 3f;
+				System.out.println("Activated");
+			}
+			if(disablingRayCooldown >= 0){
+				disablingRayCooldown -= dt;
+			}
+		}
+
+
+
+
 		if(ultimateTimer < 0){
 			ultimateAmount += 1 * ultimateAmountMultiplier;
 			ultimateTimer = 0.5f;
@@ -142,7 +170,7 @@ public class Player extends Entity {
 
 		if(!ultimateFirerEnabled) ultimateAmount = 100;
 
-		System.out.println(ultimateAmount);
+		//System.out.println(ultimateAmount);
 
 		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
 
@@ -455,8 +483,17 @@ public class Player extends Entity {
 		}
 		if(collegesCaptured >= 1){
 			SkillsScreen.unlock(1);
+			rayEnabled = true;
+			if(collegesCaptured >= 2){
+				rayLvl2 = true;
+			}
+			else{
+				rayLvl2 = false;
+			}
 		}
 		else{
+			rayEnabled = false;
+			rayLvl2 = false;
 			SkillsScreen.lock(1);
 		}
 	}

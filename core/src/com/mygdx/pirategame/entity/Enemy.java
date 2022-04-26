@@ -107,6 +107,10 @@ public abstract class Enemy extends Entity {
 		this.getBar().update();
 		this.getBar().setHealth(health/maxHealth);
 	}
+
+	public float getMaxHealth(){
+		return maxHealth;
+	}
 	public void changeIustDied (boolean input) {this.justDied = input;}
 	public void initHealthBar() {
 		this.bar = new HealthBar(this);
