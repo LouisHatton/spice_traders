@@ -29,7 +29,7 @@ public class SkillsScreen implements Screen {
 
 	//To store whether buttons are enabled or disabled
 	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1, 1);
-	private static TextButton bloodied;
+	private TextButton bloodied;
 	final Table Other = new Table();
 	private final PirateGame parent;
 	private final Stage stage;
@@ -45,9 +45,9 @@ public class SkillsScreen implements Screen {
 	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
 	 */
 //In the constructor, the parent and stage are set. Also the states list is set
-	public SkillsScreen(PirateGame pirateGame) {
+	public SkillsScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
-		stage = new Stage(new ScreenViewport());
+		this.stage = stage;
 	}
 
 	public static void unlock(int i) {
@@ -65,8 +65,6 @@ public class SkillsScreen implements Screen {
 	 * @param points the current amount of points
 	 */
 	public static void pointsCheck(int points) {
-
-
 		if (states.get(3) == 1 && points >= 200) {
 
 			states.set(3, 0);
@@ -289,6 +287,26 @@ public class SkillsScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+
+	public TextButton getBloodiedButton() {
+		return bloodied;
+	}
+
+	public TextButton getShieldButton() {
+		return shield;
+	}
+
+	public TextButton getUltimateAbilityButton() {
+		return ultimateAbility;
+	}
+
+	public TextButton getSecondaryAbilityButton() {
+		return secondaryAbility;
+	}
+
+	public TextButton getDisablingRayButton() {
+		return disablingRay;
 	}
 }
 

@@ -24,16 +24,22 @@ public class SettingsScreen implements Screen {
 	private final Screen parent;
 	private final Stage stage;
 
+	private Slider volumeMusicSlider;
+	private CheckBox musicCheckbox;
+	private Slider volumeEffectSlider;
+	private CheckBox effectCheckbox;
+	private TextButton backButton;
+
 	/**
 	 * Instantiates a new Options screen
 	 *
 	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
 	 * @param parent     the screen that called the options screen. Allows for easy return
 	 */
-	public SettingsScreen(PirateGame pirateGame, Screen parent) {
+	public SettingsScreen(PirateGame pirateGame, Screen parent, Stage stage) {
 		this.PirateGame = pirateGame;
 		this.parent = parent;
-		stage = new Stage(new ScreenViewport());
+		this.stage = stage;
 	}
 
 	/**
@@ -53,7 +59,7 @@ public class SettingsScreen implements Screen {
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 		//Music Sliders and Check boxes
-		final Slider volumeMusicSlider = new Slider(0f, 1f, 0.1f, false, skin);
+		this.volumeMusicSlider = new Slider(0f, 1f, 0.1f, false, skin);
 
 		//Set value to current option
 		volumeMusicSlider.setValue(PirateGame.getPreferences().getMusicVolume());
@@ -68,7 +74,7 @@ public class SettingsScreen implements Screen {
 			}
 		});
 
-		final CheckBox musicCheckbox = new CheckBox(null, skin);
+		this.musicCheckbox = new CheckBox(null, skin);
 
 		//Check if it should be checked or unchecked by default
 		musicCheckbox.setChecked(PirateGame.getPreferences().isMusicEnabled());
@@ -90,7 +96,7 @@ public class SettingsScreen implements Screen {
 		});
 
 		//EFFECTS
-		final Slider volumeEffectSlider = new Slider(0f, 1f, 0.1f, false, skin);
+		this.volumeEffectSlider = new Slider(0f, 1f, 0.1f, false, skin);
 		volumeEffectSlider.setValue(PirateGame.getPreferences().getEffectsVolume()); //Set value to current option
 		volumeEffectSlider.addListener(new EventListener() {
 			@Override
@@ -100,7 +106,7 @@ public class SettingsScreen implements Screen {
 			}
 		});
 
-		final CheckBox effectCheckbox = new CheckBox(null, skin);
+		this.effectCheckbox = new CheckBox(null, skin);
 		effectCheckbox.setChecked(PirateGame.getPreferences().isEffectsEnabled());
 		effectCheckbox.addListener(new EventListener() {
 			@Override
@@ -112,7 +118,7 @@ public class SettingsScreen implements Screen {
 		});
 
 		// return to main screen button
-		TextButton backButton = new TextButton("Back", skin);
+		this.backButton = new TextButton("Back", skin);
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -206,6 +212,26 @@ public class SettingsScreen implements Screen {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+	}
+
+	public Slider getVolumeMusicSlider() {
+		return volumeMusicSlider;
+	}
+
+	public CheckBox getMusicCheckbox() {
+		return musicCheckbox;
+	}
+
+	public Slider getVolumeEffectSlider() {
+		return volumeEffectSlider;
+	}
+
+	public CheckBox getEffectCheckbox() {
+		return effectCheckbox;
+	}
+
+	public TextButton getBackButton() {
+		return backButton;
 	}
 }
 

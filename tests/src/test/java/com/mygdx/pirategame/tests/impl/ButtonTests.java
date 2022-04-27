@@ -1,6 +1,7 @@
 package com.mygdx.pirategame.tests.impl;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -130,6 +131,74 @@ public class ButtonTests {
 		shopScreen.getGoldMultiplierButton().toggle();
 
 		ShopScreen.resetStats();
+		assertTrue(true); // no errors occur.
+	}
+
+	@Test()
+	public void testUltimateButtons() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		UltimateScreen ultimateScreen = new UltimateScreen(pirateGame, MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "ultimateScreen", ultimateScreen);
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
+
+		pirateGame.changeScreen(PirateGame.ULTIMATE);
+
+		ultimateScreen.show();
+
+		ultimateScreen.getLvl1Button().toggle();
+		ultimateScreen.getLvl2Button().toggle();
+		ultimateScreen.getLvl3Button().toggle();
+		ultimateScreen.getLvl4Button().toggle();
+		ultimateScreen.getLvl5Button().toggle();
+		ultimateScreen.getLvl6Button().toggle();
+		ultimateScreen.getReturnButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
+
+	@Test()
+	public void testSkillButtons() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		SkillsScreen skillsScreen = new SkillsScreen(pirateGame, MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", skillsScreen);
+		Whitebox.setInternalState(pirateGame, "ultimateScreen", Mockito.mock(UltimateScreen.class));
+		Whitebox.setInternalState(pirateGame, "bloodyScreen", Mockito.mock(BloodiedScreen.class));
+		Whitebox.setInternalState(pirateGame, "disablingrayScreen", Mockito.mock(DisablingrayScreen.class));
+		Whitebox.setInternalState(pirateGame, "burstScreen", Mockito.mock(BurstScreen.class));
+		Whitebox.setInternalState(pirateGame, "shieldScreen", Mockito.mock(ShieldScreen.class));
+
+		pirateGame.changeScreen(PirateGame.SKILL);
+
+		skillsScreen.show();
+
+		skillsScreen.getBloodiedButton().toggle();
+		skillsScreen.getDisablingRayButton().toggle();
+		skillsScreen.getShieldButton().toggle();
+		skillsScreen.getSecondaryAbilityButton().toggle();
+		skillsScreen.getUltimateAbilityButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
+
+	@Test()
+	public void testSettingsButtons() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		SettingsScreen settingsScreen = new SettingsScreen(pirateGame, pirateGame.getScreen(), MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "song", Mockito.mock(Music.class));
+		Whitebox.setInternalState(pirateGame, "settingsScreen", settingsScreen);
+		pirateGame.changeScreen(PirateGame.SETTINGS);
+
+		settingsScreen.show();
+
+		settingsScreen.getBackButton().toggle();
+		settingsScreen.getEffectCheckbox().toggle();
+		settingsScreen.getMusicCheckbox().toggle();
+		settingsScreen.getVolumeEffectSlider().fire(new ChangeListener.ChangeEvent());
+		settingsScreen.getVolumeMusicSlider().fire(new ChangeListener.ChangeEvent());
+
 		assertTrue(true); // no errors occur.
 	}
 }

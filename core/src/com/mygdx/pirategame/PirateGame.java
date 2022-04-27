@@ -109,12 +109,12 @@ public class PirateGame extends Game {
 
 			case GAME:
 				if (gameScreen == null) gameScreen = new ActiveGameScreen(this);
-				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this);
+				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(gameScreen);
 				break;
 
 			case SKILL:
-				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this);
+				if (skillTreeScreen == null) skillTreeScreen = new SkillsScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(skillTreeScreen);
 				break;
 
@@ -133,7 +133,7 @@ public class PirateGame extends Game {
 				this.setScreen(shieldScreen);
 				break;
 			case ULTIMATE:
-				if (ultimateScreen == null) ultimateScreen = new UltimateScreen(this);
+				if (ultimateScreen == null) ultimateScreen = new UltimateScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(ultimateScreen);
 				break;
 			case BURST:
@@ -167,7 +167,7 @@ public class PirateGame extends Game {
 				break;
 
 			case SETTINGS:
-				if (settingsScreen == null) settingsScreen = new SettingsScreen(this, this.screen);
+				if (settingsScreen == null) settingsScreen = new SettingsScreen(this, this.screen, new Stage(new ScreenViewport()));
 				this.setScreen(settingsScreen);
 
 				break;

@@ -101,7 +101,7 @@ public class MainMenuScreen implements Screen {
 		options.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				parent.setScreen(new SettingsScreen(parent, parent.getScreen()));
+				parent.setScreen(new SettingsScreen(parent, parent.getScreen(), new Stage(new ScreenViewport())));
 			}
 		});
 
