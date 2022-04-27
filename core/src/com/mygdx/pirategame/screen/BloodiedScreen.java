@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
-import jdk.jfr.Percentage;
 
 import java.util.Arrays;
 import java.util.List;
