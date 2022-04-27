@@ -80,7 +80,7 @@ public class BurstScreen implements Screen {
         String completion = "";
 
 
-        progressBar =  new Image(new Sprite(new Texture("blank.PNG")));
+        progressBar =  new Image(new Sprite(new Texture("blank.png")));
 
 
         score = HUD.getScore();

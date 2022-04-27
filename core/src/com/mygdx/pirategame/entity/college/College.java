@@ -58,7 +58,7 @@ public class College extends Enemy {
 		defineEntity();
 		super.initHealthBar();
 
-		setDamage(10);
+		setDamage(2);
 		cannonBalls = new Array<>();
 		int ranX = 0;
 		int ranY = 0;

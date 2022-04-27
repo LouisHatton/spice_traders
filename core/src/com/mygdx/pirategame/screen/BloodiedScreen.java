@@ -24,7 +24,8 @@ public class BloodiedScreen implements Screen {
     private int collegesKilledObjective = 1;
     private float percentage = 0;
     private final PirateGame parent;
-    private final Stage stage;
+
+    private Stage stage;
 
     private TextButton returnButton;
     private TextButton lvl1Button;
@@ -44,9 +45,9 @@ public class BloodiedScreen implements Screen {
 
     Image progressBar;
 
-    public BloodiedScreen(PirateGame pirateGame) {
+    public BloodiedScreen(PirateGame pirateGame, Stage stage) {
         parent = pirateGame;
-        stage = new Stage(new ScreenViewport());
+        this.stage = stage;
     }
 
 
@@ -72,7 +73,7 @@ public class BloodiedScreen implements Screen {
         String completion = "";
 
 
-        progressBar =  new Image(new Sprite(new Texture("blank.PNG")));
+        progressBar =  new Image(new Sprite(new Texture("blank.png")));
 
 
         currentCollegesKilled = ActiveGameScreen.player.getCollegesKilled();

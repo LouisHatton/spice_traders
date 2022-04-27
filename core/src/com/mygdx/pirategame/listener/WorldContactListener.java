@@ -106,12 +106,12 @@ public class WorldContactListener implements ContactListener {
 	public void handleWallAndPlayer(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.DEFAULT_BIT) {
 			if (fixA.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixA.getUserData().getClass())) {
-				//((InteractiveTileObject) fixA.getUserData()).onContact();
+				((InteractiveTileObject) fixA.getUserData()).onContact();
 				((Player) fixB.getUserData()).playBreakSound();
 			}
 		} else {
 			if (fixB.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixB.getUserData().getClass())) {
-				//((InteractiveTileObject) fixB.getUserData()).onContact();
+				((InteractiveTileObject) fixB.getUserData()).onContact();
 			}
 		}
 	}

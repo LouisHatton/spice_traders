@@ -114,7 +114,7 @@ public class HUD implements Disposable {
 	 */
 	public static void changeHealth(int value) {
 		if(respawnProtection > 0) return;
-		if(value < 0 && Player.protectedTimer > 0) return;
+		if(value < 0 && Player.protectedTimer > 0f) return;
 		if(value > 0 ) {
 			if(health + value > maxHealth){
 				health = (int) maxHealth;

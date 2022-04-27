@@ -121,7 +121,7 @@ public class PirateGame extends Game {
 				break;
 
 			case BLOODIED:
-				if (bloodyScreen == null) bloodyScreen = new BloodiedScreen(this);
+				if (bloodyScreen == null) bloodyScreen = new BloodiedScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(bloodyScreen);
 				break;
 

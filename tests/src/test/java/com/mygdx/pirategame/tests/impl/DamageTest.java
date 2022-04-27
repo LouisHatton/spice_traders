@@ -76,6 +76,8 @@ public class DamageTest {
 		activeGameScreen.gameOverCheck();
 
 		assertEquals("You are not dead!", PirateGame.DEATH, pirateGame.getCurrentScreen());
+
+		HUD.respawnProtection = 0f;
 	}
 
 	@Test

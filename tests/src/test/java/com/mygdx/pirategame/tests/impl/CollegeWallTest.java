@@ -39,7 +39,7 @@ public class CollegeWallTest {
 		collegeWalls.update();
 		collegeWalls.onContact();
 
-		assertEquals("Did not take expected damage.", 90, college.getHealth());
+		assertEquals("Did not take expected damage.", 98, college.getHealth());
 	}
 
 	@Test

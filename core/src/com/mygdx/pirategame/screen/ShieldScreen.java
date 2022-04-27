@@ -79,7 +79,7 @@ public class ShieldScreen implements Screen {
         String completion = "";
 
 
-        progressBar =  new Image(new Sprite(new Texture("blank.PNG")));
+        progressBar =  new Image(new Sprite(new Texture("blank.png")));
 
 
         boatsKilled = ActiveGameScreen.player.getBoatsKilled();

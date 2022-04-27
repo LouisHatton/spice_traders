@@ -64,7 +64,7 @@ public class ListenerTest {
 
 		worldContactListener.handleWallAndPlayer(fixtureA, fixtureB);
 
-		assertEquals(activeGameScreen.getCollege("Alcuin").getHealth(), 90);
+		assertEquals(activeGameScreen.getCollege("Alcuin").getHealth(), 98);
 	}
 
 	@Test
@@ -141,9 +141,10 @@ public class ListenerTest {
 		Fixture fixtureA = mockFixture(PirateGame.COLLEGEFIRE_BIT, collegeFire);
 		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, player);
 
+		System.out.println(HUD.respawnProtection);
 		worldContactListener.handleCollegeFireAndPlayer(fixtureA, fixtureB);
 
-		assertEquals(HUD.getHealth(), 85);
+		assertEquals(90, HUD.getHealth());
 	}
 
 	private Fixture mockFixture(short category, Object userData) {

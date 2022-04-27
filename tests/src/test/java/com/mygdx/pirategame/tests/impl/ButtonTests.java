@@ -3,6 +3,7 @@ package com.mygdx.pirategame.tests.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.screen.*;
@@ -68,15 +69,9 @@ public class ButtonTests {
 	@Test(expected = Test.None.class)
 	public void testBloodiedButton() {
 		PirateGame pirateGame = MockUtilities.createGame();
-		BloodiedScreen bloodiedScreen = Mockito.mock(BloodiedScreen.class);
+		BloodiedScreen bloodiedScreen = new BloodiedScreen(pirateGame, MockUtilities.mockStage());
 
 		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
-		Whitebox.setInternalState(bloodiedScreen, "stage", Mockito.mock(Stage.class));
-		Whitebox.setInternalState(bloodiedScreen, "parent", pirateGame);
-		Mockito.doCallRealMethod().when(bloodiedScreen).show();
-		Mockito.when(bloodiedScreen.getReturnButton()).thenCallRealMethod();
-
-
 		Whitebox.setInternalState(pirateGame, "bloodyScreen", bloodiedScreen);
 
 		pirateGame.changeScreen(PirateGame.BLOODIED);

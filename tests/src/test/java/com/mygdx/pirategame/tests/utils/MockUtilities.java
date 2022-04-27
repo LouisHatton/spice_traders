@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Player;
@@ -32,6 +34,8 @@ public class MockUtilities {
 		Whitebox.setInternalState(display, "scoreLabel", new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
 		Whitebox.setInternalState(display, "coinLabel", new Label("0", new Label.LabelStyle(new BitmapFont(), Color.YELLOW)));
 		Whitebox.setInternalState(display, "coinMulti", 1);
+
+		HUD.respawnProtection = 0f;
 
 		HUD.setScore(0);
 		HUD.setCoins(0);
@@ -96,5 +100,14 @@ public class MockUtilities {
 
 	public static Player mockPlayer(ActiveGameScreen activeGameScreen) {
 		return new Player(activeGameScreen, 1, 1, 1, 1, new OrthographicCamera());
+	}
+
+	public static Stage mockStage() {
+		Stage stage = Mockito.mock(Stage.class);
+		ScreenViewport screenViewport = Mockito.mock(ScreenViewport.class);
+
+		Mockito.when(stage.getViewport()).thenReturn(screenViewport);
+
+		return stage;
 	}
 }
