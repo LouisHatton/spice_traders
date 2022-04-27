@@ -48,9 +48,9 @@ public class BurstScreen implements Screen {
 	private Label progressBarLabel;
 	private Label percentageLabel;
 
-	public BurstScreen(PirateGame pirateGame) {
+	public BurstScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
-		stage = new Stage(new ScreenViewport());
+		this.stage = stage;
 	}
 
 
@@ -259,6 +259,30 @@ public class BurstScreen implements Screen {
 
 	public TextButton getReturnButton() {
 		return returnButton;
+	}
+
+	public TextButton getLvl1Button() {
+		return lvl1Button;
+	}
+
+	public TextButton getLvl2Button() {
+		return lvl2Button;
+	}
+
+	public TextButton getLvl3Button() {
+		return lvl3Button;
+	}
+
+	public TextButton getLvl4Button() {
+		return lvl4Button;
+	}
+
+	public TextButton getLvl5Button() {
+		return lvl5Button;
+	}
+
+	public TextButton getLvl6Button() {
+		return lvl6Button;
 	}
 }
 

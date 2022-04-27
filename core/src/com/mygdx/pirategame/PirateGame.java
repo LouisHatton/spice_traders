@@ -137,7 +137,7 @@ public class PirateGame extends Game {
 				this.setScreen(ultimateScreen);
 				break;
 			case BURST:
-				if (burstScreen == null) burstScreen = new BurstScreen(this);
+				if (burstScreen == null) burstScreen = new BurstScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(burstScreen);
 				break;
 

@@ -201,4 +201,28 @@ public class ButtonTests {
 
 		assertTrue(true); // no errors occur.
 	}
+
+	@Test()
+	public void testBurstButtons() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		BurstScreen burstScreen = new BurstScreen(pirateGame, MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "burstScreen", burstScreen);
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
+
+		pirateGame.changeScreen(PirateGame.BURST);
+
+		HUD.setScore(1300);
+		burstScreen.show();
+
+		burstScreen.getLvl1Button().toggle();
+		burstScreen.getLvl2Button().toggle();
+		burstScreen.getLvl3Button().toggle();
+		burstScreen.getLvl4Button().toggle();
+		burstScreen.getLvl5Button().toggle();
+		burstScreen.getLvl6Button().toggle();
+		burstScreen.getReturnButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
 }
