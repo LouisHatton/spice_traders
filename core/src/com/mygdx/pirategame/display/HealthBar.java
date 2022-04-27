@@ -20,10 +20,8 @@ public class HealthBar {
 
 	private final Sprite healthBar;
 	private final Texture image;
-
-	private float healthbarLength;
-
 	private final Enemy owner;
+	private float healthbarLength;
 
 	/**
 	 * Instantiates health bar
@@ -75,11 +73,11 @@ public class HealthBar {
 		healthBar.setSize(healthBar.getWidth() - value, healthBar.getHeight());
 	}
 
-	public void setHealth(float amount){
+	public void setHealth(float amount) {
 		healthBar.setSize(healthbarLength * amount, healthBar.getHeight());
 	}
 
-	public void deathSize(){
-		healthBar.setSize(0f,0);
+	public void deathSize() {
+		healthBar.setSize(0f, 0);
 	}
 }

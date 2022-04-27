@@ -1,7 +1,6 @@
 package com.mygdx.pirategame.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
@@ -29,77 +28,60 @@ import com.mygdx.pirategame.screen.SkillsScreen;
  * @version 1.0
  */
 public class Player extends Entity {
+	public static boolean healBubble = false;
+	public static boolean burstHeal = false;
+	public static boolean bursted = false;
+	public static boolean ultimateFirerEnabled = false;
+	public static boolean isBloodied = false;
+	public static int amountOfShotsInUltimateFire = 10;
+	public static int burstAmountForUltimateFire = 1;
+	public static float ultimateAmount = 0;
+	public static float ultimateAmountMultiplier = 1f;
+	public static float collegesCaptured = 0;
+	public static float boatsKilled = 0;
+	public static float collegesKilled = 0;
+	public static boolean shieldEnabled = false;
+	public static float protectedTimer = 0f;
+	public static float normalNumberOfShips = 4;
+	public static float numberOfShipsFollowing = 0;
+	public static float maxNumberOfShipsFollowing = 4;
+	public static float disablingRayCooldownOg = 6f;
+	public static boolean rayLvl2 = false;
+	public static boolean stopFollowing = false;
 	static float cannonBallSpeedLvl = 0;
 	static float fireRateLvl = 0;
 	static float rangeMultiplier = 0.7f;
 	static boolean fireRateChanged = false;
-	float firingCoolDown = 0.2f;
-	float ogFiringCoolDown = 0.2f;
 	private final Texture ship;
 	private final Sound breakSound;
 	private final Array<CannonFire> cannonBalls;
-	private float turnDirection;
-	private float turnSpeed;
-	private float driveDirection;
-	private float driftFactor;
-
 	public Rectangle hitBox;
-
-	public static boolean healBubble = false;
-	public static boolean burstHeal = false;
-	public static boolean bursted = false;
-
-	public static boolean ultimateFirerEnabled = false;
-
-	public static boolean isBloodied = false;
-
-	public static int amountOfShotsInUltimateFire = 10;
-	public static int burstAmountForUltimateFire = 1;
-	int burstShotsUF = 0;
-	public static float ultimateAmount = 0;
-	public static float ultimateAmountMultiplier = 1f;
-
-	float ultimateBurstCoolDown = 0f;
-	float ultimateBurstOGCoolDown = 0.5f;
-
-	private float maximumSpeed;
-	private float originalSpeed;
-	private float speed;
-
-	public static float collegesCaptured = 0;
-	public static float boatsKilled = 0;
-	public static float collegesKilled = 0;
-
-
-	private Camera cam;
-
-	public static boolean shieldEnabled = false;
 	public float shieldCoolDown = 0f;
 	public float shieldCoolDownOG = 8f;
-	public static float protectedTimer = 0f;
 	public float protectTime = 2f;
-
-	public static float normalNumberOfShips = 4;
-	public static float numberOfShipsFollowing = 0;
-	public static float maxNumberOfShipsFollowing = 4;
-
+	public boolean rayEnabled = false;
+	float firingCoolDown = 0.2f;
+	float ogFiringCoolDown = 0.2f;
+	int burstShotsUF = 0;
+	float ultimateBurstCoolDown = 0f;
+	float ultimateBurstOGCoolDown = 0.5f;
 	Sprite shield = new Sprite(new Texture("bubble.png"));
 	Sprite emp = new Sprite(new Texture("EMP.png"));
-
 	float ultimateTimer = 0.5f;
-
 	float disablingRayCooldown = 0f;
-	public static float disablingRayCooldownOg = 6f;
-	public boolean rayEnabled = false;
-	public static boolean rayLvl2 = false;
-	public static boolean stopFollowing = false;
 	float rayActiveFor = 0;
-
 	boolean empExplosion = false;
 	float empExplosionCooldown = 0;
 	float empExplosionCooldownOG = 0.4f;
 	boolean empSet = false;
-
+	private float turnDirection;
+	private float turnSpeed;
+	private float driveDirection;
+	private float driftFactor;
+	private float maximumSpeed;
+	private float originalSpeed;
+	private float speed;
+	private Camera cam;
 
 
 	/**
@@ -115,7 +97,7 @@ public class Player extends Entity {
 		this.maximumSpeed = maxSpeed;
 		this.driftFactor = driftFactor;
 		this.turnSpeed = turnSpeed;
-		this .turnDirection = 0;
+		this.turnDirection = 0;
 		this.driveDirection = 0;
 		this.speed = 80f;
 		// Retrieves world data and creates ship texture
@@ -136,7 +118,33 @@ public class Player extends Entity {
 
 
 		this.hitBox = new Rectangle(getBody().getPosition().x, getBody().getPosition().y, 64 / PirateGame.PPM, 110 / PirateGame.PPM);
-		shield.setSize(2f,2f);
+		shield.setSize(2f, 2f);
+	}
+
+	public static void upgradeCannonBallSpeed() {
+		cannonBallSpeedLvl++;
+	}
+
+	public static void upgradeFireRate() {
+		fireRateLvl++;
+		fireRateChanged = true;
+	}
+
+	public static void upgradeRange(float multiplier) {
+		rangeMultiplier += multiplier;
+	}
+
+	public static void resetStats() {
+		normalNumberOfShips = 4;
+		numberOfShipsFollowing = 0;
+		maxNumberOfShipsFollowing = 4;
+		collegesCaptured = 0;
+		boatsKilled = 0;
+		collegesKilled = 0;
+		PirateGame.difficultyMultiplier = 0;
+		PirateGame.difficultySet = false;
+		ShopScreen.resetStats();
+		HUD.respawnProtection = 4f;
 	}
 
 	/**
@@ -146,8 +154,8 @@ public class Player extends Entity {
 	 */
 	public void update(float dt) {
 		emp.setCenter(getBody().getPosition().x, getBody().getPosition().y);
-		if(empExplosion){
-			if(!empSet){
+		if (empExplosion) {
+			if (!empSet) {
 
 				empExplosionCooldown = empExplosionCooldownOG;
 				emp.setSize(0.5f, 0.5f);
@@ -155,24 +163,21 @@ public class Player extends Entity {
 			}
 			empExplosionCooldown -= dt;
 
-			if(empExplosionCooldown <= 0){
+			if (empExplosionCooldown <= 0) {
 				empExplosion = false;
 			}
-			emp.setSize(emp.getWidth() + (emp.getWidth()/2), emp.getHeight() + (emp.getHeight()/2));
-	}
+			emp.setSize(emp.getWidth() + (emp.getWidth() / 2), emp.getHeight() + (emp.getHeight() / 2));
+		}
 
 
-
-
-
-		if(rayEnabled){
-			if(stopFollowing){
+		if (rayEnabled) {
+			if (stopFollowing) {
 				rayActiveFor -= dt;
-				if(rayActiveFor <= 0){
+				if (rayActiveFor <= 0) {
 					stopFollowing = false;
 				}
 			}
-			if(Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && disablingRayCooldown <= 0){
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && disablingRayCooldown <= 0) {
 				disablingRayCooldown = disablingRayCooldownOg;
 				stopFollowing = true;
 				rayActiveFor = 3f;
@@ -181,23 +186,20 @@ public class Player extends Entity {
 				empExplosion = true;
 				empSet = false;
 			}
-			if(disablingRayCooldown >= 0){
+			if (disablingRayCooldown >= 0) {
 				disablingRayCooldown -= dt;
 			}
 		}
 
 
-
-
-		if(ultimateTimer < 0){
+		if (ultimateTimer < 0) {
 			ultimateAmount += 1 * ultimateAmountMultiplier;
 			ultimateTimer = 0.5f;
-		}
-		else{
+		} else {
 			ultimateTimer -= dt;
 		}
 
-		if(!ultimateFirerEnabled) ultimateAmount = 100;
+		if (!ultimateFirerEnabled) ultimateAmount = 100;
 
 		//System.out.println(ultimateAmount);
 
@@ -211,34 +213,32 @@ public class Player extends Entity {
 
 
 		this.hitBox.setPosition(this.getBody().getPosition());
-		if(shieldEnabled){
-			if(protectedTimer > 0){
+		if (shieldEnabled) {
+			if (protectedTimer > 0) {
 				protectedTimer -= dt;
-				if(!bursted && burstHeal){
-					HUD.changeHealth((int)(HUD.maxHealth * 0.10f));
+				if (!bursted && burstHeal) {
+					HUD.changeHealth((int) (HUD.maxHealth * 0.10f));
 					bursted = true;
 				}
-				if(shield.getHeight() < 2.7f){
+				if (shield.getHeight() < 2.7f) {
 					shield.setSize(shield.getWidth() + 0.1f, shield.getHeight() + 0.1f);
 				}
 			}
-			if(Gdx.input.isKeyJustPressed(Input.Keys.E) && shieldCoolDown <= 0){
+			if (Gdx.input.isKeyJustPressed(Input.Keys.E) && shieldCoolDown <= 0) {
 				protectedTimer = protectTime;
 				shieldCoolDown = shieldCoolDownOG;
 				bursted = false;
 			}
-			if(shieldCoolDown > 0) {
+			if (shieldCoolDown > 0) {
 				shieldCoolDown -= dt;
-				if(protectedTimer <= 0){
-					shield.setSize(2f,2f);
+				if (protectedTimer <= 0) {
+					shield.setSize(2f, 2f);
 				}
 			}
 		}
 
 
-
-
-		if(fireRateChanged){
+		if (fireRateChanged) {
 			ogFiringCoolDown = ogFiringCoolDown / (fireRateLvl * 0.1f);
 			fireRateChanged = false;
 		}
@@ -258,22 +258,20 @@ public class Player extends Entity {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && firingCoolDown <= 0) {
 			fire();
 			firingCoolDown = ogFiringCoolDown;
-		}
-		else if(firingCoolDown > 0){
+		} else if (firingCoolDown > 0) {
 			firingCoolDown -= dt;
 		}
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.Q) && ultimateAmount >= 100 && ultimateFirerEnabled) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.Q) && ultimateAmount >= 100 && ultimateFirerEnabled) {
 			burstShotsUF = burstAmountForUltimateFire;
 			ultimateAmount = 0;
 		}
 
-		if(ultimateBurstCoolDown <= 0){
-			if(burstShotsUF > 0) {
+		if (ultimateBurstCoolDown <= 0) {
+			if (burstShotsUF > 0) {
 				ultimateFirer();
 			}
-		}
-		else{
+		} else {
 			ultimateBurstCoolDown -= Gdx.graphics.getDeltaTime();
 		}
 
@@ -289,7 +287,7 @@ public class Player extends Entity {
 		}
 	}
 
-	public void changeMaxSpeed(float percentage){
+	public void changeMaxSpeed(float percentage) {
 		this.maximumSpeed = this.maximumSpeed * (1 + (percentage / 100));
 		this.turnSpeed = this.turnSpeed * (1 + (percentage / 100));
 		this.originalSpeed = this.originalSpeed * (1 + (percentage / 100));
@@ -325,23 +323,8 @@ public class Player extends Entity {
 
 	}
 
-	public static void upgradeCannonBallSpeed(){
-		cannonBallSpeedLvl ++;
-	}
+	public void burstShot() {
 
-	public static void upgradeFireRate(){
-		fireRateLvl ++;
-		fireRateChanged = true;
-	}
-
-
-	public void burstShot(){
-
-	}
-
-
-	public static void upgradeRange(float multiplier){
-		rangeMultiplier += multiplier;
 	}
 
 	/**
@@ -349,10 +332,10 @@ public class Player extends Entity {
 	 */
 	public void fire() {
 		// Fires cannons
-		Vector3 mouse_position = new Vector3(0,0,0);
+		Vector3 mouse_position = new Vector3(0, 0, 0);
 		mouse_position.set(Gdx.input.getX(), Gdx.input.getY(), 0); /** gets mouse position*/
 		cam.unproject(mouse_position);
-		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y), cannonBallSpeedLvl, rangeMultiplier, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT ));
+		cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, new Vector2(mouse_position.x, mouse_position.y), cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
 
 
 		// Cone fire below
@@ -364,15 +347,16 @@ public class Player extends Entity {
          */
 	}
 
-	public void ultimateFirer(){
-		if(!ultimateFirerEnabled) return;
-		for(int i = 0; i <= amountOfShotsInUltimateFire; i++){
-			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT ));
+	public void ultimateFirer() {
+		if (!ultimateFirerEnabled) return;
+		for (int i = 0; i <= amountOfShotsInUltimateFire; i++) {
+			cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, i * (360 / amountOfShotsInUltimateFire), cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
 
 		}
 		burstShotsUF--;
 		ultimateBurstCoolDown = ultimateBurstOGCoolDown;
 	}
+
 	public Vector2 getForwardVelocity() {
 		Vector2 currentNormal = this.getBody().getWorldVector(new Vector2(0, 1));
 		float dotProduct = currentNormal.dot(this.getBody().getLinearVelocity());
@@ -390,7 +374,6 @@ public class Player extends Entity {
 
 		return multiply(dotProduct, currentNormal);
 	}
-
 
 	public float getTurnDirection() {
 		return this.turnDirection;
@@ -442,25 +425,24 @@ public class Player extends Entity {
 		// Draws player and cannonballs
 		super.draw(batch);
 
-		if(protectedTimer > 0) shield.draw(batch);
-		if(empExplosion) emp.draw(batch);
+		if (protectedTimer > 0) shield.draw(batch);
+		if (empExplosion) emp.draw(batch);
 
 		for (CannonFire ball : cannonBalls)
 			ball.draw(batch);
 	}
 
-
 	public float getCollegesCaptured() {
 		return collegesCaptured;
-	}
-
-	public float getCollegesKilled() {
-		return collegesKilled;
 	}
 
 	public void setCollegesCaptured(float collegesCaptured) {
 		this.collegesCaptured += collegesCaptured;
 		updateStats();
+	}
+
+	public float getCollegesKilled() {
+		return collegesKilled;
 	}
 
 	public void setCollegesKilled(float collegesKilled) {
@@ -477,67 +459,50 @@ public class Player extends Entity {
 		updateStats();
 	}
 
-	void updateStats(){
-		if(boatsKilled >= 5){
+	void updateStats() {
+		if (boatsKilled >= 5) {
 			SkillsScreen.unlock(2);
 			shieldEnabled = true;
 
-			if(boatsKilled >= 7){
+			if (boatsKilled >= 7) {
 				protectTime = 3f;
 			}
-			if(boatsKilled >= 9){
+			if (boatsKilled >= 9) {
 				burstHeal = true;
 			}
-			if(boatsKilled >= 11){
+			if (boatsKilled >= 11) {
 				protectTime = 4f;
 			}
-			if(boatsKilled >= 13){
+			if (boatsKilled >= 13) {
 				shieldCoolDownOG = 7;
 			}
-			if(boatsKilled >= 15){
+			if (boatsKilled >= 15) {
 				healBubble = true;
 			}
 
 
-		}
-		else{
+		} else {
 			SkillsScreen.lock(2);
 		}
-		if(collegesKilled >= 1){
+		if (collegesKilled >= 1) {
 			SkillsScreen.unlock(0);
-			if(collegesKilled >= 2) HUD.bloodyAmount = 0.75f;
+			if (collegesKilled >= 2) HUD.bloodyAmount = 0.75f;
 			isBloodied = true;
-		}
-		else{
+		} else {
 			SkillsScreen.lock(0);
 		}
-		if(collegesCaptured >= 1){
+		if (collegesCaptured >= 1) {
 			SkillsScreen.unlock(1);
 			rayEnabled = true;
-			if(collegesCaptured >= 2){
+			if (collegesCaptured >= 2) {
 				rayLvl2 = true;
-			}
-			else{
+			} else {
 				rayLvl2 = false;
 			}
-		}
-		else{
+		} else {
 			rayEnabled = false;
 			rayLvl2 = false;
 			SkillsScreen.lock(1);
 		}
-	}
-
-	public static void resetStats(){
-		normalNumberOfShips = 4;
-		numberOfShipsFollowing = 0;
-		maxNumberOfShipsFollowing = 4;
-		collegesCaptured = 0;
-		boatsKilled = 0;
-		collegesKilled = 0;
-		PirateGame.difficultyMultiplier = 0;
-		PirateGame.difficultySet = false;
-		ShopScreen.resetStats();
-		HUD.respawnProtection = 4f;
 	}
 }

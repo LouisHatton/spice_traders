@@ -13,13 +13,12 @@ import java.util.HashMap;
  */
 public class SpawnUtils {
 
+	private static SpawnUtils INSTANCE;
 	public final int xCap = 75;
 	public final int yCap = 75;
 	public final int xBase = 7;
 	public final int yBase = 7;
 	public HashMap<Integer, ArrayList<Integer>> tileBlocked = new HashMap<>();
-
-	private static SpawnUtils INSTANCE;
 
 
 	/**

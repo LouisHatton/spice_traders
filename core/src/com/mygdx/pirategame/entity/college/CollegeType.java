@@ -12,11 +12,9 @@ public enum CollegeType {
 	private final String friendlyName;
 	private final String shipTexture;
 	private final String flagTexture;
-
-	private int shipSpawns;
-
 	private final float x;
 	private final float y;
+	private int shipSpawns;
 
 	CollegeType(String friendlyName, String shipTexture, String flagTexture, float x, float y, int shipSpawns) {
 		this.friendlyName = friendlyName;

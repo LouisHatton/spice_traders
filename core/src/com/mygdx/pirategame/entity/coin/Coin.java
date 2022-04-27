@@ -23,9 +23,9 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 public class Coin extends Entity {
 
 	private final Texture coin;
+	private final Sound coinPickup;
 	private boolean setToDestroyed;
 	private boolean destroyed;
-	private final Sound coinPickup;
 
 	/**
 	 * Instantiates a new Coin.

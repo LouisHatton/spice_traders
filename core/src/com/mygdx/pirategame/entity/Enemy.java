@@ -14,6 +14,7 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  */
 public abstract class Enemy extends Entity {
 
+	public String college;
 	private boolean setToDestroy;
 	private boolean destroyed;
 	private int health;
@@ -21,8 +22,6 @@ public abstract class Enemy extends Entity {
 	private HealthBar bar;
 	private boolean justDied = false;
 	private float maxHealth = 100;
-
-	public String college;
 
 	/**
 	 * Instantiates an enemy
@@ -90,33 +89,36 @@ public abstract class Enemy extends Entity {
 
 	public void takeDamage(double damage) {
 		float multiplier = 1f;
-		if(Player.isBloodied){
-			if(HUD.getHealth() == HUD.maxHealth){
+		if (Player.isBloodied) {
+			if (HUD.getHealth() == HUD.maxHealth) {
 				multiplier = 1f;
-			}
-			else{
-				multiplier = 1 + ((1 - (HUD.getHealth()/HUD.maxHealth) * HUD.bloodyAmount));
+			} else {
+				multiplier = 1 + ((1 - (HUD.getHealth() / HUD.maxHealth) * HUD.bloodyAmount));
 			}
 		}
 
-		if(!justDied){
+		if (!justDied) {
 			this.health -= damage * multiplier;
 			System.out.println("pp " + health);
 		}
 
 		this.getBar().update();
-		this.getBar().setHealth(health/maxHealth);
+		this.getBar().setHealth(health / maxHealth);
 	}
 
-	public float getMaxHealth(){
+	public float getMaxHealth() {
 		return maxHealth;
 	}
-	public void changeIustDied (boolean input) {this.justDied = input;}
+
+	public void changeIustDied(boolean input) {
+		this.justDied = input;
+	}
+
 	public void initHealthBar() {
 		this.bar = new HealthBar(this);
 	}
 
-	public void setCollege(String college){
+	public void setCollege(String college) {
 		this.college = college;
 	}
 }

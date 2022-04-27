@@ -20,9 +20,6 @@ import com.mygdx.pirategame.screen.*;
  */
 public class PirateGame extends Game {
 	public static final float PPM = 100;
-	public static float difficultyMultiplier = 1;
-
-
 	//Bits used in collisions
 	public static final short DEFAULT_BIT = 1;
 	public static final short PLAYER_BIT = 2;
@@ -47,6 +44,7 @@ public class PirateGame extends Game {
 	public final static int DIFFICULTY = 12;
 	public final static int SETTINGS = 13;
 	public final static int DISABLINGRAY = 14;
+	public static float difficultyMultiplier = 1;
 	public static boolean difficultySet = false;
 
 	public SpriteBatch batch;
@@ -219,7 +217,9 @@ public class PirateGame extends Game {
 		batch.dispose();
 	}
 
-	public float getDifficulty(){return difficultyMultiplier;}
+	public float getDifficulty() {
+		return difficultyMultiplier;
+	}
 
 	public int getCurrentScreen() {
 		return currentScreen;

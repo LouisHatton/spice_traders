@@ -1,6 +1,5 @@
 package com.mygdx.pirategame.listener;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
@@ -161,15 +160,15 @@ public class WorldContactListener implements ContactListener {
 	public void handleCollegeFireAndPlayer(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.COLLEGEFIRE_BIT) {
 			HUD.changeHealth(-10);
-			if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixA.getUserData()).setToDestroy();
-			else if(fixA.getUserData() instanceof CannonFire){
+			if (fixA.getUserData() instanceof CollegeFire) ((CollegeFire) fixA.getUserData()).setToDestroy();
+			else if (fixA.getUserData() instanceof CannonFire) {
 				((CannonFire) fixA.getUserData()).setToDestroy();
 				((CannonFire) fixA.getUserData()).onContact();
 			}
 		} else {
 			HUD.changeHealth(-10);
-			if(fixA.getUserData() instanceof CollegeFire)((CollegeFire) fixB.getUserData()).setToDestroy();
-			else if(fixA.getUserData() instanceof CannonFire) {
+			if (fixA.getUserData() instanceof CollegeFire) ((CollegeFire) fixB.getUserData()).setToDestroy();
+			else if (fixA.getUserData() instanceof CannonFire) {
 				((CannonFire) fixB.getUserData()).setToDestroy();
 				((CannonFire) fixB.getUserData()).onContact();
 			}

@@ -3,7 +3,6 @@ package com.mygdx.pirategame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,7 +29,7 @@ import com.mygdx.pirategame.entity.Player;
 import com.mygdx.pirategame.entity.coin.Coin;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
-import com.mygdx.pirategame.entity.college.version.cannonBallManager;
+import com.mygdx.pirategame.entity.cannon.CannonManager;
 import com.mygdx.pirategame.entity.ship.EnemyAiManager;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.listener.WorldContactListener;
@@ -52,18 +51,21 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 public class ActiveGameScreen implements Screen {
-	
+
 	public static final int GAME_RUNNING = 0;
 	public static final int GAME_PAUSED = 1;
 	public static PirateGame game;
+	public static List<Coin> Coins = new ArrayList<>();
+	public static Player player;
+	public static Rectangle BoundsAL = new Rectangle();
+	public static Rectangle BoundsC = new Rectangle();
+	public static Rectangle BoundsG = new Rectangle();
 	private static float maxSpeed = 60f;
 	private static float accel = 0.05f;
 	private static Map<String, College> colleges = new HashMap<>();
 	private static List<EnemyShip> ships = new ArrayList<>();
-	public static List<Coin> Coins = new ArrayList<>();
 	private static int gameStatus;
 	private final Stage stage;
-	private float stateTime;
 	private final OrthographicCamera camera;
 	private final Viewport viewport;
 	private final TmxMapLoader maploader;
@@ -71,11 +73,12 @@ public class ActiveGameScreen implements Screen {
 	private final OrthogonalTiledMapRenderer renderer;
 	private final World world;
 	private final Box2DDebugRenderer b2dr;
-	public static Player player;
 	public HUD hud;
+	ShapeRenderer shapeRenderer = new ShapeRenderer();
+	float zoomAmount = 0;
+	private float stateTime;
 	private Table pauseTable;
 	private Table table;
-
 	private TextButton pauseButton;
 	private TextButton skillButton;
 	private TextButton shopButton;
@@ -83,21 +86,11 @@ public class ActiveGameScreen implements Screen {
 	private TextButton startButton;
 	private TextButton optionsButton;
 	private TextButton exitButton;
-
 	private Box2DDebugRenderer debugger;
-
-	public static Rectangle BoundsAL = new Rectangle();
-	public static Rectangle BoundsC = new Rectangle();
-	public static Rectangle BoundsG = new Rectangle();
-
-	ShapeRenderer shapeRenderer = new ShapeRenderer();
-
 	private Sprite test = new Sprite(new Texture("tile_04.png"));
 	private Sprite test1 = new Sprite(new Texture("tile_04.png"));
 	private Sprite test2 = new Sprite(new Texture("tile_04.png"));
 	private Sprite test3 = new Sprite(new Texture("tile_04.png"));
-
-	float zoomAmount = 0;
 
 
 	/**
@@ -138,7 +131,7 @@ public class ActiveGameScreen implements Screen {
 		colleges.put("Anne Lister", new College(this, CollegeType.ANNE_LISTER));
 		colleges.put("Constantine", new College(this, CollegeType.CONSTANTINE));
 		colleges.put("Goodricke", new College(this, CollegeType.GOODRICKE));
-		
+
 		ships = colleges.values().stream().flatMap(col -> col.getFleet().stream()).collect(Collectors.toList());
 		ships.addAll(this.generateShips(20));
 
@@ -149,14 +142,12 @@ public class ActiveGameScreen implements Screen {
 		stage = new Stage(new ScreenViewport());
 
 
-
-
-		BoundsG.setCenter(1760 / PirateGame.PPM,6767 / PirateGame.PPM);
-		BoundsAL.setCenter(5304/PirateGame.PPM,899/PirateGame.PPM);
-		BoundsC.setCenter(6240 / PirateGame.PPM,6703 / PirateGame.PPM);
-		BoundsC.setSize(35.5f,50.5f);
-		BoundsAL.setSize(35.5f,50.5f);
-		BoundsG.setSize(35.5f,50.5f);
+		BoundsG.setCenter(1760 / PirateGame.PPM, 6767 / PirateGame.PPM);
+		BoundsAL.setCenter(5304 / PirateGame.PPM, 899 / PirateGame.PPM);
+		BoundsC.setCenter(6240 / PirateGame.PPM, 6703 / PirateGame.PPM);
+		BoundsC.setSize(35.5f, 50.5f);
+		BoundsAL.setSize(35.5f, 50.5f);
+		BoundsG.setSize(35.5f, 50.5f);
 
 		debugger = new Box2DDebugRenderer();
 	}
@@ -197,6 +188,14 @@ public class ActiveGameScreen implements Screen {
 
 			col.changeDamageReceived(value);
 		});
+	}
+
+	public static List<EnemyShip> getShips() {
+		return ships;
+	}
+
+	public static void chasePlayer(EnemyShip enemy) {
+
 	}
 
 	/**
@@ -303,12 +302,12 @@ public class ActiveGameScreen implements Screen {
 		});
 
 		this.optionsButton.addListener(new ChangeListener() {
-								@Override
-								public void changed(ChangeEvent event, Actor actor) {
-									pauseTable.setVisible(false);
-									game.changeScreen(PirateGame.SETTINGS);
-								}
-							}
+										   @Override
+										   public void changed(ChangeEvent event, Actor actor) {
+											   pauseTable.setVisible(false);
+											   game.changeScreen(PirateGame.SETTINGS);
+										   }
+									   }
 		);
 
 		this.exitButton.addListener(new ChangeListener() {
@@ -325,8 +324,6 @@ public class ActiveGameScreen implements Screen {
 	 * Applies to keys "W" "A" "S" "D" "E" "Esc"
 	 * <p>
 	 * Caps player velocity
-	 *
-	 *
 	 */
 
 	public void inputUpdate() {
@@ -350,12 +347,11 @@ public class ActiveGameScreen implements Screen {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
-			if(camera.zoom <  0.0155f * 2)camera.zoom += 0.02f/100;
+			if (camera.zoom < 0.0155f * 2) camera.zoom += 0.02f / 100;
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-			if(camera.zoom > 0.0155f)camera.zoom -= 0.02f/100;
+			if (camera.zoom > 0.0155f) camera.zoom -= 0.02f / 100;
 		}
-
 
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -371,11 +367,6 @@ public class ActiveGameScreen implements Screen {
 			}
 		}
 	}
-
-
-
-
-
 
 	private void processInput() {
 		Vector2 baseVector = new Vector2(0, 0);
@@ -430,16 +421,13 @@ public class ActiveGameScreen implements Screen {
 		player.getBody().setLinearVelocity(forwardSpeed.x + lateralSpeed.x * player.getDriftFactor(), forwardSpeed.y + lateralSpeed.y * player.getDriftFactor());
 	}
 
-
-
-
 	/**
 	 * Updates the state of each object with delta time
 	 *
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
-		if(zoomAmount < 0.0155f){
+		if (zoomAmount < 0.0155f) {
 			camera.zoom -= 0.0005f;
 			zoomAmount += 0.0005f;
 		}
@@ -500,7 +488,7 @@ public class ActiveGameScreen implements Screen {
 	@Override
 	public void render(float dt) {
 
-		if(gameStatus == GAME_PAUSED) {
+		if (gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);
 		}
@@ -547,7 +535,7 @@ public class ActiveGameScreen implements Screen {
 			ship.draw(game.batch);
 
 		}
-		cannonBallManager.update(dt, game.batch);
+		CannonManager.update(dt, game.batch);
 		game.batch.end();
 		HUD.stage.draw();
 
@@ -738,14 +726,6 @@ public class ActiveGameScreen implements Screen {
 
 	public HUD getHud() {
 		return hud;
-	}
-
-	public static List<EnemyShip> getShips() {
-		return ships;
-	}
-
-	public static void chasePlayer(EnemyShip enemy){
-
 	}
 
 	public TextButton getPauseButton() {

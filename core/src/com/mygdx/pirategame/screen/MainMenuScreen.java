@@ -23,10 +23,11 @@ import com.mygdx.pirategame.PirateGame;
  */
 public class MainMenuScreen implements Screen {
 
-	private final PirateGame parent;
-	private final Stage stage;
-	public static Sprite background = new Sprite(new Texture(Gdx.files.internal("background.PNG")));;
+	public static Sprite background = new Sprite(new Texture(Gdx.files.internal("background.PNG")));
 	private static SpriteBatch batch;
+	private final PirateGame parent;
+	;
+	private final Stage stage;
 
 	/**
 	 * Instantiates a new Main menu.
@@ -39,12 +40,18 @@ public class MainMenuScreen implements Screen {
 		batch = new SpriteBatch();
 	}
 
+	public static void renderBackground() {
+		batch.begin();
+		background.draw(batch);
+		batch.end();
+	}
+
 	/**
 	 * What should be displayed on the options screen
 	 */
 	@Override
 	public void show() {
-		background.setSize(1920,1080);
+		background.setSize(1920, 1080);
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
 		// Create a table for the buttons
@@ -120,12 +127,6 @@ public class MainMenuScreen implements Screen {
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
 		renderBackground();
 		stage.draw();
-	}
-
-	public static void renderBackground(){
-		batch.begin();
-		background.draw(batch);
-		batch.end();
 	}
 
 	/**

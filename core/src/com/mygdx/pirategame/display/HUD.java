@@ -26,9 +26,11 @@ import com.mygdx.pirategame.screen.SkillsScreen;
 public class HUD implements Disposable {
 
 	public static Stage stage;
-	private static int score;
 	public static float resistanceMultiplier = 100;
 	public static float maxHealth = 100;
+	public static float respawnProtection = 4f;
+	public static float bloodyAmount = 0.5f;
+	private static int score;
 	private static int health;
 	private static Label scoreLabel;
 	private static Label healthLabel;
@@ -37,17 +39,13 @@ public class HUD implements Disposable {
 	private static int coins;
 	private static float coinMulti;
 	private final Viewport viewport;
-	private float timeCount;
 	private final Texture hp;
 	private final Texture boxBackground;
 	private final Texture coinPic;
 	private final Image hpImg;
 	private final Image box;
 	private final Image coin;
-
-	public static float respawnProtection = 4f;
-
-	public static float bloodyAmount = 0.5f;
+	private float timeCount;
 
 	/**
 	 * Retrieves information and displays it in the hud
@@ -113,10 +111,10 @@ public class HUD implements Disposable {
 	 * @param value Increase to health
 	 */
 	public static void changeHealth(int value) {
-		if(respawnProtection > 0) return;
-		if(value < 0 && Player.protectedTimer > 0f) return;
-		if(value > 0 ) {
-			if(health + value > maxHealth){
+		if (respawnProtection > 0) return;
+		if (value < 0 && Player.protectedTimer > 0f) return;
+		if (value > 0) {
+			if (health + value > maxHealth) {
 				health = (int) maxHealth;
 				healthLabel.setText(String.format("%02d", health));
 				return;
@@ -127,19 +125,20 @@ public class HUD implements Disposable {
 		}
 
 
-		health = (int)(health +((value* (resistanceMultiplier/100)) * PirateGame.difficultyMultiplier ));
+		health = (int) (health + ((value * (resistanceMultiplier / 100)) * PirateGame.difficultyMultiplier));
 		healthLabel.setText(String.format("%02d", health));
 	}
 
-	public static void upgradResistance(float multiplier){
+	public static void upgradResistance(float multiplier) {
 		resistanceMultiplier -= multiplier;
 	}
-	public static void upgradMaxHealth(float amount){
+
+	public static void upgradMaxHealth(float amount) {
 		maxHealth += amount;
 	}
 
-	public static boolean purchase(float value){
-		if(coins >= value){
+	public static boolean purchase(float value) {
+		if (coins >= value) {
 			coins -= value;
 			coinLabel.setText(String.format("%03d", coins));
 			return true;
@@ -154,20 +153,11 @@ public class HUD implements Disposable {
 	 */
 	public static void changeCoins(int value) {
 		if (value > 0) {
-			coins = (int)(coins + (value * PirateGame.difficultyMultiplier) * coinMulti);
+			coins = (int) (coins + (value * PirateGame.difficultyMultiplier) * coinMulti);
 			coinLabel.setText(String.format("%03d", coins));
 		}
 	}
 
-	public static void setCoins(int value) {
-		coins = value;
-		coinLabel.setText(String.format("%03d", coins));
-	}
-
-	public static void setScore(int value) {
-		score = value;
-		scoreLabel.setText(String.format("%03d", score));
-	}
 	/**
 	 * Changes points by value increase
 	 *
@@ -179,37 +169,37 @@ public class HUD implements Disposable {
 		//Check if a points boundary is met
 		SkillsScreen.pointsCheck(score);
 
-		if(score >= 200){
+		if (score >= 200) {
 
 		}
-		if(score >= 400){
+		if (score >= 400) {
 
 		}
-		if(score >= 500){
+		if (score >= 500) {
 			ActiveGameScreen.player.ultimateFirerEnabled = true;
 		}
-		if(score >= 600){
+		if (score >= 600) {
 
 		}
-		if(score >= 650){
+		if (score >= 650) {
 			ActiveGameScreen.player.ultimateAmountMultiplier = 1.5f;
 		}
-		if(score >= 800){
+		if (score >= 800) {
 			ActiveGameScreen.player.amountOfShotsInUltimateFire = 15;
 		}
-		if(score >= 950){
+		if (score >= 950) {
 			ActiveGameScreen.player.ultimateAmountMultiplier = 2f;
 		}
-		if(score >= 1000){
+		if (score >= 1000) {
 
 		}
-		if(score >= 1100){
+		if (score >= 1100) {
 			ActiveGameScreen.player.amountOfShotsInUltimateFire = 20;
 		}
-		if(score >= 1200){
+		if (score >= 1200) {
 
 		}
-		if(score >= 1250){
+		if (score >= 1250) {
 			ActiveGameScreen.player.burstAmountForUltimateFire = 2;
 		}
 	}
@@ -252,20 +242,34 @@ public class HUD implements Disposable {
 		return coins;
 	}
 
+	public static void setCoins(int value) {
+		coins = value;
+		coinLabel.setText(String.format("%03d", coins));
+	}
+
+	public static int getScore() {
+		return score;
+	}
+
+	public static void setScore(int value) {
+		score = value;
+		scoreLabel.setText(String.format("%03d", score));
+	}
+
 	/**
 	 * Updates the state of the hud
 	 *
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
-		if(respawnProtection >= 0){
+		if (respawnProtection >= 0) {
 			respawnProtection -= dt;
 		}
 
-		if(Player.protectedTimer > 0 && Player.healBubble){
+		if (Player.protectedTimer > 0 && Player.healBubble) {
 			timeCount += dt * 3;
 		}
-			timeCount += dt;
+		timeCount += dt;
 		if (timeCount >= 1) {
 			//Regen health every second
 			if (health < maxHealth) {
@@ -287,10 +291,6 @@ public class HUD implements Disposable {
 	@Override
 	public void dispose() {
 		stage.dispose();
-	}
-
-	public static int getScore() {
-		return score;
 	}
 }
 

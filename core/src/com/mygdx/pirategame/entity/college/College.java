@@ -31,7 +31,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class College extends Enemy {
 
-	private List<EnemyShip> fleet = new ArrayList<>();
 	private static Texture enemyCollege;
 	private final String currentCollege;
 	private final Array<CollegeFire> cannonBalls;
@@ -41,10 +40,11 @@ public class College extends Enemy {
 	float pointsCoolDown = 0;
 	float ogCoolDown = 1f;
 	boolean died = false;
+	private List<EnemyShip> fleet = new ArrayList<>();
 
 	/**
-	 * @param screen       Visual data
-	 * @param college      Data about the college i.e. "Alcuin" used for fleet assignment
+	 * @param screen  Visual data
+	 * @param college Data about the college i.e. "Alcuin" used for fleet assignment
 	 */
 	public College(ActiveGameScreen screen, CollegeType college) {
 		super(screen, college.getX(), college.getY());
@@ -107,23 +107,21 @@ public class College extends Enemy {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
-		if(deathCoolDown >= 0 && surrended){
+		if (deathCoolDown >= 0 && surrended) {
 			deathCoolDown -= Gdx.graphics.getDeltaTime();
 			setHealth(1);
 			changeIustDied(true);
-		}
-		else {
+		} else {
 			changeIustDied(false);
 		}
 
-		if(surrended){
-			if(pointsCoolDown <= 0){
+		if (surrended) {
+			if (pointsCoolDown <= 0) {
 				HUD.changePoints(2);
 				HUD.changeCoins(1);
 				ActiveGameScreen.player.ultimateAmount += 1 * ActiveGameScreen.player.ultimateAmountMultiplier;
 				pointsCoolDown = ogCoolDown;
-			}
-			else {
+			} else {
 				pointsCoolDown -= dt;
 			}
 		}
@@ -151,22 +149,21 @@ public class College extends Enemy {
 		}
 
 
-		if(!surrended){
+		if (!surrended) {
 			this.getBar().update();
-		}
-		else{
+		} else {
 			this.getBar().deathSize();
 		}
 
 		if (getHealth() <= 0) {
-			if(deathCoolDown > 0) return;
-			if(surrended && !died) {
+			if (deathCoolDown > 0) return;
+			if (surrended && !died) {
 				setToDestroy(true);
 				ActiveGameScreen.player.setCollegesCaptured(-1);
 				ActiveGameScreen.player.setCollegesKilled(1);
 				died = true;
 			}
-			if(!surrended) {
+			if (!surrended) {
 				surrended = true;
 				setHealth(1);
 				ActiveGameScreen.player.setCollegesCaptured(1);
@@ -234,12 +231,12 @@ public class College extends Enemy {
 	 * Fires cannonballs
 	 */
 	public void fire() {
-		if(surrended) return;
+		if (surrended) return;
 		cannonBalls.add(new CollegeFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, currentCollege));
 	}
 
 	public List<EnemyShip> getFleet() {
-	  return fleet;
+		return fleet;
 	}
 
 	public CollegeType getType() {

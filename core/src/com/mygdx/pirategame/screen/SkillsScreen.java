@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
-import com.mygdx.pirategame.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,15 +30,14 @@ public class SkillsScreen implements Screen {
 	//To store whether buttons are enabled or disabled
 	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1, 1);
 	private static TextButton bloodied;
+	final Table Other = new Table();
 	private final PirateGame parent;
 	private final Stage stage;
+	Table table = new Table();
 	private TextButton shield;
 	private TextButton ultimateAbility;
 	private TextButton secondaryAbility;
 	private TextButton disablingRay;
-
-	Table table = new Table();
-	final Table Other = new Table();
 
 	/**
 	 * Instantiates a new Skill tree.
@@ -52,12 +50,12 @@ public class SkillsScreen implements Screen {
 		stage = new Stage(new ScreenViewport());
 	}
 
-	public static void unlock(int i){
+	public static void unlock(int i) {
 		states.set(i, 0);
 	}
 
 
-	public static void lock(int i){
+	public static void lock(int i) {
 		states.set(i, 1);
 	}
 
@@ -69,12 +67,11 @@ public class SkillsScreen implements Screen {
 	public static void pointsCheck(int points) {
 
 
-		 if (states.get(3) == 1 && points >= 200) {
+		if (states.get(3) == 1 && points >= 200) {
 
 			states.set(3, 0);
 
-		}
-		 else if (states.get(4) == 1 && points >= 500) {
+		} else if (states.get(4) == 1 && points >= 500) {
 
 			states.set(4, 0);
 		}
@@ -102,7 +99,6 @@ public class SkillsScreen implements Screen {
 
 		Other.setFillParent(true);
 		stage.addActor(Other);
-
 
 
 		//The skin for the actors
@@ -142,7 +138,6 @@ public class SkillsScreen implements Screen {
 				parent.changeScreen(PirateGame.SHIELD);
 			}
 		});
-
 
 
 		if (states.get(2) == 1) {
@@ -192,43 +187,36 @@ public class SkillsScreen implements Screen {
 		});
 
 
-
-
-
-
-
-
-
 		//add buttons and labels to main table
-		if(ActiveGameScreen.player.getCollegesKilled() == 0) {
+		if (ActiveGameScreen.player.getCollegesKilled() == 0) {
 			Label bloodiedLabel = new Label("Destroy a college to unlock ", skin);
 			table.add(bloodiedLabel);
 		}
 		table.add(bloodied);
 
 		table.row().pad(10, 0, 10, 0);
-		if(ActiveGameScreen.player.getCollegesCaptured() == 0) {
+		if (ActiveGameScreen.player.getCollegesCaptured() == 0) {
 			Label disablingRayLabel = new Label("Capture a college to unlock ", skin);
 			table.add(disablingRayLabel);
 		}
 		table.add(disablingRay);
 
 		table.row().pad(10, 0, 10, 0);
-		if(ActiveGameScreen.player.getBoatsKilled() < 5) {
+		if (ActiveGameScreen.player.getBoatsKilled() < 5) {
 			Label shieldLabel = new Label("Destroy 5 Ships to unlock ", skin);
 			table.add(shieldLabel);
 		}
 		table.add(shield);
 
 		table.row().pad(10, 0, 10, 0);
-		if(HUD.getScore() < 200) {
+		if (HUD.getScore() < 200) {
 			Label secondaryLabel = new Label("Gather 200 Score to unlock ", skin);
 			table.add(secondaryLabel);
 		}
 		table.add(secondaryAbility);
 
 		table.row().pad(10, 0, 10, 0);
-		if(HUD.getScore() < 500) {
+		if (HUD.getScore() < 500) {
 			Label ultimateLabel = new Label("Gather 500 Score to unlock ", skin);
 			table.add(ultimateLabel);
 		}

@@ -15,10 +15,8 @@ import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 import com.mygdx.pirategame.entity.Enemy;
 import com.mygdx.pirategame.entity.cannon.CannonFire;
-import com.mygdx.pirategame.entity.college.version.cannonBallManager;
+import com.mygdx.pirategame.entity.cannon.CannonManager;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
-
-import java.util.Objects;
 
 /**
  * Enemy Ship
@@ -30,21 +28,19 @@ import java.util.Objects;
  */
 public class EnemyShip extends Enemy {
 
-	public String college;
-	private Texture enemyShip;
+	public static Rectangle detectBox;
+	public static EnemyShip NPCTarget;
 	private final Sound destroy;
 	private final Sound hit;
-	public static Rectangle detectBox;
+	public String college;
 	public Rectangle shootBox;
 	public Rectangle stoppingDistanceBox;
 	public Rectangle leaveBox;
 	public Rectangle enemyDetectBox;
-	private Array<CannonFire> cannonBalls = new Array<CannonFire>();
-	public static EnemyShip NPCTarget;
-
-
 	public boolean isFollowing = false;
 	Body body;
+	private Texture enemyShip;
+	private Array<CannonFire> cannonBalls = new Array<CannonFire>();
 	private float maxLinearSpeed = 5;
 	private float firingCoolDown = 0;
 	private float ogFiringCoolDown = 0.5f;
@@ -75,11 +71,11 @@ public class EnemyShip extends Enemy {
 		defineEntity();
 
 
-		this.detectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 11,11);
-		this.enemyDetectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 1f,1f);
-		this.stoppingDistanceBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 4,4);
-		this.shootBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 6,6);
-		this.leaveBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 17,17);
+		this.detectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 11, 11);
+		this.enemyDetectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 1f, 1f);
+		this.stoppingDistanceBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 4, 4);
+		this.shootBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 6, 6);
+		this.leaveBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 17, 17);
 		setBody(body);
 		super.initHealthBar();
 
@@ -90,6 +86,11 @@ public class EnemyShip extends Enemy {
 		setCollege(college);
 	}
 
+	public static void setNPCTarget(EnemyShip target) {
+		NPCTarget = target;
+
+	}
+
 	/**
 	 * Updates the state of each object with delta time
 	 * Checks for ship destruction
@@ -98,16 +99,16 @@ public class EnemyShip extends Enemy {
 	 */
 	public void update(float dt) {
 		getBar().update();
-		if(ActiveGameScreen.player.stopFollowing && isFollowing){
+		if (ActiveGameScreen.player.stopFollowing && isFollowing) {
 			isFollowing = false;
 			ActiveGameScreen.player.numberOfShipsFollowing = 0;
-			if(ActiveGameScreen.player.rayLvl2){
-				takeDamage(getMaxHealth()/2);
+			if (ActiveGameScreen.player.rayLvl2) {
+				takeDamage(getMaxHealth() / 2);
 			}
 		}
-		if(college == "Alcuin" && isFollowing){
+		if (college == "Alcuin" && isFollowing) {
 			isFollowing = false;
-			ActiveGameScreen.player.numberOfShipsFollowing --;
+			ActiveGameScreen.player.numberOfShipsFollowing--;
 		}
 		for (CannonFire ball : cannonBalls) {
 			ball.update(dt);
@@ -116,7 +117,7 @@ public class EnemyShip extends Enemy {
 		}
 
 
-		 if(firingCoolDown > 0){
+		if (firingCoolDown > 0) {
 			firingCoolDown -= dt;
 		}
 
@@ -142,58 +143,53 @@ public class EnemyShip extends Enemy {
 			//Update position and angle of ship
 			setPosition(body.getPosition().x - getWidth() / 2f, body.getPosition().y - getHeight() / 2f);
 			float angle = (float) Math.atan2(body.getLinearVelocity().y, body.getLinearVelocity().x);
-			if((this.detectBox.overlaps(ActiveGameScreen.player.hitBox) || isFollowing) && college != "Alcuin" && !ActiveGameScreen.player.stopFollowing){
-				if(ActiveGameScreen.player.numberOfShipsFollowing < ActiveGameScreen.player.maxNumberOfShipsFollowing){
-					if(!isFollowing)ActiveGameScreen.player.numberOfShipsFollowing++;
+			if ((this.detectBox.overlaps(ActiveGameScreen.player.hitBox) || isFollowing) && college != "Alcuin" && !ActiveGameScreen.player.stopFollowing) {
+				if (ActiveGameScreen.player.numberOfShipsFollowing < ActiveGameScreen.player.maxNumberOfShipsFollowing) {
+					if (!isFollowing) ActiveGameScreen.player.numberOfShipsFollowing++;
 					isFollowing = true;
 				}
-				if(!isFollowing) return;
-				if(!this.stoppingDistanceBox.overlaps(ActiveGameScreen.player.hitBox)){
+				if (!isFollowing) return;
+				if (!this.stoppingDistanceBox.overlaps(ActiveGameScreen.player.hitBox)) {
 					followTarget(ActiveGameScreen.player.getBody());
-				}
-				else{
+				} else {
 					if (firingCoolDown <= 0) {
 						shootTarget(ActiveGameScreen.player.getBody());
 						firingCoolDown = ogFiringCoolDown;
 					}
 				}
-				if(this.shootBox.overlaps(ActiveGameScreen.player.hitBox)){
+				if (this.shootBox.overlaps(ActiveGameScreen.player.hitBox)) {
 					if (firingCoolDown <= 0) {
 						shootTarget(ActiveGameScreen.player.getBody());
 						firingCoolDown = ogFiringCoolDown;
 					}
 				}
-				if(!this.leaveBox.overlaps(ActiveGameScreen.player.hitBox)){
+				if (!this.leaveBox.overlaps(ActiveGameScreen.player.hitBox)) {
 					isFollowing = false;
-					ActiveGameScreen.player.numberOfShipsFollowing --;
+					ActiveGameScreen.player.numberOfShipsFollowing--;
 				}
 
-			}
-			else if(NPCTarget != null){
+			} else if (NPCTarget != null) {
 
-					if((this.detectBox.overlaps(NPCTarget.detectBox) || !isFollowing) && college != NPCTarget.college){
-						if(!this.stoppingDistanceBox.overlaps(NPCTarget.stoppingDistanceBox)){
-							this.followTarget(NPCTarget.getBody());
+				if ((this.detectBox.overlaps(NPCTarget.detectBox) || !isFollowing) && college != NPCTarget.college) {
+					if (!this.stoppingDistanceBox.overlaps(NPCTarget.stoppingDistanceBox)) {
+						this.followTarget(NPCTarget.getBody());
+					} else {
+						if (firingCoolDown <= 0) {
+							shootTarget(NPCTarget.getBody());
+							firingCoolDown = ogFiringCoolDown;
 						}
-						else{
-							if (firingCoolDown <= 0) {
-								shootTarget(NPCTarget.getBody());
-								firingCoolDown = ogFiringCoolDown;
-							}
+					}
+					if (this.shootBox.overlaps(NPCTarget.shootBox)) {
+						if (firingCoolDown <= 0) {
+							shootTarget(NPCTarget.getBody());
+							firingCoolDown = ogFiringCoolDown;
 						}
-						if(this.shootBox.overlaps(NPCTarget.shootBox)){
-							if (firingCoolDown <= 0) {
-								shootTarget(NPCTarget.getBody());
-								firingCoolDown = ogFiringCoolDown;
-							}
-						}
+					}
 
 
 				}
 
-			}
-
-			else{
+			} else {
 				body.setTransform(body.getWorldCenter(), angle - ((float) Math.PI) / 2.0f);
 			}
 
@@ -202,7 +198,10 @@ public class EnemyShip extends Enemy {
 			getBar().update();
 		}
 		if (getHealth() <= 0) {
-			if(isFollowing) {ActiveGameScreen.player.numberOfShipsFollowing --; isFollowing = false;}
+			if (isFollowing) {
+				ActiveGameScreen.player.numberOfShipsFollowing--;
+				isFollowing = false;
+			}
 			setToDestroy(true);
 		}
 
@@ -246,7 +245,7 @@ public class EnemyShip extends Enemy {
 		// setting BIT identifier
 		fdef.filter.categoryBits = PirateGame.ENEMY_BIT;
 		// determining what this BIT can collide with
-		fdef.filter.maskBits = PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT | PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT |PirateGame.COLLEGEFIRE_BIT;
+		fdef.filter.maskBits = PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT | PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT | PirateGame.COLLEGEFIRE_BIT;
 		fdef.shape = shape;
 		fdef.restitution = 0.7f;
 		body.createFixture(fdef).setUserData(this);
@@ -280,18 +279,15 @@ public class EnemyShip extends Enemy {
 		setRegion(enemyShip);
 	}
 
-	public void followTarget(Body target){
-		if(this.getBody().getLinearVelocity().len() < maxLinearSpeed) this.body.applyForceToCenter(this.body.getWorldVector(new Vector2(0, 3)), true);
-		float newOrientation = (float)Math.atan2( this.body.getPosition().x- target.getPosition().x, target.getPosition().y- this.body.getPosition().y  );
+	public void followTarget(Body target) {
+		if (this.getBody().getLinearVelocity().len() < maxLinearSpeed)
+			this.body.applyForceToCenter(this.body.getWorldVector(new Vector2(0, 3)), true);
+		float newOrientation = (float) Math.atan2(this.body.getPosition().x - target.getPosition().x, target.getPosition().y - this.body.getPosition().y);
 		body.setTransform(body.getPosition(), newOrientation);
 	}
-	public void shootTarget(Body target){
-		cannonBallManager.insert(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, target.getPosition(), 0, 0.7f, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT), PirateGame.COLLEGEFIRE_BIT, college));
 
-	}
-
-	public static void setNPCTarget(EnemyShip target){
-			NPCTarget = target;
+	public void shootTarget(Body target) {
+		CannonManager.insert(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, target.getPosition(), 0, 0.7f, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT), PirateGame.COLLEGEFIRE_BIT, college));
 
 	}
 

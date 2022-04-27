@@ -5,7 +5,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.entity.Entity;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
@@ -22,12 +25,10 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 public class CannonFire extends Entity {
 
 	private final Texture cannonBall;
-	private float stateTime;
-	private boolean destroyed;
-	private boolean setToDestroy;
 	private final float angle;
 	private final float velocity;
 	private final Sound fireNoise;
+	public String college;
 	Body body;
 	Vector2 target;
 	boolean rotated = false;
@@ -36,8 +37,9 @@ public class CannonFire extends Entity {
 	float rangeMultiplier = 1f;
 	float bulletSpeedLvls;
 	short maskbit;
-
-	public String college;
+	private float stateTime;
+	private boolean destroyed;
+	private boolean setToDestroy;
 
 	/**
 	 * Instantiates cannon fire
@@ -59,7 +61,6 @@ public class CannonFire extends Entity {
 		this.target = target;
 		this.bulletSpeedLvls = bulletSpeedLvls;
 		this.maskbit = maskBit;
-
 
 
 		//set cannonBall dimensions for the texture
@@ -88,7 +89,6 @@ public class CannonFire extends Entity {
 		this.bulletSpeedLvls = bulletSpeedLvls;
 		this.maskbit = maskBit;
 		this.college = college;
-
 
 
 		//set cannonBall dimensions for the texture
@@ -151,7 +151,7 @@ public class CannonFire extends Entity {
 		//Sets collision boundaries
 		FixtureDef fDef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox((10/ 2f) / PirateGame.PPM, (10 * 3f) / PirateGame.PPM);
+		shape.setAsBox((10 / 2f) / PirateGame.PPM, (10 * 3f) / PirateGame.PPM);
 
 		// setting BIT identifier
 		fDef.filter.categoryBits = catBit;
@@ -176,13 +176,13 @@ public class CannonFire extends Entity {
 	public void update(float dt) {
 		stateTime += dt;
 
-		if(!rotated) {
-			rotate((float)Math.toDegrees( Math.atan2( getBody().getPosition().x-target.x,target.y- getBody().getPosition().y)));
+		if (!rotated) {
+			rotate((float) Math.toDegrees(Math.atan2(getBody().getPosition().x - target.x, target.y - getBody().getPosition().y)));
 			rotated = true;
-			getBody().setTransform(getBody().getPosition().x, getBody().getPosition().y, (float)Math.atan2( getBody().getPosition().x-target.x,target.y- getBody().getPosition().y  ));
+			getBody().setTransform(getBody().getPosition().x, getBody().getPosition().y, (float) Math.atan2(getBody().getPosition().x - target.x, target.y - getBody().getPosition().y));
 		}
 
-		if(!applyForce){
+		if (!applyForce) {
 			this.body.applyForceToCenter(this.body.getWorldVector(new Vector2(0, speed + (speed * (this.bulletSpeedLvls * 0.15f)))), true);
 			applyForce = true;
 		}
@@ -205,6 +205,7 @@ public class CannonFire extends Entity {
 	public void setToDestroy() {
 		setToDestroy = true;
 	}
+
 	public void changeRangeMultiplier(float multiplier) {
 		this.rangeMultiplier += multiplier;
 	}
