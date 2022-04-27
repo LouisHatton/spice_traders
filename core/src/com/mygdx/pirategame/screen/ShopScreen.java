@@ -25,31 +25,31 @@ import com.mygdx.pirategame.entity.Player;
 public class ShopScreen implements Screen {
 
 	//The skin for the actors
-	static Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+	private static Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 	private static float damage1Price = 200f;
-	static Label damage1Label = new Label(damage1Price + " Gold", skin);
+	private static Label damage1Label = new Label(damage1Price + " Gold", skin);
 	private static float health1Price = 150f;
-	static Label health1Label = new Label(health1Price + " Gold", skin);
+	private static Label health1Label = new Label(health1Price + " Gold", skin);
 	private static float dps1Price = 200f;
-	static Label dps1Label = new Label(dps1Price + " Gold", skin);
+	private static Label dps1Label = new Label(dps1Price + " Gold", skin);
 	private static float range1Price = 200f;
-	static Label range1Label = new Label(range1Price + " Gold", skin);
+	private static Label range1Label = new Label(range1Price + " Gold", skin);
 	private static float GoldMulti1Price = 50f;
-	static Label GoldMulti1Label = new Label(GoldMulti1Price + " Gold", skin);
+	private static Label GoldMulti1Label = new Label(GoldMulti1Price + " Gold", skin);
 	private static float resistancePrice = 150f;
-	static Label resistanceLabel = new Label(resistancePrice + " Gold", skin);
+	private static Label resistanceLabel = new Label(resistancePrice + " Gold", skin);
 	private static float bulletSpeedPrice = 200f;
 	//Point unlock labels
-	static Label bulletSpeedLabel = new Label(bulletSpeedPrice + " Gold", skin);
+	private static Label bulletSpeedLabel = new Label(bulletSpeedPrice + " Gold", skin);
 	private static float movement1Price = 175f;
-	static Label movement1Label = new Label(movement1Price + " Gold", skin);
-	final Table Other = new Table();
+	private static Label movement1Label = new Label(movement1Price + " Gold", skin);
+	private final Table Other = new Table();
 	//To store whether buttons are enabled or disabled
 	private final PirateGame parent;
 	private final Stage stage;
 	public float percentPerPurchase = 15f;
-	Label currentGold = new Label(" Gold: " + HUD.getCoins(), skin);
-	Table table = new Table();
+	private Label currentGold = new Label(" Gold: " + HUD.getCoins(), skin);
+	private Table table = new Table();
 
 	private TextButton bulletSpeedButton;
 	private TextButton dpsButton;
@@ -60,7 +60,6 @@ public class ShopScreen implements Screen {
 	private TextButton healthButton;
 	private TextButton goldMultiplierButton;
 	private TextButton backButton;
-
 
 	/**
 	 * Instantiates a new Skill tree.

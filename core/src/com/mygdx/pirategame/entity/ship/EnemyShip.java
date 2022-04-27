@@ -288,7 +288,6 @@ public class EnemyShip extends Enemy {
 
 	public void shootTarget(Body target) {
 		CannonManager.insert(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, target.getPosition(), 0, 0.7f, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT), PirateGame.COLLEGEFIRE_BIT, college));
-
 	}
 
 }

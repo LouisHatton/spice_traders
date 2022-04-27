@@ -98,12 +98,12 @@ public class UltimateScreen implements Screen {
 		});
 
 
-		lvl1Button = new TextButton("Level 1 - Base ability", skin);
-		lvl2Button = new TextButton("Level 2", skin);
-		lvl3Button = new TextButton("Level 3", skin);
-		lvl4Button = new TextButton("Level 4", skin);
-		lvl5Button = new TextButton("Level 5", skin);
-		lvl6Button = new TextButton("Level 6 - Max Level", skin);
+		this.lvl1Button = new TextButton("Level 1 - Base ability", skin);
+		this.lvl2Button = new TextButton("Level 2", skin);
+		this.lvl3Button = new TextButton("Level 3", skin);
+		this.lvl4Button = new TextButton("Level 4", skin);
+		this.lvl5Button = new TextButton("Level 5", skin);
+		this.lvl6Button = new TextButton("Level 6 - Max Level", skin);
 
 		lvl2Button.setDisabled(true);
 		lvl3Button.setDisabled(true);

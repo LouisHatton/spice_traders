@@ -3,6 +3,7 @@ package com.mygdx.pirategame.tests.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
@@ -88,7 +89,7 @@ public class ButtonTests {
 		DeathScreen deathScreen = Mockito.mock(DeathScreen.class);
 
 		Whitebox.setInternalState(pirateGame, "menuScreen", Mockito.mock(MainMenuScreen.class));
-		Whitebox.setInternalState(deathScreen, "stage", Mockito.mock(Stage.class));
+		Whitebox.setInternalState(deathScreen, "stage", MockUtilities.mockStage());
 		Whitebox.setInternalState(deathScreen, "parent", pirateGame);
 		Mockito.doCallRealMethod().when(deathScreen).show();
 		Mockito.when(deathScreen.getReturnButton()).thenCallRealMethod();
@@ -107,7 +108,7 @@ public class ButtonTests {
 	@Test(expected = Test.None.class)
 	public void testShopButtons() {
 		PirateGame pirateGame = MockUtilities.createGameAndScreen();
-		ShopScreen shopScreen = new ShopScreen(pirateGame, Mockito.mock(Stage.class));
+		ShopScreen shopScreen = new ShopScreen(pirateGame, MockUtilities.mockStage());
 
 		Whitebox.setInternalState(pirateGame, "menuScreen", Mockito.mock(MainMenuScreen.class));
 		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));

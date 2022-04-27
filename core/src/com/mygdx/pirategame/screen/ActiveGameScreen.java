@@ -30,7 +30,6 @@ import com.mygdx.pirategame.entity.cannon.CannonManager;
 import com.mygdx.pirategame.entity.coin.Coin;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
-import com.mygdx.pirategame.entity.ship.EnemyAiManager;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.listener.WorldContactListener;
 import com.mygdx.pirategame.utils.Location;
@@ -499,8 +498,6 @@ public class ActiveGameScreen implements Screen {
 			pauseTable.setVisible(false);
 		}
 
-		EnemyAiManager.update(dt);
-
 		Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		renderer.render();
@@ -639,6 +636,7 @@ public class ActiveGameScreen implements Screen {
 			ArrayList<Integer> yTest = SpawnUtils.get().tileBlocked.get(x);
 			return !yTest.contains(y);
 		}
+
 		return true;
 	}
 
@@ -680,6 +678,7 @@ public class ActiveGameScreen implements Screen {
 			}
 
 			locations.add(new Location(a, b));
+			SpawnUtils.get().add(a, b);
 		}
 
 		return locations;
