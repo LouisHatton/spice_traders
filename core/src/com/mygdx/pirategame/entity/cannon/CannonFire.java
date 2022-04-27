@@ -29,14 +29,14 @@ public class CannonFire extends Entity {
 	private final float velocity;
 	private final Sound fireNoise;
 	public String college;
-	Body body;
-	Vector2 target;
-	boolean rotated = false;
-	float speed = 500f;
-	boolean applyForce = false;
-	float rangeMultiplier = 1f;
-	float bulletSpeedLvls;
-	short maskbit;
+	private Body body;
+	private Vector2 target;
+	private boolean rotated = false;
+	private float speed = 500f;
+	private boolean applyForce = false;
+	private float rangeMultiplier = 1f;
+	private float bulletSpeedLvls;
+	private short maskbit;
 	private float stateTime;
 	private boolean destroyed;
 	private boolean setToDestroy;
@@ -75,65 +75,18 @@ public class CannonFire extends Entity {
 		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
 			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
 		}
-
-
 	}
 
-	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short CatBit, String college) {
-		super(screen, x, y);
-		this.velocity = velocity;
-		this.rangeMultiplier = rangeMultiplier;
-		//sets the angle and velocity
-		angle = body.getAngle();
-		this.target = target;
-		this.bulletSpeedLvls = bulletSpeedLvls;
-		this.maskbit = maskBit;
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, Vector2 target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short catBit, String college) {
+		this(screen, x, y, body, velocity, target, bulletSpeedLvls, rangeMultiplier, maskBit, catBit);
+
 		this.college = college;
-
-
-		//set cannonBall dimensions for the texture
-		cannonBall = new Texture("cannonBall.png");
-		setRegion(cannonBall);
-		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
-		defineEntity(maskBit, CatBit);
-
-		//set collision bounds
-		//set sound for fire and play if on
-		fireNoise = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
-		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
-			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
-		}
-
-
 	}
 
-	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, float target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short CatBit) {
-		super(screen, x, y);
-		this.velocity = velocity;
-		this.rangeMultiplier = rangeMultiplier;
-		//sets the angle and velocity
-		angle = body.getAngle();
-		this.bulletSpeedLvls = bulletSpeedLvls;
-
-
-		this.maskbit = maskBit;
-		//set cannonBall dimensions for the texture
-		cannonBall = new Texture("cannonBall.png");
-		setRegion(cannonBall);
-		setBounds(x, y, 12 / PirateGame.PPM, 12 / PirateGame.PPM);
-		defineEntity(maskBit, CatBit);
-
-		//set collision bounds
-		//set sound for fire and play if on
-		fireNoise = Gdx.audio.newSound(Gdx.files.internal("explosion.wav"));
-		if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
-			fireNoise.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
-		}
-		this.rotated = true;
+	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, float target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short catBit) {
+		this(screen, x, y, body, velocity, null, bulletSpeedLvls, rangeMultiplier, maskBit, catBit);
 
 		this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y, target);
-
-
 	}
 
 	/**

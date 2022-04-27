@@ -2,7 +2,6 @@ package com.mygdx.pirategame.entity.cannon;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.pirategame.entity.cannon.CannonFire;
 
 public class CannonManager {
 
