@@ -14,7 +14,6 @@ public class TestRunner {
 
 	private final static Set<Class<?>> TESTS_TO_RUN = Sets.newSet(
 			AssetTests.class,
-			ScreenTest.class,
 			ScoreTest.class,
 			ShipTest.class,
 			CoinTest.class,

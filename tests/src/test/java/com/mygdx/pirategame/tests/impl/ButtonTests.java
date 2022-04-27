@@ -32,7 +32,7 @@ public class ButtonTests {
 		MockUtilities.createDefaultScoreAndPoints();
 	}
 
-	@Test(expected = Test.None.class)
+	@Test()
 	public void testButton() {
 		PirateGame pirateGame = MockUtilities.createGameAndScreen();
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
@@ -66,9 +66,9 @@ public class ButtonTests {
 		assertTrue(true); // no errors occur.
 	}
 
-	@Test(expected = Test.None.class)
+	@Test()
 	public void testBloodiedButton() {
-		PirateGame pirateGame = MockUtilities.createGame();
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
 		BloodiedScreen bloodiedScreen = new BloodiedScreen(pirateGame, MockUtilities.mockStage());
 
 		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
@@ -106,7 +106,7 @@ public class ButtonTests {
 
 	@Test(expected = Test.None.class)
 	public void testShopButtons() {
-		PirateGame pirateGame = MockUtilities.createGame();
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
 		ShopScreen shopScreen = new ShopScreen(pirateGame, Mockito.mock(Stage.class));
 
 		Whitebox.setInternalState(pirateGame, "menuScreen", Mockito.mock(MainMenuScreen.class));

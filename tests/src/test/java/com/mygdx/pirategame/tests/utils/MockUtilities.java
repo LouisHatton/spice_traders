@@ -27,8 +27,9 @@ import java.util.stream.Collectors;
 
 public class MockUtilities {
 
-	public static void createDefaultScoreAndPoints() {
-		HUD display = Mockito.mock(HUD.class);
+	public static HUD createDefaultScoreAndPoints() {
+		//HUD display = Mockito.mock(HUD.class);
+		HUD display = new HUD(mockStage());
 
 		// Default data.
 		Whitebox.setInternalState(display, "scoreLabel", new Label("0", new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
@@ -39,6 +40,8 @@ public class MockUtilities {
 
 		HUD.setScore(0);
 		HUD.setCoins(0);
+
+		return display;
 	}
 
 	public static PirateGame createGame() {
@@ -65,7 +68,8 @@ public class MockUtilities {
 		Whitebox.setInternalState(screen, "renderer", Mockito.mock(OrthogonalTiledMapRenderer.class));
 		Mockito.when(screen.getWorld()).thenCallRealMethod();
 
-		Whitebox.setInternalState(screen, "player", mockPlayer(screen));
+		ActiveGameScreen.player = mockPlayer(screen);
+		//Whitebox.setInternalState(screen, "player", mockPlayer(screen));
 
 		return screen;
 	}
@@ -81,7 +85,7 @@ public class MockUtilities {
 		Whitebox.setInternalState(activeGameScreen, "game", pirateGame);
 		Whitebox.setInternalState(pirateGame, "batch", Mockito.mock(SpriteBatch.class));
 
-		Whitebox.setInternalState(activeGameScreen, "hud", new HUD(pirateGame.batch));
+		Whitebox.setInternalState(activeGameScreen, "hud", createDefaultScoreAndPoints());
 		//Mockito.when(activeGameScreen.getHud()).thenReturn(new HUD(pirateGame.batch));
 
 		Mockito.when(activeGameScreen.checkGenPos(Mockito.anyInt(), Mockito.anyInt())).thenCallRealMethod();

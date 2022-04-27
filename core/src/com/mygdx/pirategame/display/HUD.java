@@ -38,7 +38,6 @@ public class HUD implements Disposable {
 	private static Label pointsText;
 	private static int coins;
 	private static float coinMulti;
-	private final Viewport viewport;
 	private final Texture hp;
 	private final Texture boxBackground;
 	private final Texture coinPic;
@@ -53,7 +52,7 @@ public class HUD implements Disposable {
 	 *
 	 * @param sb Batch of images used in the hud
 	 */
-	public HUD(SpriteBatch sb) {
+	public HUD(Stage stage) {
 		health = 100;
 		score = 0;
 		coins = 0;
@@ -67,8 +66,7 @@ public class HUD implements Disposable {
 		box = new Image(boxBackground);
 		coin = new Image(coinPic);
 
-		viewport = new ScreenViewport();
-		stage = new Stage(viewport, sb);
+		HUD.stage = stage;
 
 		//Creates tables
 		Table table1 = new Table(); //Counters
@@ -101,8 +99,6 @@ public class HUD implements Disposable {
 		stage.addActor(table3);
 		stage.addActor(table2);
 		stage.addActor(table1);
-
-
 	}
 
 	/**

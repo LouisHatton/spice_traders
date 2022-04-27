@@ -64,7 +64,6 @@ public class BloodiedScreen implements Screen {
 
 		progressBar = new Image(new Sprite(new Texture("blank.png")));
 
-
 		currentCollegesKilled = ActiveGameScreen.player.getCollegesKilled();
 		collegesKilledObjective = 2;
 		percentage = ((currentCollegesKilled / collegesKilledObjective));
@@ -74,6 +73,7 @@ public class BloodiedScreen implements Screen {
 			percentage = 100;
 			completion = "- Completed!";
 		}
+
 		progressBar.scaleBy(500 * (percentage / 100), 22);
 		Gdx.input.setInputProcessor(stage);
 
