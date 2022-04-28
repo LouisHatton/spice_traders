@@ -181,7 +181,6 @@ public class Player extends Entity {
 				disablingRayCooldown = disablingRayCooldownOg;
 				stopFollowing = true;
 				rayActiveFor = 3f;
-				System.out.println("Activated");
 
 				empExplosion = true;
 				empSet = false;
