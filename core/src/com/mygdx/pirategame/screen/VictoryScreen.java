@@ -26,16 +26,17 @@ public class VictoryScreen implements Screen {
 	private final PirateGame parent;
 	private final Stage stage;
 
+	private TextButton backButton;
+
 
 	/**
 	 * Instantiates a new Victory screen.
 	 *
 	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
 	 */
-	public VictoryScreen(PirateGame pirateGame) {
+	public VictoryScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
-		stage = new Stage(new ScreenViewport());
-
+		this.stage = stage;
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class VictoryScreen implements Screen {
 		stage.addActor(table);
 
 		//Create return button
-		TextButton backButton = new TextButton("Return To Menu", skin);
+		this.backButton = new TextButton("Return To Menu", skin);
 
 		//Set the click response
 		backButton.addListener(new ChangeListener() {
@@ -163,5 +164,9 @@ public class VictoryScreen implements Screen {
 	@Override
 	public void dispose() {
 
+	}
+
+	public TextButton getBackButton() {
+		return backButton;
 	}
 }

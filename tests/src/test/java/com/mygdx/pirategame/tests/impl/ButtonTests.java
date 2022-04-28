@@ -225,4 +225,77 @@ public class ButtonTests {
 
 		assertTrue(true); // no errors occur.
 	}
+
+	@Test()
+	public void testShieldScreen() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ShieldScreen shieldScreen = new ShieldScreen(pirateGame, MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "shieldScreen", shieldScreen);
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
+
+		pirateGame.changeScreen(PirateGame.SHIELD);
+		shieldScreen.show();
+
+		shieldScreen.getLvl1Button().toggle();
+		shieldScreen.getLvl2Button().toggle();
+		shieldScreen.getLvl3Button().toggle();
+		shieldScreen.getLvl4Button().toggle();
+		shieldScreen.getLvl5Button().toggle();
+		shieldScreen.getLvl6Button().toggle();
+		shieldScreen.getReturnButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
+
+	@Test
+	public void testVictoryButton() {
+		PirateGame pirateGame = MockUtilities.createGame();
+		VictoryScreen victoryScreen = new VictoryScreen(pirateGame, MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "menuScreen", Mockito.mock(MainMenuScreen.class));
+		Whitebox.setInternalState(pirateGame, "victoryScreen", victoryScreen);
+
+		pirateGame.changeScreen(PirateGame.VICTORY);
+		victoryScreen.show();
+
+		victoryScreen.getBackButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
+
+	@Test
+	public void testDifficultyButton() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		DifficultyScreen difficultyScreen = new DifficultyScreen(pirateGame, pirateGame.getScreen(), MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "difficultyScreen", difficultyScreen);
+		Whitebox.setInternalState(pirateGame, "gameScreen", Mockito.mock(ActiveGameScreen.class));
+		Whitebox.setInternalState(pirateGame, "skillTreeScreen", Mockito.mock(SkillsScreen.class));
+
+		pirateGame.changeScreen(PirateGame.DIFFICULTY);
+		difficultyScreen.show();
+
+		difficultyScreen.getEasyButton().toggle();
+
+		assertEquals("Difficulty not as expected!", 0.5f, PirateGame.difficultyMultiplier, 0.0);
+
+		difficultyScreen.getNormalButton().toggle();
+
+		assertEquals("Difficulty not as expected!", 1f, PirateGame.difficultyMultiplier, 0.0);
+
+		difficultyScreen.getHardButton().toggle();
+
+		assertEquals("Difficulty not as expected!", 1.5f, PirateGame.difficultyMultiplier, 0.0);
+
+		difficultyScreen.getImpossibleButton().toggle();
+
+		assertEquals("Difficulty not as expected!", 2f, PirateGame.difficultyMultiplier, 0.0);
+
+		difficultyScreen.getBackButton().toggle();
+
+		PirateGame.difficultyMultiplier = 1f;
+
+		assertTrue(true); // no errors occur.
+	}
 }

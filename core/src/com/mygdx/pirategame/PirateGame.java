@@ -129,7 +129,7 @@ public class PirateGame extends Game {
 				break;
 
 			case SHIELD:
-				if (shieldScreen == null) shieldScreen = new ShieldScreen(this);
+				if (shieldScreen == null) shieldScreen = new ShieldScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(shieldScreen);
 				break;
 			case ULTIMATE:
@@ -157,12 +157,12 @@ public class PirateGame extends Game {
 				break;
 
 			case VICTORY:
-				if (victoryScreen == null) victoryScreen = new VictoryScreen(this);
+				if (victoryScreen == null) victoryScreen = new VictoryScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(victoryScreen);
 				break;
 
 			case DIFFICULTY:
-				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.screen);
+				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.screen, new Stage(new ScreenViewport()));
 				this.setScreen(difficultyScreen);
 				break;
 

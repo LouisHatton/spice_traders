@@ -26,12 +26,16 @@ public class DifficultyScreen implements Screen {
 	private final Stage stage;
 	String textForDiff = " ";
 
-	boolean difficultySet = false;
+	private TextButton easyButton;
+	private TextButton normalButton;
+	private TextButton hardButton;
+	private TextButton impossibleButton;
+	private TextButton backButton;
 
-	public DifficultyScreen(PirateGame pirateGame, Screen parent) {
+	public DifficultyScreen(PirateGame pirateGame, Screen parent, Stage stage) {
 		this.pirateGame = pirateGame;
 		this.parent = parent;
-		stage = new Stage(new ScreenViewport());
+		this.stage = stage;
 	}
 
 
@@ -61,27 +65,27 @@ public class DifficultyScreen implements Screen {
 		}
 
 		//create buttons
-		TextButton Easy = new TextButton("Easy", skin);
-		TextButton Normal = new TextButton("Normal", skin);
-		TextButton Hard = new TextButton("Hard", skin);
-		TextButton Impossible = new TextButton("Impossible", skin);
-		TextButton Back = new TextButton("Back", skin);
+		this.easyButton = new TextButton("Easy", skin);
+		this.normalButton = new TextButton("Normal", skin);
+		this.hardButton = new TextButton("Hard", skin);
+		this.impossibleButton = new TextButton("Impossible", skin);
+		this.backButton = new TextButton("Back", skin);
 
 		//add buttons to table
-		table.add(Easy).fillX().uniformX();
+		table.add(this.easyButton).fillX().uniformX();
 		table.row().pad(10, 0, 10, 0);
-		table.add(Normal).fillX().uniformX();
+		table.add(this.normalButton).fillX().uniformX();
 		table.row();
-		table.add(Hard).fillX().uniformX();
+		table.add(this.hardButton).fillX().uniformX();
 		table.row();
-		table.add(Impossible).fillX().uniformX();
+		table.add(this.impossibleButton).fillX().uniformX();
 		table.row();
-		table.add(Back).fillX().uniformX();
+		table.add(this.backButton).fillX().uniformX();
 
 		//add listeners to the buttons
 
 		//Start a game
-		Easy.addListener(new ChangeListener() {
+		this.easyButton.addListener(new ChangeListener() {
 
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -91,7 +95,7 @@ public class DifficultyScreen implements Screen {
 			}
 		});
 		//Help Screen
-		Normal.addListener(new ChangeListener() {
+		this.normalButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				PirateGame.difficultyMultiplier = 1f;
@@ -100,7 +104,7 @@ public class DifficultyScreen implements Screen {
 			}
 		});
 		//Help Screen
-		Hard.addListener(new ChangeListener() {
+		this.hardButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				PirateGame.difficultyMultiplier = 1.5f;
@@ -109,7 +113,7 @@ public class DifficultyScreen implements Screen {
 			}
 		});
 
-		Impossible.addListener(new ChangeListener() {
+		this.impossibleButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				PirateGame.difficultyMultiplier = 2f;
@@ -119,7 +123,7 @@ public class DifficultyScreen implements Screen {
 		});
 
 
-		Back.addListener(new ChangeListener() {
+		this.backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				pirateGame.setScreen(parent);
@@ -168,5 +172,29 @@ public class DifficultyScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+
+	public TextButton getEasyButton() {
+		return easyButton;
+	}
+
+	public TextButton getNormalButton() {
+		return normalButton;
+	}
+
+	public TextButton getHardButton() {
+		return hardButton;
+	}
+
+	public TextButton getImpossibleButton() {
+		return impossibleButton;
+	}
+
+	public TextButton getBackButton() {
+		return backButton;
+	}
+
+	public String getTextForDiff() {
+		return textForDiff;
 	}
 }

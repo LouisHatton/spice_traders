@@ -86,7 +86,7 @@ public class MainMenuScreen implements Screen {
 		newGame.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				parent.setScreen(new DifficultyScreen(parent, parent.getScreen()));
+				parent.setScreen(new DifficultyScreen(parent, parent.getScreen(), new Stage(new ScreenViewport())));
 			}
 		});
 		//Help Screen
