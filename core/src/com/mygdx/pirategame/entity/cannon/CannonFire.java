@@ -85,7 +85,7 @@ public class CannonFire extends Entity {
 
 	public CannonFire(ActiveGameScreen screen, float x, float y, Body body, float velocity, float target, float bulletSpeedLvls, float rangeMultiplier, short maskBit, short catBit) {
 		this(screen, x, y, body, velocity, null, bulletSpeedLvls, rangeMultiplier, maskBit, catBit);
-
+		this.rotated = true;
 		this.body.setTransform(this.body.getPosition().x, this.body.getPosition().y, target);
 	}
 

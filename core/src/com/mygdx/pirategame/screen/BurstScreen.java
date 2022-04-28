@@ -111,16 +111,16 @@ public class BurstScreen implements Screen {
 		lvl5Button.setDisabled(true);
 		lvl6Button.setDisabled(true);
 
-		lvl1ButtonLabel = new Label("", skin);
-		lvl2ButtonLabel = new Label("", skin);
+		lvl1ButtonLabel = new Label("Shoots 3 cannons in the direction the player is looking at (Activated using right click) (8 second cool down)", skin);
+		lvl2ButtonLabel = new Label("Adds a second wave of bullets", skin);
 		lvl1ButtonLabel2 = new Label("Gain 200 Score", skin);
 		lvl2ButtonLabel2 = new Label("Gain 400 Score", skin);
-		lvl3ButtonLabel = new Label("", skin);
-		lvl4ButtonLabel = new Label("", skin);
+		lvl3ButtonLabel = new Label("Increase number of cannons shot to 4 and decreases cool down to 7 seconds from 8", skin);
+		lvl4ButtonLabel = new Label("Adds a third wave of bullets", skin);
 		lvl3ButtonLabel2 = new Label("Gain 600 Score", skin);
 		lvl4ButtonLabel2 = new Label("Gain 800 Score", skin);
-		lvl5ButtonLabel = new Label("", skin);
-		lvl6ButtonLabel = new Label("", skin);
+		lvl5ButtonLabel = new Label("Increase number of cannons shot to 5", skin);
+		lvl6ButtonLabel = new Label("Adds 10% to the ultimate. (Stacks with multiplier) and decreases cool down to 6 seconds from 7", skin);
 		lvl5ButtonLabel2 = new Label("Gain 1000 Score", skin);
 		lvl6ButtonLabel2 = new Label("Gain 1200 Score", skin);
 		Title = new Label("Burst Shot", skin);

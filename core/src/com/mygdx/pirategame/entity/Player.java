@@ -82,6 +82,16 @@ public class Player extends Entity {
 	private float originalSpeed;
 	private float speed;
 	private Camera cam;
+	public static boolean burstFire = false;
+	public static boolean ultOnShot = false;
+	public static float amountToTheSide = 1;
+	public static float amountOfBullets = 3;
+	public static float sideShots = 0;
+	public static float ogburstTimer = 8;
+	public float burstCooldown = 0f;
+	boolean burstShooting = false;
+	float burstShotCooldown = 0;
+	public static float burstShotCoolDownOg = 0.3f;
 
 
 	/**
@@ -153,10 +163,44 @@ public class Player extends Entity {
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
+		if(burstFire){
+		if(burstShooting){
+			if(burstShotCooldown <= 0){
+				if(sideShots > 0){
+					cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, getBody().getAngle(), cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
+					cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, getBody().getAngle() + 50, cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
+					cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, getBody().getAngle() - 50, cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
+
+					if(amountOfBullets >= 4)cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, getBody().getAngle() - 51, cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
+
+					if(amountOfBullets >= 5)cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, getBody().getAngle() + 51, cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
+					sideShots --;
+				}
+				burstShotCooldown = burstShotCoolDownOg;
+				if(sideShots == 0){
+					burstShotCooldown = 0;
+					burstShooting = false;
+				}
+
+			}
+			else {
+				burstShotCooldown -= dt;
+			}
+		}
+
+		if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && burstCooldown <= 0){
+			burstShooting = true;
+			sideShots = amountToTheSide;
+			burstCooldown = ogburstTimer;
+			if(ultOnShot) ultimateAmount += 10 * ultimateAmountMultiplier;
+		}
+		if(burstCooldown >= 0){
+			burstCooldown -= dt;
+		}
+	}
 		emp.setCenter(getBody().getPosition().x, getBody().getPosition().y);
 		if (empExplosion) {
 			if (!empSet) {
-
 				empExplosionCooldown = empExplosionCooldownOG;
 				emp.setSize(0.5f, 0.5f);
 				empSet = true;
