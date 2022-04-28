@@ -108,7 +108,7 @@ public class ActiveGameScreen implements Screen {
 		camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
 		// Initialize a hud
-		hud = new HUD(new Stage(viewport));
+		hud = new HUD(new Stage(new ScreenViewport(), game.batch));
 
 		// Initialising box2d physics
 		world = new World(new Vector2(0, 0), true);
