@@ -68,7 +68,7 @@ public class Player extends Entity {
 	Sprite shield = new Sprite(new Texture("bubble.png"));
 	Sprite emp = new Sprite(new Texture("EMP.png"));
 	float ultimateTimer = 0.5f;
-	float disablingRayCooldown = 0f;
+	public static float disablingRayCooldown = 0f;
 	float rayActiveFor = 0;
 	boolean empExplosion = false;
 	float empExplosionCooldown = 0;
@@ -90,7 +90,7 @@ public class Player extends Entity {
 	public static float ogburstTimer = 8;
 	public float burstCooldown = 0f;
 	boolean burstShooting = false;
-	float burstShotCooldown = 0;
+	public static float burstShotCooldown = 0;
 	public static float burstShotCoolDownOg = 0.3f;
 
 
