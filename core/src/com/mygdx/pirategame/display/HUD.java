@@ -383,6 +383,13 @@ public class HUD implements Disposable {
 			empStackAdded = true;
 			empStackOnCd = true;
 		}
+		if(!ActiveGameScreen.player.rayEnabled && empStackAdded){
+			abilities3.removeActor(empLogo);
+			abilities3.removeActor(empStack);
+			empStackAdded = false;
+			empStackOnCd = false;
+			empStackOnCd2 = false;
+		}
 		if(ActiveGameScreen.player.burstFire && !burstStackAdded){
 			abilities1.add(burstLogo);
 			burstStackAdded = true;
