@@ -2,6 +2,7 @@ package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -140,7 +141,9 @@ public class DisablingrayScreen implements Screen {
 
 
 		//add return button
+		Label Strategy1 = new Label("Strategy: This ability can be used to get out of sticky situations or to engage the college for a few seconds without the fleet targeting the player", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Other.add(this.returnButton);
+		Other.add(Strategy1);
 		Other.bottom().left();
 	}
 

@@ -2,6 +2,7 @@ package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -138,8 +139,10 @@ public class BloodiedScreen implements Screen {
 		table.add(percentageLabel).padLeft(10).padRight(10);
 
 
+		Label Strategy1 = new Label("Strategy : Ensuring your health is under 50% will give the most optimal damage output without too much risk. keep an eye on your health", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		//add return button
 		Other.add(this.returnButton);
+		Other.add(Strategy1);
 		Other.bottom().left();
 	}
 

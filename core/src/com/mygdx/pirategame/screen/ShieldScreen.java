@@ -2,6 +2,7 @@ package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -205,7 +206,9 @@ public class ShieldScreen implements Screen {
 
 
 		//add return button
+		Label Strategy1 = new Label("Strategy: This ability is the only active healing method. be sure to use it in sticky situations and if the player needs healing (level 3,5)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Other.add(this.returnButton);
+		Other.add(Strategy1);
 		Other.bottom().left();
 	}
 
