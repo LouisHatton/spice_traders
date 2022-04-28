@@ -50,7 +50,7 @@ public class HUD implements Disposable {
 	 * Retrieves information and displays it in the hud
 	 * Adjusts hud with viewport
 	 *
-	 * @param sb Batch of images used in the hud
+	 *
 	 */
 	public HUD(Stage stage) {
 		health = 100;
@@ -166,34 +166,39 @@ public class HUD implements Disposable {
 		SkillsScreen.pointsCheck(score);
 
 		if (score >= 200) {
+			if(!ActiveGameScreen.player.burstFire)ActiveGameScreen.player.burstCooldown = 0;
+			ActiveGameScreen.player.burstFire = true;
 
 		}
 		if (score >= 400) {
-
+			ActiveGameScreen.player.amountToTheSide = 2;
 		}
 		if (score >= 500) {
 			ActiveGameScreen.player.ultimateFirerEnabled = true;
 		}
 		if (score >= 600) {
-
+			ActiveGameScreen.player.amountOfBullets = 4;
+			ActiveGameScreen.player.ogburstTimer = 7;
 		}
 		if (score >= 650) {
 			ActiveGameScreen.player.ultimateAmountMultiplier = 1.5f;
 		}
 		if (score >= 800) {
 			ActiveGameScreen.player.amountOfShotsInUltimateFire = 15;
+			ActiveGameScreen.player.amountToTheSide = 3;
 		}
 		if (score >= 950) {
 			ActiveGameScreen.player.ultimateAmountMultiplier = 2f;
 		}
 		if (score >= 1000) {
-
+			ActiveGameScreen.player.amountOfBullets = 5;
 		}
 		if (score >= 1100) {
 			ActiveGameScreen.player.amountOfShotsInUltimateFire = 20;
 		}
 		if (score >= 1200) {
-
+			ActiveGameScreen.player.ultOnShot = true;
+			ActiveGameScreen.player.ogburstTimer = 6;
 		}
 		if (score >= 1250) {
 			ActiveGameScreen.player.burstAmountForUltimateFire = 2;
