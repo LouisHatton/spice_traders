@@ -72,6 +72,7 @@ public class HelpScreen implements Screen {
 		Label Controls1 = new Label("WASD to move", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Controls2 = new Label("Left click to fire (fires at the direction of the mouse click)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Controls3 = new Label("ESCAPE to see menu", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Controls4 = new Label("For the abilities check the skills screen for more info", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective1 = new Label("The objective is to take over or destroy all other colleges", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective2 = new Label("Destroy the college flag with cannons", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective3 = new Label("Collect coins on the way and spend them in the shop to get upgrades", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
@@ -79,7 +80,7 @@ public class HelpScreen implements Screen {
 		Label skillInfo2 = new Label("See your abilities and objectives look at the skills tab", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy1 = new Label("Strategy to kill boats : shooting the direction you are moving will give the player less reach. so try shooting the other way to get better reach on the enemy", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy2 = new Label("Strategy to destroy colleges : ensure that the colleges fleet has been destroyed and circle the college while shooting it", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
-		Label Strategy2Con = new Label("that way you can destroy the college without disruptions", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Strategy2Con = new Label("that way you can destroy the college without disruptions. Additionally, destroying a college will disable its fleet", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 
 		//Return Button
 		TextButton backButton = new TextButton("Return", skin);
@@ -100,7 +101,9 @@ public class HelpScreen implements Screen {
 		Other.row();
 		Other.add(Controls2);
 		Other.row();
-		Other.add(Controls3).padBottom((40));
+		Other.add(Controls3);
+		Other.row();
+		Other.add(Controls4).padBottom((40));
 		Other.row();
 		Other.add(objective1);
 		Other.row();
