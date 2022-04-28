@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -43,6 +44,9 @@ public class DisablingrayScreen implements Screen {
 
 	@Override
 	public void show() {
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
 		table.reset();
 		table.clearChildren();
 		table.clear();
@@ -99,7 +103,7 @@ public class DisablingrayScreen implements Screen {
 		lvl2ButtonLabel = new Label("The ships that are targeting the player will lose 50% of their health when this ability is activated (drops cool down from 6 to 5)", skin);
 		lvl1ButtonLabel2 = new Label("Capture 1 college", skin);
 		lvl2ButtonLabel2 = new Label("Capture 2 colleges", skin);
-		Title = new Label("Disabling Ray", skin);
+		Title = new Label("Disabling Ray", label1Style);
 
 
 		int collegesKilledPercever = (int) currentCollegesCaptured;
@@ -118,7 +122,6 @@ public class DisablingrayScreen implements Screen {
 
 
 		titleTable.center().top();
-		Title.setFontScale(3);
 		titleTable.add(Title);
 
 

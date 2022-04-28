@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -78,6 +79,11 @@ public class ShieldScreen implements Screen {
 		progressBar = new Image(new Sprite(new Texture("blank.png")));
 
 
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
+
+
 		boatsKilled = ActiveGameScreen.player.getBoatsKilled();
 
 
@@ -122,7 +128,7 @@ public class ShieldScreen implements Screen {
 		lvl6ButtonLabel = new Label("When bubble is active healing is increased by 300%", skin);
 		lvl5ButtonLabel2 = new Label("Destroy 13 ships", skin);
 		lvl6ButtonLabel2 = new Label("Destroy 15 ships", skin);
-		Title = new Label("Bubble", skin);
+		Title = new Label("Bubble", label1Style);
 
 
 		boatsKilledObjective = 7;
@@ -165,7 +171,6 @@ public class ShieldScreen implements Screen {
 		progressBar.scaleBy(500 * (percentage / 100), 22);
 
 		titleTable.center().top();
-		Title.setFontScale(3);
 		titleTable.add(Title);
 
 

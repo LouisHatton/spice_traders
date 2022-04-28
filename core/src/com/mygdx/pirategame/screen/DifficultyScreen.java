@@ -56,8 +56,7 @@ public class DifficultyScreen implements Screen {
 			if (pirateGame.getDifficulty() == 1) textForDiff = "Normal";
 			if (pirateGame.getDifficulty() == 1.5) textForDiff = "Hard";
 			if (pirateGame.getDifficulty() == 2) textForDiff = "Impossible";
-			Label difficultyMsg = new Label("Current Difficulty is " + textForDiff, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-			difficultyMsg.setFontScale(1.3f);
+			Label difficultyMsg = new Label("Current Difficulty is " + textForDiff, skin);
 			table.add(difficultyMsg).center();
 			stage.addActor(table);
 			table.row();

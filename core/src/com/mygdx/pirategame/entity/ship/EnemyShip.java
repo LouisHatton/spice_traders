@@ -98,6 +98,22 @@ public class EnemyShip extends Enemy {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+		if(getHealth() <= 0){
+			setToDestroy(true);
+		}
+		if (isSetToDestroy() && !isDestroyed()) {
+			//Play death noise
+			if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
+				destroy.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
+			}
+			getWorld().destroyBody(body);
+			setDestroyed(true);
+			//Change player coins and points
+			HUD.changePoints(20);
+			HUD.changeCoins(10);
+			ActiveGameScreen.player.setBoatsKilled(1);
+			ActiveGameScreen.player.ultimateAmount += 5 * ActiveGameScreen.player.ultimateAmountMultiplier;
+		}
 		getBar().update();
 		if (ActiveGameScreen.player.stopFollowing && isFollowing) {
 			isFollowing = false;
@@ -127,19 +143,7 @@ public class EnemyShip extends Enemy {
 		this.shootBox.setCenter(this.body.getPosition());
 		this.leaveBox.setCenter(this.body.getPosition());
 		//If ship is set to destroy and isnt, destroy it
-		if (isSetToDestroy() && !isDestroyed()) {
-			//Play death noise
-			if (ActiveGameScreen.game.getPreferences().isEffectsEnabled()) {
-				destroy.play(ActiveGameScreen.game.getPreferences().getEffectsVolume());
-			}
-			getWorld().destroyBody(body);
-			setDestroyed(true);
-			//Change player coins and points
-			HUD.changePoints(20);
-			HUD.changeCoins(10);
-			ActiveGameScreen.player.setBoatsKilled(1);
-			ActiveGameScreen.player.ultimateAmount += 5 * ActiveGameScreen.player.ultimateAmountMultiplier;
-		} else if (!isDestroyed()) {
+		 if (!isDestroyed() && !isSetToDestroy()) {
 			//Update position and angle of ship
 			setPosition(body.getPosition().x - getWidth() / 2f, body.getPosition().y - getHeight() / 2f);
 			float angle = (float) Math.atan2(body.getLinearVelocity().y, body.getLinearVelocity().x);

@@ -3,6 +3,7 @@ package com.mygdx.pirategame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -29,6 +30,8 @@ public class SettingsScreen implements Screen {
 	private Slider volumeEffectSlider;
 	private CheckBox effectCheckbox;
 	private TextButton backButton;
+	private Table titleTable = new Table();
+
 
 	/**
 	 * Instantiates a new Options screen
@@ -47,6 +50,16 @@ public class SettingsScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		titleTable.clear();
+		titleTable.clearChildren();
+		titleTable.reset();
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
+
+		Label Title = new Label("Settings", label1Style);
+
+
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
 		stage.clear();
@@ -54,9 +67,14 @@ public class SettingsScreen implements Screen {
 		Table table = new Table();
 		table.setFillParent(true);
 		stage.addActor(table);
+		titleTable.center().top();
+		titleTable.setFillParent(true);
+		titleTable.add(Title);
+		stage.addActor(titleTable);
 
 		//The skin for the actors
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+
 
 		//Music Sliders and Check boxes
 		this.volumeMusicSlider = new Slider(0f, 1f, 0.1f, false, skin);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -86,6 +87,9 @@ public class UltimateScreen implements Screen {
 
 		//The skin for the actors
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
 
 		//Return Button
 		this.returnButton = new TextButton("Return", skin);
@@ -123,7 +127,7 @@ public class UltimateScreen implements Screen {
 		lvl6ButtonLabel = new Label("increases amount of rings shot from 1 to 2 (for a total of 40 cannon shots)", skin);
 		lvl5ButtonLabel2 = new Label("Gain 1100 Score", skin);
 		lvl6ButtonLabel2 = new Label("Gain 1250 Score", skin);
-		Title = new Label("Ultimate", skin);
+		Title = new Label("Ultimate" ,label1Style);
 
 
 		scoreTarget = 650;
@@ -166,7 +170,6 @@ public class UltimateScreen implements Screen {
 		progressBar.scaleBy(500 * (percentage / 100), 22);
 
 		titleTable.center().top();
-		Title.setFontScale(3);
 		titleTable.add(Title);
 
 

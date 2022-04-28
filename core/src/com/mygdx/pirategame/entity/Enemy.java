@@ -18,7 +18,7 @@ public abstract class Enemy extends Entity {
 	private boolean setToDestroy;
 	private boolean destroyed;
 	private int health;
-	private int damage;
+	private int damage = 20;
 	private HealthBar bar;
 	private boolean justDied = false;
 	private float maxHealth = 100;

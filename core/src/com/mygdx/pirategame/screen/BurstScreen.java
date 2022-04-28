@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -56,6 +57,9 @@ public class BurstScreen implements Screen {
 
 	@Override
 	public void show() {
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
 		table.reset();
 		table.clearChildren();
 		table.clear();
@@ -123,7 +127,7 @@ public class BurstScreen implements Screen {
 		lvl6ButtonLabel = new Label("Adds 10% to the ultimate. (Stacks with multiplier) and decreases cool down to 6 seconds from 7", skin);
 		lvl5ButtonLabel2 = new Label("Gain 1000 Score", skin);
 		lvl6ButtonLabel2 = new Label("Gain 1200 Score", skin);
-		Title = new Label("Burst Shot", skin);
+		Title = new Label("Burst Shot", label1Style);
 
 
 		scoreTarget = 400;
@@ -166,7 +170,6 @@ public class BurstScreen implements Screen {
 		progressBar.scaleBy(500 * (percentage / 100), 22);
 
 		titleTable.center().top();
-		Title.setFontScale(3);
 		titleTable.add(Title);
 
 

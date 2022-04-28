@@ -10,7 +10,7 @@ public enum CollegeType {
 	GOODRICKE("Goodricke", "goodricke_ship.png", "goodricke_flag.png", 1760 / PirateGame.PPM, 6767 / PirateGame.PPM, 8);
 
 	private final String friendlyName;
-	private final String shipTexture;
+	private String shipTexture;
 	private final String flagTexture;
 	private final float x;
 	private final float y;

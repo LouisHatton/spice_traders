@@ -3,6 +3,7 @@ package com.mygdx.pirategame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -34,6 +35,7 @@ public class SkillsScreen implements Screen {
 	private final PirateGame parent;
 	private final Stage stage;
 	Table table = new Table();
+	Table titleTable = new Table();
 	private TextButton shield;
 	private TextButton ultimateAbility;
 	private TextButton secondaryAbility;
@@ -86,6 +88,10 @@ public class SkillsScreen implements Screen {
 		Other.clear();
 		Other.clearChildren();
 		Other.reset();
+		titleTable.clear();
+		titleTable.clearChildren();
+		titleTable.reset();
+
 
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
@@ -101,6 +107,17 @@ public class SkillsScreen implements Screen {
 
 		//The skin for the actors
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
+
+
+		Label Title = new Label("Skills Screen", label1Style);
+		titleTable.center().top();
+		titleTable.setFillParent(true);
+		Title.setFontScale(1);
+		titleTable.add(Title);
+		stage.addActor(titleTable);
 
 		//create skill tree buttons
 		bloodied = new TextButton("Bloodied", skin);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -42,6 +43,9 @@ public class BloodiedScreen implements Screen {
 
 	@Override
 	public void show() {
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
 		table.reset();
 		table.clearChildren();
 		table.clear();
@@ -98,7 +102,7 @@ public class BloodiedScreen implements Screen {
 		lvl2ButtonLabel = new Label("                Maximum damage multiplier increases from 50% to 75% more damage", skin);
 		lvl1ButtonLabel2 = new Label("Destroy 1 college", skin);
 		lvl2ButtonLabel2 = new Label("Destroy 2 colleges", skin);
-		Title = new Label("Bloodied", skin);
+		Title = new Label("Bloodied", label1Style);
 
 
 		int collegesKilledPercever = (int) currentCollegesKilled;
@@ -117,7 +121,6 @@ public class BloodiedScreen implements Screen {
 
 
 		titleTable.center().top();
-		Title.setFontScale(3);
 		titleTable.add(Title);
 
 

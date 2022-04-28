@@ -24,6 +24,7 @@ import com.mygdx.pirategame.PirateGame;
 public class HelpScreen implements Screen {
 	private final PirateGame parent;
 	private final Stage stage;
+	private Table titleTable = new Table();
 
 	/**
 	 * In the constructor, the parent and stage are set. Also the states list is set
@@ -40,6 +41,18 @@ public class HelpScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		titleTable.clear();
+		titleTable.clearChildren();
+		titleTable.reset();
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
+
+		Label Title = new Label("Help", label1Style);
+		titleTable.center().top();
+		titleTable.setFillParent(true);
+		titleTable.add(Title);
+		stage.addActor(titleTable);
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
 		// Create a table that fills the screen
@@ -56,14 +69,14 @@ public class HelpScreen implements Screen {
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 		//Text
-		Label Controls1 = new Label("WASD to move", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		Label Controls2 = new Label("E to fire", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		Label Controls3 = new Label("ESCAPE to see menu", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		Label objective1 = new Label("The objective is to take over or destroy all other colleges", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		Label objective2 = new Label("Destroy the college flag with cannons", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		Label objective3 = new Label("Collect coins on the way", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		Label skillInfo1 = new Label("Automatically upgrade as you play", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		Label skillInfo2 = new Label("See your upgrades in the skills tab", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		Label Controls1 = new Label("WASD to move", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Controls2 = new Label("E to fire", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Controls3 = new Label("ESCAPE to see menu", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label objective1 = new Label("The objective is to take over or destroy all other colleges", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label objective2 = new Label("Destroy the college flag with cannons", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label objective3 = new Label("Collect coins on the way", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label skillInfo1 = new Label("Automatically upgrade as you play", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label skillInfo2 = new Label("See your upgrades in the skills tab", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 
 		//Return Button
 		TextButton backButton = new TextButton("Return", skin);

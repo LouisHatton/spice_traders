@@ -2,12 +2,15 @@ package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -28,6 +31,7 @@ public class MainMenuScreen implements Screen {
 	private final PirateGame parent;
 	;
 	private final Stage stage;
+	private Table titleTable = new Table();
 
 	/**
 	 * Instantiates a new Main menu.
@@ -51,6 +55,19 @@ public class MainMenuScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		titleTable.clear();
+		titleTable.clearChildren();
+		titleTable.reset();
+		Label.LabelStyle label1Style = new Label.LabelStyle();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+		label1Style.font = font;
+
+		Label Title = new Label("Spice Traders", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), Color.FIREBRICK));
+		titleTable.center().top();
+		titleTable.setFillParent(true);
+		titleTable.add(Title);
+		stage.addActor(titleTable);
+
 		background.setSize(1920, 1080);
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);

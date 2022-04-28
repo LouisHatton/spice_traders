@@ -524,7 +524,6 @@ public class ActiveGameScreen implements Screen {
 				//Flips a colleges allegence if their college is destroyed
 				if (colleges.get(ship.college).isDestroyed() || colleges.get(ship.college).isCaptured()) {
 					ship.updateTexture("Alcuin", "alcuin_ship.png");
-					//colleges.updateTexture("surender_flag.png");
 				}
 			}
 
@@ -611,6 +610,7 @@ public class ActiveGameScreen implements Screen {
 		});
 
 		if (allDestroyed) {
+			player.resetStats();
 			game.changeScreen(PirateGame.VICTORY);
 			game.killGame();
 		}
