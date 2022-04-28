@@ -221,7 +221,7 @@ public class Player extends Entity {
 					stopFollowing = false;
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_LEFT) && disablingRayCooldown <= 0) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.F) && disablingRayCooldown <= 0) {
 				disablingRayCooldown = disablingRayCooldownOg;
 				stopFollowing = true;
 				rayActiveFor = 3f;

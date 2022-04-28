@@ -379,7 +379,7 @@ public class HUD implements Disposable {
 
 
 		if(ActiveGameScreen.player.rayEnabled && !empStackAdded){
-			abilities3.add(empLogo).right();
+			abilities3.add(empLogo);
 			empStackAdded = true;
 			empStackOnCd = true;
 		}
@@ -401,14 +401,14 @@ public class HUD implements Disposable {
 			ultimateStackOnCd = true;
 		}
 		if(ActiveGameScreen.player.shieldEnabled && !shieldStackAdded){
-			abilities3.add(shieldLogo).left();
+			abilities3.add(shieldLogo);
 			shieldStackAdded = true;
 			shieldStackOnCd = true;
 		}
 
 		if(ActiveGameScreen.player.rayEnabled && !empStackOnCd){
 			if(ActiveGameScreen.player.disablingRayCooldown <= 0){
-				abilities3.add(empLogo).right();
+				abilities3.add(empLogo);
 				abilities3.removeActor(empStack);
 				empStackOnCd = true;
 				empStackOnCd2 = false;
@@ -432,7 +432,7 @@ public class HUD implements Disposable {
 		}
 		if(ActiveGameScreen.player.shieldEnabled && !shieldStackOnCd){
 			if(ActiveGameScreen.player.shieldCoolDown <= 0){
-				abilities3.add(shieldLogo).left();
+				abilities3.add(shieldLogo);
 				abilities3.removeActor(shieldStack);
 				shieldStackOnCd = true;
 				shieldStackOnCd2 = false;
@@ -441,7 +441,7 @@ public class HUD implements Disposable {
 
 		if(ActiveGameScreen.player.shieldEnabled && ActiveGameScreen.player.shieldCoolDown > 0 && !shieldStackOnCd2){
 			abilities3.removeActor(shieldLogo);
-			abilities3.add(shieldStack).left();
+			abilities3.add(shieldStack);
 			shieldStackOnCd = false;
 			shieldStackOnCd2 = true;
 		}
@@ -459,7 +459,7 @@ public class HUD implements Disposable {
 		}
 		if(ActiveGameScreen.player.rayEnabled && !empStackOnCd2 && ActiveGameScreen.player.disablingRayCooldown >= 0){
 			abilities3.removeActor(empLogo);
-			abilities3.add(empStack).right();
+			abilities3.add(empStack);
 			empStackOnCd = false;
 			empStackOnCd2 = true;
 		}
