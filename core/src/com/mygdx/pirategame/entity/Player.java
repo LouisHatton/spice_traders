@@ -366,10 +366,6 @@ public class Player extends Entity {
 
 	}
 
-	public void burstShot() {
-
-	}
-
 	/**
 	 * Called when E is pushed. Causes 1 cannon ball to spawn on both sides of the ships wih their relative velocity
 	 */
