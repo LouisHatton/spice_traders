@@ -37,9 +37,9 @@ public class DisablingrayScreen implements Screen {
 	private Label progressBarLabel;
 	private Label percentageLabel;
 
-	public DisablingrayScreen(PirateGame pirateGame) {
+	public DisablingrayScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
-		stage = new Stage(new ScreenViewport());
+		this.stage = stage;
 	}
 
 
@@ -201,6 +201,14 @@ public class DisablingrayScreen implements Screen {
 
 	public TextButton getReturnButton() {
 		return returnButton;
+	}
+
+	public TextButton getLvl1Button() {
+		return lvl1Button;
+	}
+
+	public TextButton getLvl2Button() {
+		return lvl2Button;
 	}
 }
 

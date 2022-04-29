@@ -78,7 +78,7 @@ public class PirateGame extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		//Set starting screen
-		MainMenuScreen mainMenu = new MainMenuScreen(this);
+		MainMenuScreen mainMenu = new MainMenuScreen(this, new Stage(new ScreenViewport()));
 		setScreen(mainMenu);
 		//Create options
 		options = new AudioPreferences();
@@ -103,7 +103,7 @@ public class PirateGame extends Game {
 
 		switch (screen) {
 			case MENU:
-				if (menuScreen == null) menuScreen = new MainMenuScreen(this);
+				if (menuScreen == null) menuScreen = new MainMenuScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(menuScreen);
 				break;
 
@@ -124,7 +124,7 @@ public class PirateGame extends Game {
 				break;
 
 			case DISABLINGRAY:
-				if (disablingrayScreen == null) disablingrayScreen = new DisablingrayScreen(this);
+				if (disablingrayScreen == null) disablingrayScreen = new DisablingrayScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(disablingrayScreen);
 				break;
 
@@ -162,7 +162,7 @@ public class PirateGame extends Game {
 				break;
 
 			case DIFFICULTY:
-				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.screen, new Stage(new ScreenViewport()));
+				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.getScreen(), new Stage(new ScreenViewport()));
 				this.setScreen(difficultyScreen);
 				break;
 

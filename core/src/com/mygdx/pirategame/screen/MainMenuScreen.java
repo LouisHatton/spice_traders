@@ -27,24 +27,30 @@ import com.mygdx.pirategame.PirateGame;
 public class MainMenuScreen implements Screen {
 
 	public static Sprite background = new Sprite(new Texture(Gdx.files.internal("background.PNG")));
-	private static SpriteBatch batch;
 	private final PirateGame parent;
 	;
 	private final Stage stage;
 	private Table titleTable = new Table();
+
+	private TextButton newGameButton;
+	private TextButton resumeGameButton;
+	private TextButton helpButton;
+	private TextButton optionsButton;
+	private TextButton exitButton;
 
 	/**
 	 * Instantiates a new Main menu.
 	 *
 	 * @param PirateGame the main starting body of the game. Where screen swapping is carried out.
 	 */
-	public MainMenuScreen(PirateGame PirateGame) {
+	public MainMenuScreen(PirateGame PirateGame, Stage stage) {
 		parent = PirateGame;
-		stage = new Stage(new ScreenViewport());
-		batch = new SpriteBatch();
+		this.stage = stage;
 	}
 
 	public static void renderBackground() {
+		SpriteBatch batch = new SpriteBatch();
+
 		batch.begin();
 		background.draw(batch);
 		batch.end();
@@ -80,34 +86,34 @@ public class MainMenuScreen implements Screen {
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 		//create buttons
-		TextButton newGame = new TextButton("New Game", skin);
-		TextButton resumeGame = new TextButton("Resume Game", skin);
-		TextButton help = new TextButton("Help", skin);
-		TextButton options = new TextButton("Options", skin);
-		TextButton exit = new TextButton("Exit", skin);
+		this.newGameButton = new TextButton("New Game", skin);
+		this.resumeGameButton = new TextButton("Resume Game", skin);
+		this.helpButton = new TextButton("Help", skin);
+		this.optionsButton = new TextButton("Options", skin);
+		this.exitButton = new TextButton("Exit", skin);
 
 		//add buttons to table
-		table.add(newGame).fillX().uniformX();
+		table.add(this.newGameButton).fillX().uniformX();
 		table.row().pad(10, 0, 10, 0);
-		table.add(resumeGame).fillX().uniformX();
+		table.add(this.resumeGameButton).fillX().uniformX();
 		table.row();
-		table.add(help).fillX().uniformX();
+		table.add(this.helpButton).fillX().uniformX();
 		table.row();
-		table.add(options).fillX().uniformX();
+		table.add(this.optionsButton).fillX().uniformX();
 		table.row();
-		table.add(exit).fillX().uniformX();
+		table.add(this.exitButton).fillX().uniformX();
 
 		//add listeners to the buttons
 
 		//Start a game
-		newGame.addListener(new ChangeListener() {
+		this.newGameButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				parent.setScreen(new DifficultyScreen(parent, parent.getScreen(), new Stage(new ScreenViewport())));
+				parent.changeScreen(PirateGame.DIFFICULTY);
 			}
 		});
 		//Help Screen
-		help.addListener(new ChangeListener() {
+		this.helpButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				parent.changeScreen(PirateGame.HELP);
@@ -115,16 +121,16 @@ public class MainMenuScreen implements Screen {
 		});
 
 		//Go to edit options
-		options.addListener(new ChangeListener() {
+		this.optionsButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				parent.setScreen(new SettingsScreen(parent, parent.getScreen(), new Stage(new ScreenViewport())));
+				parent.changeScreen(PirateGame.SETTINGS);
 			}
 		});
 
 
 		//Quit game
-		exit.addListener(new ChangeListener() {
+		this.exitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.exit();
@@ -187,6 +193,26 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+
+	public TextButton getNewGameButton() {
+		return newGameButton;
+	}
+
+	public TextButton getResumeGameButton() {
+		return resumeGameButton;
+	}
+
+	public TextButton getHelpButton() {
+		return helpButton;
+	}
+
+	public TextButton getOptionsButton() {
+		return optionsButton;
+	}
+
+	public TextButton getExitButton() {
+		return exitButton;
 	}
 }
 
