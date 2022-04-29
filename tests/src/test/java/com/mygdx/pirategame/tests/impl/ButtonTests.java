@@ -338,4 +338,20 @@ public class ButtonTests {
 
 		assertTrue(true); // no errors occur.
 	}
+
+	@Test
+	public void testHelpButton() {
+		PirateGame pirateGame = MockUtilities.createGame();
+		HelpScreen helpScreen = new HelpScreen(pirateGame, MockUtilities.mockStage());
+
+		Whitebox.setInternalState(pirateGame, "menuScreen", Mockito.mock(MainMenuScreen.class));
+		Whitebox.setInternalState(pirateGame, "helpScreen", helpScreen);
+
+		pirateGame.changeScreen(PirateGame.HELP);
+		helpScreen.show();
+
+		helpScreen.getBackButton().toggle();
+
+		assertTrue(true); // no errors occur.
+	}
 }

@@ -26,14 +26,16 @@ public class HelpScreen implements Screen {
 	private final Stage stage;
 	private Table titleTable = new Table();
 
+	private TextButton backButton;
+
 	/**
 	 * In the constructor, the parent and stage are set. Also the states list is set
 	 *
 	 * @param pirateGame Game data
 	 */
-	public HelpScreen(PirateGame pirateGame) {
+	public HelpScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
-		stage = new Stage(new ScreenViewport());
+		this.stage = stage;
 	}
 
 	/**
@@ -83,7 +85,7 @@ public class HelpScreen implements Screen {
 		Label Strategy2Con = new Label("that way you can destroy the college without disruptions. Additionally, destroying a college will disable its fleet", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 
 		//Return Button
-		TextButton backButton = new TextButton("Return", skin);
+		this.backButton = new TextButton("Return", skin);
 		backButton.addListener(new ChangeListener() {
 
 			@Override
@@ -182,6 +184,10 @@ public class HelpScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
+	}
+
+	public TextButton getBackButton() {
+		return backButton;
 	}
 }
 

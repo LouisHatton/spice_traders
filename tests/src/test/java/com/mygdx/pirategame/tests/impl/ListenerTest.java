@@ -47,7 +47,20 @@ public class ListenerTest {
 		Fixture fixtureA = mockFixture(PirateGame.COIN_BIT, new Coin(activeGameScreen, 0, 0));
 		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, MockUtilities.mockPlayer(activeGameScreen));
 
-		worldContactListener.handlePlayerAndCoin(fixtureA, fixtureB);
+		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.COIN_BIT | PirateGame.PLAYER_BIT);
+
+		assertEquals(HUD.getCoins(), 1);
+	}
+
+	@Test
+	public void testPlayerAndCoinReversed() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		Fixture fixtureA = mockFixture(PirateGame.COIN_BIT, new Coin(activeGameScreen, 0, 0));
+		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, MockUtilities.mockPlayer(activeGameScreen));
+
+		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.COIN_BIT | PirateGame.PLAYER_BIT);
 
 		assertEquals(HUD.getCoins(), 1);
 	}
@@ -62,7 +75,22 @@ public class ListenerTest {
 		Fixture fixtureA = mockFixture(PirateGame.DEFAULT_BIT, collegeWalls);
 		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, MockUtilities.mockPlayer(activeGameScreen));
 
-		worldContactListener.handleWallAndPlayer(fixtureA, fixtureB);
+		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT);
+
+		assertEquals(activeGameScreen.getCollege("Alcuin").getHealth(), 98);
+	}
+
+	@Test
+	public void testWallAndPlayerReversed() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		CollegeWalls collegeWalls = new CollegeWalls(activeGameScreen, "Alcuin", Mockito.mock(Rectangle.class));
+
+		Fixture fixtureA = mockFixture(PirateGame.DEFAULT_BIT, collegeWalls);
+		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, MockUtilities.mockPlayer(activeGameScreen));
+
+		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT);
 
 		assertEquals(activeGameScreen.getCollege("Alcuin").getHealth(), 98);
 	}
@@ -77,7 +105,22 @@ public class ListenerTest {
 		Fixture fixtureA = mockFixture(PirateGame.ENEMY_BIT, enemyShip);
 		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, MockUtilities.mockPlayer(activeGameScreen));
 
-		worldContactListener.handleEnemyAndPlayer(fixtureA, fixtureB);
+		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT);
+
+		assertEquals(enemyShip.getHealth(), 80);
+	}
+
+	@Test
+	public void testEnemyAndPlayerReversed() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		EnemyShip enemyShip = new EnemyShip(activeGameScreen, 0, 0, "unaligned_ship.png", "Unaligned");
+
+		Fixture fixtureA = mockFixture(PirateGame.ENEMY_BIT, enemyShip);
+		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, MockUtilities.mockPlayer(activeGameScreen));
+
+		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT);
 
 		assertEquals(enemyShip.getHealth(), 80);
 	}
@@ -93,7 +136,23 @@ public class ListenerTest {
 		Fixture fixtureA = mockFixture(PirateGame.COLLEGE_BIT, collegeWalls);
 		Fixture fixtureB = mockFixture(PirateGame.CANNON_BIT, cannonFire);
 
-		worldContactListener.handleCollegeAndCannon(fixtureA, fixtureB);
+		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.COLLEGE_BIT | PirateGame.CANNON_BIT);
+
+		assertTrue(cannonFire.isSetToDestroy());
+	}
+
+	@Test
+	public void testCollegeAndCannonReversed() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		CollegeWalls collegeWalls = new CollegeWalls(activeGameScreen, "Alcuin", Mockito.mock(Rectangle.class));
+		CannonFire cannonFire = new CannonFire(activeGameScreen, 0, 0, collegeWalls.getBody(), 5, new Vector2(3, 3), 1f, 1f, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT );
+
+		Fixture fixtureA = mockFixture(PirateGame.COLLEGE_BIT, collegeWalls);
+		Fixture fixtureB = mockFixture(PirateGame.CANNON_BIT, cannonFire);
+
+		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.COLLEGE_BIT | PirateGame.CANNON_BIT);
 
 		assertTrue(cannonFire.isSetToDestroy());
 	}
@@ -109,7 +168,23 @@ public class ListenerTest {
 		Fixture fixtureA = mockFixture(PirateGame.ENEMY_BIT, enemyShip);
 		Fixture fixtureB = mockFixture(PirateGame.CANNON_BIT, cannonFire);
 
-		worldContactListener.handleEnemyAndCannon(fixtureA, fixtureB);
+		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT);
+
+		assertTrue(cannonFire.isSetToDestroy());
+	}
+
+	@Test
+	public void testEnemyAndCannonReversed() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		EnemyShip enemyShip = new EnemyShip(activeGameScreen, 0, 0, "unaligned_ship.png", "Unaligned");
+		CannonFire cannonFire = new CannonFire(activeGameScreen, 0, 0, enemyShip.getBody(), 5, new Vector2(3, 3), 1f, 1f, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT );
+
+		Fixture fixtureA = mockFixture(PirateGame.ENEMY_BIT, enemyShip);
+		Fixture fixtureB = mockFixture(PirateGame.CANNON_BIT, cannonFire);
+
+		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT);
 
 		assertTrue(cannonFire.isSetToDestroy());
 	}
@@ -125,7 +200,23 @@ public class ListenerTest {
 		Fixture fixtureA = mockFixture(PirateGame.PLAYER_BIT, player);
 		Fixture fixtureB = mockFixture(PirateGame.CANNON_BIT, cannonFire);
 
-		worldContactListener.handlePlayerAndCannon(fixtureA, fixtureB);
+		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.PLAYER_BIT | PirateGame.CANNON_BIT);
+
+		assertTrue(cannonFire.isSetToDestroy());
+	}
+
+	@Test
+	public void testPlayerAndCannonReversed() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		Player player = MockUtilities.mockPlayer(activeGameScreen);
+		CannonFire cannonFire = new CannonFire(activeGameScreen, 0, 0, player.getBody(), 5, new Vector2(3, 3), 1f, 1f, (short)(PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT );
+
+		Fixture fixtureA = mockFixture(PirateGame.PLAYER_BIT, player);
+		Fixture fixtureB = mockFixture(PirateGame.CANNON_BIT, cannonFire);
+
+		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.PLAYER_BIT | PirateGame.CANNON_BIT);
 
 		assertTrue(cannonFire.isSetToDestroy());
 	}
@@ -142,7 +233,24 @@ public class ListenerTest {
 		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, player);
 
 		System.out.println(HUD.respawnProtection);
-		worldContactListener.handleCollegeFireAndPlayer(fixtureA, fixtureB);
+		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT);
+
+		assertEquals(90, HUD.getHealth());
+	}
+
+	@Test
+	public void testCollegeFireAndPlayerReversed() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		Player player = MockUtilities.mockPlayer(activeGameScreen);
+		CollegeFire collegeFire = new CollegeFire(activeGameScreen, 0, 0, "Alcuin");
+
+		Fixture fixtureA = mockFixture(PirateGame.COLLEGEFIRE_BIT, collegeFire);
+		Fixture fixtureB = mockFixture(PirateGame.PLAYER_BIT, player);
+
+		System.out.println(HUD.respawnProtection);
+		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT);
 
 		assertEquals(90, HUD.getHealth());
 	}

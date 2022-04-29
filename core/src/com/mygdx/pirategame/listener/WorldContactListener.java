@@ -31,35 +31,7 @@ public class WorldContactListener implements ContactListener {
 
 		int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
-		// Fixes contact to an entity
-		switch (cDef) {
-			case PirateGame.COLLEGEFIRE_BIT | PirateGame.ENEMY_BIT:
-				break;
-
-			case PirateGame.COIN_BIT | PirateGame.PLAYER_BIT:
-				this.handlePlayerAndCoin(fixA, fixB);
-				break;
-			case PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT:
-				this.handleWallAndPlayer(fixA, fixB);
-				break;
-			case PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT:
-				this.handleEnemyAndPlayer(fixA, fixB);
-				break;
-			case PirateGame.COLLEGE_BIT | PirateGame.CANNON_BIT:
-				this.handleCollegeAndCannon(fixA, fixB);
-				break;
-			case PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT:
-				this.handleEnemyAndCannon(fixA, fixB);
-				break;
-			case PirateGame.PLAYER_BIT | PirateGame.CANNON_BIT:
-				this.handlePlayerAndCannon(fixA, fixB);
-				break;
-			case PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT:
-				this.handleCollegeFireAndPlayer(fixA, fixB);
-				break;
-
-
-		}
+		this.selectAppropriateResponse(fixA, fixB, cDef);
 	}
 
 	/**
@@ -92,6 +64,36 @@ public class WorldContactListener implements ContactListener {
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 
+	}
+
+	public void selectAppropriateResponse(Fixture fixA, Fixture fixB, int cDef) {
+		// Fixes contact to an entity
+		switch (cDef) {
+			case PirateGame.COLLEGEFIRE_BIT | PirateGame.ENEMY_BIT:
+				break;
+
+			case PirateGame.COIN_BIT | PirateGame.PLAYER_BIT:
+				this.handlePlayerAndCoin(fixA, fixB);
+				break;
+			case PirateGame.DEFAULT_BIT | PirateGame.PLAYER_BIT:
+				this.handleWallAndPlayer(fixA, fixB);
+				break;
+			case PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT:
+				this.handleEnemyAndPlayer(fixA, fixB);
+				break;
+			case PirateGame.COLLEGE_BIT | PirateGame.CANNON_BIT:
+				this.handleCollegeAndCannon(fixA, fixB);
+				break;
+			case PirateGame.ENEMY_BIT | PirateGame.CANNON_BIT:
+				this.handleEnemyAndCannon(fixA, fixB);
+				break;
+			case PirateGame.PLAYER_BIT | PirateGame.CANNON_BIT:
+				this.handlePlayerAndCannon(fixA, fixB);
+				break;
+			case PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT:
+				this.handleCollegeFireAndPlayer(fixA, fixB);
+				break;
+		}
 	}
 
 	public void handlePlayerAndCoin(Fixture fixA, Fixture fixB) {

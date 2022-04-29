@@ -152,7 +152,7 @@ public class PirateGame extends Game {
 				break;
 
 			case HELP:
-				if (helpScreen == null) helpScreen = new HelpScreen(this);
+				if (helpScreen == null) helpScreen = new HelpScreen(this, new Stage(new ScreenViewport()));
 				this.setScreen(helpScreen);
 				break;
 
