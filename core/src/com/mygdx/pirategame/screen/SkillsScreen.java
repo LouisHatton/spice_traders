@@ -303,6 +303,11 @@ public class SkillsScreen implements Screen {
 
 	public static void resetStats(){
 		states = Arrays.asList(1, 1, 1, 1, 1);
+
+		if (bloodied == null) { // if one is null, all are!
+			return;
+		}
+
 		bloodied.setDisabled(true);
 		ultimateAbility.setDisabled(true);
 		shield.setDisabled(true);
