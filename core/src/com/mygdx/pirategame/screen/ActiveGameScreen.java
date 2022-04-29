@@ -59,7 +59,6 @@ public class ActiveGameScreen implements Screen {
 	public static Rectangle BoundsAL = new Rectangle();
 	public static Rectangle BoundsC = new Rectangle();
 	public static Rectangle BoundsG = new Rectangle();
-	private static float maxSpeed = 60f;
 	private static float accel = 0.05f;
 	private static Map<String, College> colleges = new HashMap<>();
 	private static List<EnemyShip> ships = new ArrayList<>();
@@ -73,7 +72,6 @@ public class ActiveGameScreen implements Screen {
 	private final World world;
 	private final Box2DDebugRenderer b2dr;
 	public HUD hud;
-	ShapeRenderer shapeRenderer = new ShapeRenderer();
 	float zoomAmount = 0;
 	private float stateTime;
 	private Table pauseTable;
@@ -86,11 +84,6 @@ public class ActiveGameScreen implements Screen {
 	private TextButton optionsButton;
 	private TextButton exitButton;
 	private Box2DDebugRenderer debugger;
-	private Sprite test = new Sprite(new Texture("tile_04.png"));
-	private Sprite test1 = new Sprite(new Texture("tile_04.png"));
-	private Sprite test2 = new Sprite(new Texture("tile_04.png"));
-	private Sprite test3 = new Sprite(new Texture("tile_04.png"));
-
 
 	/**
 	 * Initialises the Game Screen,
@@ -486,7 +479,6 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void render(float dt) {
-
 		if (gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);

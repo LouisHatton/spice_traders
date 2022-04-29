@@ -3,7 +3,10 @@ package com.mygdx.pirategame.tests.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.screen.*;
@@ -27,6 +30,22 @@ public class ScreenTest {
 		Gdx.gl20 = Mockito.mock(GL20.class);
 		Gdx.gl = Gdx.gl20;
 	}
+
+	@Test
+	public void renderingTest() {
+		PirateGame pirateGame = MockUtilities.createGameAndScreen();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
+
+		Mockito.doCallRealMethod().when(activeGameScreen).render(Mockito.anyInt());
+
+		Whitebox.setInternalState(activeGameScreen, "table", new Table());
+		Whitebox.setInternalState(activeGameScreen, "pauseTable", new Table());
+		Whitebox.setInternalState(activeGameScreen, "stage", MockUtilities.mockStage());
+		Whitebox.setInternalState(activeGameScreen, "renderer", Mockito.mock(OrthogonalTiledMapRenderer.class));
+		Whitebox.setInternalState(activeGameScreen, "debugger", Mockito.mock(Box2DDebugRenderer.class));
+
+		activeGameScreen.render(1f);
+ 	}
 
 	@Test
 	public void testChangeVictoryScreen() {
