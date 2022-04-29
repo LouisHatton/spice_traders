@@ -159,6 +159,7 @@ public class Player extends Entity {
 		PirateGame.difficultySet = false;
 		ShopScreen.resetStats();
 		HUD.respawnProtection = 4f;
+		SkillsScreen.resetStats();
 	}
 
 	/**

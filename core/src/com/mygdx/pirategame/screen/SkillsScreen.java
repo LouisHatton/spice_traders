@@ -2,6 +2,7 @@ package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -29,17 +30,17 @@ import java.util.List;
 public class SkillsScreen implements Screen {
 
 	//To store whether buttons are enabled or disabled
-	private static final List<Integer> states = Arrays.asList(1, 1, 1, 1, 1);
-	private TextButton bloodied;
+	private static List<Integer> states = Arrays.asList(1, 1, 1, 1, 1);
+	private static TextButton bloodied;
 	final Table Other = new Table();
 	private final PirateGame parent;
 	private final Stage stage;
 	Table table = new Table();
 	Table titleTable = new Table();
-	private TextButton shield;
-	private TextButton ultimateAbility;
-	private TextButton secondaryAbility;
-	private TextButton disablingRay;
+	private static TextButton shield;
+	private static TextButton ultimateAbility;
+	private static TextButton secondaryAbility;
+	private static TextButton disablingRay;
 
 	/**
 	 * Instantiates a new Skill tree.
@@ -240,7 +241,9 @@ public class SkillsScreen implements Screen {
 		table.center();
 
 		//add return button
+		Label Strategy1 = new Label("Click on the ability once unlocked to get more information and see the progression of the ability", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Other.add(backButton);
+		Other.add(Strategy1);
 		Other.bottom().left();
 	}
 
@@ -296,6 +299,15 @@ public class SkillsScreen implements Screen {
 	 */
 	@Override
 	public void hide() {
+	}
+
+	public static void resetStats(){
+		states = Arrays.asList(1, 1, 1, 1, 1);
+		bloodied.setDisabled(true);
+		ultimateAbility.setDisabled(true);
+		shield.setDisabled(true);
+		secondaryAbility.setDisabled(true);
+		disablingRay.setDisabled(true);
 	}
 
 	/**

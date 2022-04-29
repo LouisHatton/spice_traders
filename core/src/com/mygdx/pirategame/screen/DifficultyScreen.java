@@ -31,6 +31,9 @@ public class DifficultyScreen implements Screen {
 	private TextButton hardButton;
 	private TextButton impossibleButton;
 	private TextButton backButton;
+	Table table = new Table();
+
+	private Table info = new Table();
 
 	public DifficultyScreen(PirateGame pirateGame, Screen parent, Stage stage) {
 		this.pirateGame = pirateGame;
@@ -41,10 +44,20 @@ public class DifficultyScreen implements Screen {
 
 	@Override
 	public void show() {
+		info.clear();
+		info.clearChildren();
+		table.reset();
+		table.clear();
+		table.clearChildren();
+		info.reset();
+		Label Strategy1 = new Label("Note: if playing on easy the coin pick ups will not grant coin until the (CoinMultiplier) has been upgraded from the shop", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.FIREBRICK));
+		info.setFillParent(true);
+		info.add(Strategy1);
+		info.center().bottom();
+		stage.addActor(info);
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
 		// Create a table for the buttons
-		Table table = new Table();
 		table.setFillParent(true);
 		stage.addActor(table);
 
