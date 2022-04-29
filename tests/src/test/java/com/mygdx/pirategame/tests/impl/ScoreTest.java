@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.internal.util.MockUtil;
 
 import static org.junit.Assert.assertEquals;
 
@@ -49,5 +50,17 @@ public class ScoreTest {
 
 		assertEquals(20, HUD.getScore());
 		assertEquals(10, HUD.getCoins());
+	}
+
+	@Test
+	public void maximumScoreTest() {
+		MockUtilities.createDefaultScoreAndPoints();
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
+
+		assertEquals("Not default!", 1, activeGameScreen.player.burstAmountForUltimateFire);
+
+		HUD.changePoints(1300);
+
+		assertEquals("Not enabled!", 2, activeGameScreen.player.burstAmountForUltimateFire);
 	}
 }

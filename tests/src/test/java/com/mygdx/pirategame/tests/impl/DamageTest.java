@@ -60,6 +60,19 @@ public class DamageTest {
 	}
 
 	@Test
+	public void testChangeHealth() {
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
+
+		HUD.changeHealth(-1);
+
+		assertEquals(HUD.getHealth(), 99);
+
+		HUD.changeHealth(1);
+
+		assertEquals("Health is not full!", 100, HUD.getHealth());
+	}
+
+	@Test
 	public void testOverWithNoHealth() {
 		PirateGame pirateGame = MockUtilities.createGameAndScreen();
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
