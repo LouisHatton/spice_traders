@@ -50,6 +50,7 @@ public class SettingsScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+
 		titleTable.clear();
 		titleTable.clearChildren();
 		titleTable.reset();
@@ -74,6 +75,18 @@ public class SettingsScreen implements Screen {
 
 		//The skin for the actors
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+
+		SelectBox<String> selectBox = new SelectBox<String>(skin);
+		selectBox.setItems("Default","Green","Black","Red");
+		selectBox.setSelectedIndex(2);
+
+		selectBox.addListener(new EventListener() {
+			@Override
+			public boolean handle(Event event) {
+				System.out.println(selectBox.getSelectedIndex());
+				return false;
+			}
+		});
 
 
 		//Music Sliders and Check boxes
@@ -150,6 +163,7 @@ public class SettingsScreen implements Screen {
 		Label effectLabel = new Label("Effect Volume", skin);
 		Label musicOnLabel = new Label("Music On/Off", skin);
 		Label effectOnLabel = new Label("Effect On/Off", skin);
+		Label selectBoxLabel = new Label("Colour settings", skin);
 
 		//add buttons,sliders and labels to table
 		table.add(titleLabel).colspan(2);
@@ -165,6 +179,9 @@ public class SettingsScreen implements Screen {
 		table.row().pad(10, 0, 0, 0);
 		table.add(effectOnLabel).left();
 		table.add(effectCheckbox);
+		table.row().pad(10, 0, 0, 0);
+		table.add(selectBoxLabel).left();
+		table.add(selectBox);
 		table.row().pad(10, 0, 0, 10);
 		table.add(backButton);
 
