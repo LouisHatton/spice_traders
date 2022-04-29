@@ -59,7 +59,7 @@ public class Player extends Entity {
 	public float shieldCoolDown = 0f;
 	public float shieldCoolDownOG = 8f;
 	public float protectTime = 2f;
-	public boolean rayEnabled = false;
+	public static boolean rayEnabled = false;
 	float firingCoolDown = 0.2f;
 	float ogFiringCoolDown = 0.2f;
 	int burstShotsUF = 0;
@@ -148,6 +148,10 @@ public class Player extends Entity {
 		normalNumberOfShips = 4;
 		numberOfShipsFollowing = 0;
 		maxNumberOfShipsFollowing = 4;
+		rayEnabled = false;
+		shieldEnabled = false;
+		ultimateFirerEnabled = false;
+		burstFire = false;
 		collegesCaptured = 0;
 		boatsKilled = 0;
 		collegesKilled = 0;
