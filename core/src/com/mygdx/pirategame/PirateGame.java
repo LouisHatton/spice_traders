@@ -59,7 +59,7 @@ public class PirateGame extends Game {
 	private DeathScreen deathScreen;
 	private HelpScreen helpScreen;
 	private VictoryScreen victoryScreen;
-	private AudioPreferences options;
+	private static AudioPreferences options;
 	private DifficultyScreen difficultyScreen;
 	private BloodiedScreen bloodyScreen;
 	private DisablingrayScreen disablingrayScreen;
@@ -183,8 +183,8 @@ public class PirateGame extends Game {
 	 *
 	 * @return the options object
 	 */
-	public AudioPreferences getPreferences() {
-		return this.options;
+	public static AudioPreferences getPreferences() {
+		return options;
 	}
 
 	/**
@@ -210,6 +210,10 @@ public class PirateGame extends Game {
 	@Override
 	public void render() {
 		super.render();
+		if(ActiveGameScreen.weatherSoundEffect == null || ActiveGameScreen.badWeather) return;
+		if(ActiveGameScreen.weatherSoundEffect.isPlaying()){
+			ActiveGameScreen.weatherSoundEffect.pause();
+		}
 	}
 
 	/**

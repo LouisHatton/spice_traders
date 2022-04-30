@@ -3,6 +3,7 @@ package com.mygdx.pirategame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -89,6 +90,7 @@ public class ActiveGameScreen implements Screen {
 	private ShaderProgram shader;
 	SpriteBatch batch;
 	public static boolean badWeather = false;
+	public static Music weatherSoundEffect;
 
 	/**
 	 * Initialises the Game Screen,
@@ -99,7 +101,7 @@ public class ActiveGameScreen implements Screen {
 	public ActiveGameScreen(PirateGame game) {
 
 
-
+		badWeather = false;
 		gameStatus = GAME_RUNNING;
 		ActiveGameScreen.game = game;
 		// Initialising camera and extendable viewport for viewing game
@@ -207,6 +209,7 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		weatherSoundEffect = Gdx.audio.newMusic(Gdx.files.internal("thunderstorm.mp3"));
 		batch = new SpriteBatch();
 		ShaderProgram.pedantic = false;
 		shader = new ShaderProgram(Gdx.files.internal("vignette.vsh"), Gdx.files.internal("vignette.fsh"));
@@ -514,13 +517,29 @@ public class ActiveGameScreen implements Screen {
 
 		if(player.getCollegesKilled() >= 2){
 			Gdx.gl.glClearColor(26 / 255f, 115 / 255f, 63 / 255f, 1);
-			game.batch.setShader(shader);
-			renderer.getBatch().setShader(shader);
-			badWeather = true;
+			if(!badWeather){
+				game.batch.setShader(shader);
+				renderer.getBatch().setShader(shader);
+				badWeather = true;
+
+				weatherSoundEffect.setLooping(true);
+				if (PirateGame.getPreferences().isEffectsEnabled()) {
+					weatherSoundEffect.play();
+				}
+				weatherSoundEffect.setVolume(PirateGame.getPreferences().getEffectsVolume());
+			}
+
 		}else {
 			Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
-			game.batch.setShader(batch.getShader());
-			badWeather = false;
+			if(badWeather){
+				game.batch.setShader(batch.getShader());
+				badWeather = false;
+
+			}
+
+			if(weatherSoundEffect.isPlaying()){
+				weatherSoundEffect.pause();
+			}
 		}
 
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
