@@ -3,6 +3,7 @@ package com.mygdx.pirategame.tests.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mygdx.pirategame.display.HUD;
+import com.mygdx.pirategame.entity.Player;
 import com.mygdx.pirategame.entity.college.College;
 import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
@@ -16,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.internal.util.MockUtil;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class ScoreTest {
@@ -62,5 +64,21 @@ public class ScoreTest {
 		HUD.changePoints(1300);
 
 		assertEquals("Not enabled!", 2, activeGameScreen.player.burstAmountForUltimateFire);
+	}
+
+	@Test
+	public void abilitiesTest() {
+		MockUtilities.createDefaultScoreAndPoints();
+		HUD hud = new HUD(MockUtilities.mockStage());
+		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
+
+		Player.rayEnabled = true;
+		Player.shieldEnabled = true;
+		Player.burstFire = true;
+		Player.ultimateFirerEnabled = true;
+
+		hud.update(1f);
+
+		assertTrue("Abilities not valid!", Player.rayEnabled);
 	}
 }

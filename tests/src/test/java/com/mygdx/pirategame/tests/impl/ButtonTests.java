@@ -38,6 +38,7 @@ public class ButtonTests {
 	public void testDifficultyButton() {
 		PirateGame pirateGame = MockUtilities.createGameAndScreen();
 		DifficultyScreen difficultyScreen = new DifficultyScreen(pirateGame, pirateGame.getScreen(), MockUtilities.mockStage());
+		PirateGame.difficultySet = true;
 
 		Whitebox.setInternalState(pirateGame, "difficultyScreen", difficultyScreen);
 		Whitebox.setInternalState(pirateGame, "gameScreen", Mockito.mock(ActiveGameScreen.class));
