@@ -9,7 +9,6 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.height = 1080;
 		config.width = 1920;
-		config.useGL30 = true;
 		config.foregroundFPS = 60;
 		config.backgroundFPS = 60;
 		//config.addIcon("models/Black_Flag.png", Files.FileType.Internal);
