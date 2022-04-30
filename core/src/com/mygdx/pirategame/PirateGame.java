@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.pref.AudioPreferences;
@@ -20,6 +21,7 @@ import com.mygdx.pirategame.screen.*;
  */
 public class PirateGame extends Game {
 	public static final float PPM = 100;
+	public static ShaderProgram defaultShader;
 	//Bits used in collisions
 	public static final short DEFAULT_BIT = 1;
 	public static final short PLAYER_BIT = 2;
@@ -77,6 +79,7 @@ public class PirateGame extends Game {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
+		defaultShader = batch.getShader();
 		//Set starting screen
 		MainMenuScreen mainMenu = new MainMenuScreen(this, new Stage(new ScreenViewport()));
 		setScreen(mainMenu);

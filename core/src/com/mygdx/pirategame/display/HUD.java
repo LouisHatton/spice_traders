@@ -87,6 +87,8 @@ public class HUD implements Disposable {
 	Label ultimateCooldown;
 	Label shieldCooldown;
 	Label empCooldown;
+
+	public static int badWeather = 0;
 	/**
 	 * Retrieves information and displays it in the hud
 	 * Adjusts hud with viewport
@@ -181,6 +183,12 @@ public class HUD implements Disposable {
 	 * @param value Increase to health
 	 */
 	public static void changeHealth(int value) {
+		if(ActiveGameScreen.badWeather) {
+			badWeather = 1;
+		}
+		else{
+			badWeather = 0;
+		}
 		if (respawnProtection > 0) return;
 		if (value < 0 && Player.protectedTimer > 0f) return;
 		if (value > 0) {
@@ -195,7 +203,7 @@ public class HUD implements Disposable {
 		}
 
 
-		health = (int) (health + ((value * (resistanceMultiplier / 100)) * PirateGame.difficultyMultiplier));
+		health = (int) (health + ((value * (resistanceMultiplier / 100)) * (PirateGame.difficultyMultiplier + badWeather)));
 		healthLabel.setText(String.format("%02d", health));
 	}
 
@@ -222,8 +230,14 @@ public class HUD implements Disposable {
 	 * @param value Increase to coins
 	 */
 	public static void changeCoins(int value) {
+		if(ActiveGameScreen.badWeather) {
+			badWeather = 1;
+		}
+		else{
+			badWeather = 0;
+		}
 		if (value > 0) {
-			coins = (int) (coins + (value * PirateGame.difficultyMultiplier) * coinMulti);
+			coins = (int) (coins + (value * (PirateGame.difficultyMultiplier + badWeather)) * coinMulti);
 			coinLabel.setText(String.format("%03d", coins));
 		}
 	}

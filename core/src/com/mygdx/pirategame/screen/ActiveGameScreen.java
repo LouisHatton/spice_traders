@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -84,6 +86,9 @@ public class ActiveGameScreen implements Screen {
 	private TextButton optionsButton;
 	private TextButton exitButton;
 	private Box2DDebugRenderer debugger;
+	private ShaderProgram shader;
+	SpriteBatch batch;
+	public static boolean badWeather = false;
 
 	/**
 	 * Initialises the Game Screen,
@@ -92,6 +97,9 @@ public class ActiveGameScreen implements Screen {
 	 * @param game passes game data to current class,
 	 */
 	public ActiveGameScreen(PirateGame game) {
+
+
+
 		gameStatus = GAME_RUNNING;
 		ActiveGameScreen.game = game;
 		// Initialising camera and extendable viewport for viewing game
@@ -111,7 +119,9 @@ public class ActiveGameScreen implements Screen {
 		// making the Tiled tmx file render as a map
 		maploader = new TmxMapLoader();
 		map = maploader.load("map.tmx");
+
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / PirateGame.PPM);
+
 		new WorldCreator(this);
 
 		// Setting up contact listener for collisions
@@ -197,6 +207,14 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+		batch = new SpriteBatch();
+		ShaderProgram.pedantic = false;
+		shader = new ShaderProgram(Gdx.files.internal("vignette.vsh"), Gdx.files.internal("vignette.fsh"));
+		System.out.println(shader.isCompiled() ? "yay" : shader.getLog());
+
+
+
+
 		Gdx.input.setInputProcessor(stage);
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
@@ -309,6 +327,7 @@ public class ActiveGameScreen implements Screen {
 			}
 		});
 
+
 	}
 
 	/**
@@ -419,6 +438,9 @@ public class ActiveGameScreen implements Screen {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+
+
+
 		if (zoomAmount < 0.0155f) {
 			camera.zoom -= 0.0005f;
 			zoomAmount += 0.0005f;
@@ -490,7 +512,17 @@ public class ActiveGameScreen implements Screen {
 			pauseTable.setVisible(false);
 		}
 
-		Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
+		if(player.getCollegesKilled() >= 2){
+			Gdx.gl.glClearColor(26 / 255f, 115 / 255f, 63 / 255f, 1);
+			game.batch.setShader(shader);
+			renderer.getBatch().setShader(shader);
+			badWeather = true;
+		}else {
+			Gdx.gl.glClearColor(46 / 255f, 204 / 255f, 113 / 255f, 1);
+			game.batch.setShader(batch.getShader());
+			badWeather = false;
+		}
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		renderer.render();
 		// b2dr is the hitbox shapes, can be commented out to hide
@@ -547,6 +579,11 @@ public class ActiveGameScreen implements Screen {
 		HUD.resize(width, height);
 		camera.update();
 		renderer.setView(camera);
+		shader.begin();
+		shader.setUniformf("u_resolution", width, height);
+		shader.end();
+
+
 	}
 
 	/**
