@@ -29,6 +29,7 @@ public class TestRunner {
 	@Test
 	public void runTests() {
 		boolean hasPassed = true;
+		int testsRan = 0;
 
 		for (Class<?> clazz : TESTS_TO_RUN) {
 			System.out.println("Running " + clazz.getSimpleName());
@@ -41,10 +42,11 @@ public class TestRunner {
 				hasPassed = false;
 			}
 
+			testsRan += result.getRunCount();
 			System.out.println("Complete! Ran " + result.getRunCount() + " tests. In total " + (result.getRunCount() - result.getFailureCount()) + " tests passed. Failure for " + result.getFailureCount() + " tests.");
 		}
 
-		System.out.println("All tests complete");
+		System.out.println("All tests complete. In total, we ran " + testsRan + " tests!");
 		Assert.assertTrue("Not all tests have passed!", hasPassed);
 	}
 }
