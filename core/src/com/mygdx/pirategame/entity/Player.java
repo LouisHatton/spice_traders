@@ -92,6 +92,8 @@ public class Player extends Entity {
 	boolean burstShooting = false;
 	public static float burstShotCooldown = 0;
 	public static float burstShotCoolDownOg = 0.3f;
+	Sound empSound;
+	Sound bubbleSound;
 
 
 	/**
@@ -101,6 +103,9 @@ public class Player extends Entity {
 	 */
 	public Player(ActiveGameScreen screen, float spawnSpeed, float maxSpeed, float driftFactor, float turnSpeed, Camera cam) {
 		super(screen, 0, 0);
+
+		empSound = Gdx.audio.newSound(Gdx.files.internal("emp.mp3"));
+		bubbleSound = Gdx.audio.newSound(Gdx.files.internal("bubble.mp3"));
 
 		this.originalSpeed = spawnSpeed;
 		this.cam = cam;
@@ -233,6 +238,12 @@ public class Player extends Entity {
 
 				empExplosion = true;
 				empSet = false;
+
+
+				empSound.setVolume(0, PirateGame.getPreferences().getEffectsVolume());
+				if (PirateGame.getPreferences().isEffectsEnabled()) {
+					empSound.play();
+				}
 			}
 			if (disablingRayCooldown >= 0) {
 				disablingRayCooldown -= dt;
@@ -276,6 +287,10 @@ public class Player extends Entity {
 				protectedTimer = protectTime;
 				shieldCoolDown = shieldCoolDownOG;
 				bursted = false;
+				bubbleSound.setVolume(0, PirateGame.getPreferences().getEffectsVolume());
+				if (PirateGame.getPreferences().isEffectsEnabled()) {
+					bubbleSound.play();
+				}
 			}
 			if (shieldCoolDown > 0) {
 				shieldCoolDown -= dt;
