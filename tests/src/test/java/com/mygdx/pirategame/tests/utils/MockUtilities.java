@@ -50,7 +50,7 @@ public class MockUtilities {
 		AudioPreferences audioPreferences = new AudioPreferences();
 
 		Whitebox.setInternalState(pirateGame, "options", audioPreferences);
-		Mockito.when(pirateGame.getPreferences()).thenReturn(audioPreferences);
+		//Mockito.when(pirateGame.getPreferences()).thenReturn(audioPreferences);
 		Mockito.doCallRealMethod().when(pirateGame).setScreen(Mockito.any(Screen.class));
 		Mockito.doCallRealMethod().when(pirateGame).changeScreen(Mockito.anyInt());
 		Mockito.doCallRealMethod().when(pirateGame).getScreen();

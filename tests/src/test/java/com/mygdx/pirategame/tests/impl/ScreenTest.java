@@ -2,6 +2,7 @@ package com.mygdx.pirategame.tests.impl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -43,6 +44,7 @@ public class ScreenTest {
 		Whitebox.setInternalState(activeGameScreen, "stage", MockUtilities.mockStage());
 		Whitebox.setInternalState(activeGameScreen, "renderer", Mockito.mock(OrthogonalTiledMapRenderer.class));
 		Whitebox.setInternalState(activeGameScreen, "debugger", Mockito.mock(Box2DDebugRenderer.class));
+		Whitebox.setInternalState(activeGameScreen, "weatherSoundEffect", Mockito.mock(Music.class));
 
 		activeGameScreen.render(1f);
  	}

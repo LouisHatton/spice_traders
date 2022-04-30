@@ -143,6 +143,7 @@ public class ActiveGameScreen implements Screen {
 		Coins = this.generateCoins(60);
 
 		//Setting stage
+		batch = new SpriteBatch();
 		stage = new Stage(new ScreenViewport());
 
 
@@ -210,12 +211,9 @@ public class ActiveGameScreen implements Screen {
 	@Override
 	public void show() {
 		weatherSoundEffect = Gdx.audio.newMusic(Gdx.files.internal("thunderstorm.mp3"));
-		batch = new SpriteBatch();
 		ShaderProgram.pedantic = false;
 		shader = new ShaderProgram(Gdx.files.internal("vignette.vsh"), Gdx.files.internal("vignette.fsh"));
 		System.out.println(shader.isCompiled() ? "yay" : shader.getLog());
-
-
 
 
 		Gdx.input.setInputProcessor(stage);
