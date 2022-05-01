@@ -334,6 +334,8 @@ public class ActiveGameScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.exit();
+				//pauseTable.setVisible(false);
+				//game.changeScreen(PirateGame.MENU);
 			}
 		});
 
