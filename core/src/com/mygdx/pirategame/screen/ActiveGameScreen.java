@@ -263,6 +263,8 @@ public class ActiveGameScreen implements Screen {
 
 		pauseTable.add(this.startButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
+		pauseTable.add(this.saveButton).fillX().uniformX();
+		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(this.skillButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(this.shopButton).fillX().uniformX();
@@ -272,8 +274,7 @@ public class ActiveGameScreen implements Screen {
 		pauseTable.add(this.optionsButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(this.exitButton).fillX().uniformX();
-		pauseTable.row().pad(20, 0, 10, 0);
-		pauseTable.add(this.saveButton).fillX().uniformX();
+
 		pauseTable.center();
 
 
