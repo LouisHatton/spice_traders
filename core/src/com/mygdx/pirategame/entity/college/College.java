@@ -31,7 +31,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class College extends Enemy {
 
-	private static Texture enemyCollege;
+	private transient static Texture enemyCollege;
 	private final String currentCollege;
 	private final Array<CollegeFire> cannonBalls;
 	private final CollegeType type;
@@ -249,6 +249,10 @@ public class College extends Enemy {
 
 	public boolean isCaptured() {
 		return surrended;
+	}
+
+	public void setSurrended(boolean surrended) {
+		this.surrended = surrended;
 	}
 }
 

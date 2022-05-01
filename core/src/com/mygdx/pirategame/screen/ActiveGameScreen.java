@@ -36,6 +36,7 @@ import com.mygdx.pirategame.entity.college.CollegeType;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.listener.WorldContactListener;
 import com.mygdx.pirategame.utils.Location;
+import com.mygdx.pirategame.utils.Persistence;
 import com.mygdx.pirategame.utils.SpawnUtils;
 import com.mygdx.pirategame.utils.WorldCreator;
 
@@ -63,16 +64,16 @@ public class ActiveGameScreen implements Screen {
 	public static Rectangle BoundsC = new Rectangle();
 	public static Rectangle BoundsG = new Rectangle();
 	private static float accel = 0.05f;
-	private static Map<String, College> colleges = new HashMap<>();
-	private static List<EnemyShip> ships = new ArrayList<>();
-	private static int gameStatus;
+	protected static Map<String, College> colleges = new HashMap<>();
+	protected static List<EnemyShip> ships = new ArrayList<>();
+	protected static int gameStatus;
 	private final Stage stage;
 	private final OrthographicCamera camera;
 	private final Viewport viewport;
 	private final TmxMapLoader maploader;
 	private final TiledMap map;
 	private final OrthogonalTiledMapRenderer renderer;
-	private final World world;
+	protected final World world;
 	private final Box2DDebugRenderer b2dr;
 	public HUD hud;
 	float zoomAmount = 0;
@@ -86,6 +87,8 @@ public class ActiveGameScreen implements Screen {
 	private TextButton startButton;
 	private TextButton optionsButton;
 	private TextButton exitButton;
+	private TextButton saveButton;
+
 	private Box2DDebugRenderer debugger;
 	private ShaderProgram shader;
 	SpriteBatch batch;
@@ -229,6 +232,7 @@ public class ActiveGameScreen implements Screen {
 		this.startButton = new TextButton("Resume", skin);
 		this.optionsButton = new TextButton("Options", skin);
 		this.exitButton = new TextButton("Exit", skin);
+		this.saveButton = new TextButton("Save Game", skin);
 
 
 		//Create main table and pause tables
@@ -266,7 +270,10 @@ public class ActiveGameScreen implements Screen {
 		pauseTable.add(this.optionsButton).fillX().uniformX();
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(this.exitButton).fillX().uniformX();
+		pauseTable.row().pad(20, 0, 10, 0);
+		pauseTable.add(this.saveButton).fillX().uniformX();
 		pauseTable.center();
+
 
 
 		this.pauseButton.addListener(new ChangeListener() {
@@ -328,7 +335,43 @@ public class ActiveGameScreen implements Screen {
 			}
 		});
 
+		this.saveButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				// Make sure to load data in the MainMenuScreen too!
+				Persistence persistence = Persistence.get();
+				persistence.reset();
 
+				persistence.set("points", HUD.getScore());
+				persistence.set("coins", HUD.getCoins());
+				persistence.set("health", HUD.getHealth());
+
+				persistence.set("difficulty", PirateGame.difficultyMultiplier);
+
+				for (College college : colleges.values()) {
+					if (college.isCaptured()) {
+						persistence.set("college_captured_" + college.getType().getName(), true);
+					}
+
+					if (college.isDestroyed()) {
+						persistence.set("college_destroyed_" + college.getType().getName(), true);
+					}
+				}
+
+				for (int i = 0; i < SkillsScreen.states.size(); i++) {
+					int state = SkillsScreen.states.get(i);
+
+					persistence.set("skill_" + i, state);
+				}
+
+				Vector2 playerPos = getPlayerPos();
+
+				persistence.set("player_x", playerPos.x);
+				persistence.set("player_y", playerPos.y);
+
+				pauseTable.setVisible(false);
+			}
+		});
 	}
 
 	/**

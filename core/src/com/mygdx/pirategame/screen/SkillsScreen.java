@@ -30,7 +30,7 @@ import java.util.List;
 public class SkillsScreen implements Screen {
 
 	//To store whether buttons are enabled or disabled
-	private static List<Integer> states = Arrays.asList(1, 1, 1, 1, 1);
+	protected static List<Integer> states = Arrays.asList(1, 1, 1, 1, 1);
 	private static TextButton bloodied;
 	final Table Other = new Table();
 	private final PirateGame parent;

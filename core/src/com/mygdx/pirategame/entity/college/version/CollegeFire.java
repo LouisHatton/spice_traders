@@ -20,7 +20,7 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 
 public class CollegeFire extends Entity {
 
-	private final Texture cannonBall;
+	private transient final Texture cannonBall;
 	private final Vector2 playerPos;
 	public String college;
 	private float stateTime;

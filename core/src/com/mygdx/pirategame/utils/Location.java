@@ -4,19 +4,19 @@ import java.util.Objects;
 
 public class Location {
 
-	private final int x;
-	private final int y;
+	private final float x;
+	private final float y;
 
-	public Location(int x, int y) {
+	public Location(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 

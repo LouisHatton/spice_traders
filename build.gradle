@@ -59,6 +59,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         implementation group: 'com.badlogicgames.gdx', name: 'gdx-tools', version: '1.10.0'
+        implementation 'com.google.code.gson:gson:2.9.0'
     }
 }
 

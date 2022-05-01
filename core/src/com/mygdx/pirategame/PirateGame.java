@@ -2,6 +2,7 @@ package com.mygdx.pirategame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -98,7 +99,7 @@ public class PirateGame extends Game {
 	 *
 	 * @param screen the number of the screen that the user wants to swap to
 	 */
-	public void changeScreen(int screen) {
+	public Screen changeScreen(int screen) {
 		//Depending on which value given, change the screen
 		this.currentScreen = screen;
 
@@ -174,6 +175,8 @@ public class PirateGame extends Game {
 				break;
 
 		}//
+
+		return this.getScreen();
 	}
 
 	/**

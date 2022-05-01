@@ -20,6 +20,7 @@ import com.mygdx.pirategame.entity.cannon.CannonFire;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.screen.ShopScreen;
 import com.mygdx.pirategame.screen.SkillsScreen;
+import com.mygdx.pirategame.utils.Location;
 
 /**
  * Creates the class of the player. Everything that involves actions coming from the player boat
@@ -95,6 +96,8 @@ public class Player extends Entity {
 	Sound empSound;
 	Sound bubbleSound;
 
+	private Location spawnLocation;
+
 
 	/**
 	 * Instantiates a new Player. Constructor only called once per game
@@ -104,6 +107,7 @@ public class Player extends Entity {
 	public Player(ActiveGameScreen screen, float spawnSpeed, float maxSpeed, float driftFactor, float turnSpeed, Camera cam) {
 		super(screen, 0, 0);
 
+		this.spawnLocation = new Location(1200 / PirateGame.PPM, 2500 / PirateGame.PPM);
 		empSound = Gdx.audio.newSound(Gdx.files.internal("emp.mp3"));
 		bubbleSound = Gdx.audio.newSound(Gdx.files.internal("bubble.mp3"));
 
@@ -363,7 +367,7 @@ public class Player extends Entity {
 	public void defineEntity() {
 		// Defines a players position
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(1200 / PirateGame.PPM, 2500 / PirateGame.PPM); // Default Pos: 1800,2500
+		bdef.position.set(this.spawnLocation.getX(), this.spawnLocation.getY()); // Default Pos: 1800,2500
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		setBody(getWorld().createBody(bdef));
 
@@ -563,5 +567,9 @@ public class Player extends Entity {
 			rayLvl2 = false;
 			SkillsScreen.lock(1);
 		}
+	}
+
+	public void setSpawnLocation(Location spawnLocation) {
+		this.spawnLocation = spawnLocation;
 	}
 }

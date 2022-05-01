@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -17,6 +19,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
+import com.mygdx.pirategame.display.HUD;
+import com.mygdx.pirategame.entity.Player;
+import com.mygdx.pirategame.entity.coin.Coin;
+import com.mygdx.pirategame.entity.college.College;
+import com.mygdx.pirategame.entity.ship.EnemyShip;
+import com.mygdx.pirategame.utils.Location;
+import com.mygdx.pirategame.utils.Persistence;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Main menu is the first screen the player sees. Allows them to navigate where they want to go to
@@ -134,6 +148,55 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				Gdx.app.exit();
+			}
+		});
+
+		this.resumeGameButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				ActiveGameScreen activeGameScreen = (ActiveGameScreen) parent.changeScreen(PirateGame.GAME); // initialise.
+				Persistence persistence = Persistence.get();
+
+				if (persistence.raw() == null || persistence.raw().isEmpty()) {
+					return;
+				}
+
+				System.out.println(persistence.raw().keySet());
+
+				HUD.changePoints(persistence.getInt("points"));
+				HUD.changeCoins(persistence.getInt("coins"));
+				HUD.changeHealth(persistence.getInt("health"));
+
+				PirateGame.difficultySet = true;
+				PirateGame.difficultyMultiplier = persistence.getFloat("difficulty");
+
+				List<Integer> skills = new ArrayList<>();
+
+				for (int i : SkillsScreen.states) {
+					skills.add(persistence.getInt("skill_" + i));
+				}
+
+				for (College college : ActiveGameScreen.colleges.values()) {
+					if (persistence.isSet("college_captured_" + college.getType().getName())) {
+						college.setHealth(0);
+						college.setSurrended(true);
+					}
+
+					if (persistence.isSet("college_destroyed_" + college.getType().getName())) {
+						college.setHealth(0);
+						college.setDestroyed(true);
+					}
+				}
+
+				float x = persistence.getFloat("player_x");
+				float y = persistence.getFloat("player_x");
+
+				Player player = ActiveGameScreen.player;
+				Body body = player.getBody();
+				activeGameScreen.world.destroyBody(body);
+
+				player.setSpawnLocation(new Location(x, y));
+				player.defineEntity();
 			}
 		});
 	}

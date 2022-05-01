@@ -29,7 +29,7 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 public class EnemyShip extends Enemy {
 
 	public static Rectangle detectBox;
-	public static EnemyShip NPCTarget;
+	public transient static EnemyShip NPCTarget;
 	private final Sound destroy;
 	private final Sound hit;
 	public String college;
@@ -39,7 +39,7 @@ public class EnemyShip extends Enemy {
 	public Rectangle enemyDetectBox;
 	public boolean isFollowing = false;
 	Body body;
-	private Texture enemyShip;
+	private transient Texture enemyShip;
 	private Array<CannonFire> cannonBalls = new Array<CannonFire>();
 	private float maxLinearSpeed = 5;
 	private float firingCoolDown = 0;
