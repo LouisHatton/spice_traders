@@ -234,6 +234,8 @@ public class ActiveGameScreen implements Screen {
 		this.exitButton = new TextButton("Exit", skin);
 		this.saveButton = new TextButton("Save Game", skin);
 
+		startButton.getStyle().fontColor = PirateGame.selectedColour;
+
 
 		//Create main table and pause tables
 		table = new Table();
@@ -370,6 +372,8 @@ public class ActiveGameScreen implements Screen {
 				persistence.set("player_y", playerPos.y);
 
 				pauseTable.setVisible(false);
+				table.setVisible(true);
+				resume();
 			}
 		});
 	}

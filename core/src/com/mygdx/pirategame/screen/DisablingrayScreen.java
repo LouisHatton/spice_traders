@@ -65,6 +65,7 @@ public class DisablingrayScreen implements Screen {
 		stage.addActor(Other);
 
 
+
 		String completion = "";
 
 
@@ -88,6 +89,7 @@ public class DisablingrayScreen implements Screen {
 
 		//Return Button
 		this.returnButton = new TextButton("Return", skin);
+		this.returnButton.getStyle().fontColor = PirateGame.selectedColour;
 
 		this.returnButton.addListener(new ChangeListener() {
 			@Override
@@ -105,6 +107,7 @@ public class DisablingrayScreen implements Screen {
 		lvl1ButtonLabel2 = new Label("Capture 1 college", skin);
 		lvl2ButtonLabel2 = new Label("Capture 2 colleges", skin);
 		Title = new Label("Disabling Ray", label1Style);
+
 
 
 		int collegesKilledPercever = (int) currentCollegesCaptured;
@@ -125,7 +128,13 @@ public class DisablingrayScreen implements Screen {
 		titleTable.center().top();
 		titleTable.add(Title);
 
-
+		lvl1ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl1ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel2.setColor(PirateGame.selectedColour);
+		Title.setColor(PirateGame.selectedColour);
+		progressBarLabel.setColor(PirateGame.selectedColour);
+		percentageLabel.setColor(PirateGame.selectedColour);
 		table.center();
 		table.add(lvl1ButtonLabel2).padLeft(10);
 		table.add(lvl1Button).padLeft(10);
@@ -142,6 +151,7 @@ public class DisablingrayScreen implements Screen {
 
 		//add return button
 		Label Strategy1 = new Label("Strategy: This ability can be used to get out of sticky situations or to engage the college for a few seconds without the fleet targeting the player", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Strategy1.setColor(PirateGame.selectedColour);
 		Other.add(this.returnButton);
 		Other.add(Strategy1);
 		Other.bottom().left();

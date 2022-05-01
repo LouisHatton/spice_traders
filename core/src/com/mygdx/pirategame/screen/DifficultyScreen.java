@@ -50,7 +50,7 @@ public class DifficultyScreen implements Screen {
 		table.clear();
 		table.clearChildren();
 		info.reset();
-		Label Strategy1 = new Label("Note: if playing on easy the coin pick ups will not grant coin until the (CoinMultiplier) has been upgraded from the shop", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.FIREBRICK));
+		Label Strategy1 = new Label("Note: if playing on easy the coin pick ups will not grant coin until the (CoinMultiplier) has been upgraded from the shop", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
 		info.setFillParent(true);
 		info.add(Strategy1);
 		info.center().bottom();
@@ -70,6 +70,7 @@ public class DifficultyScreen implements Screen {
 			if (pirateGame.getDifficulty() == 1.5) textForDiff = "Hard";
 			if (pirateGame.getDifficulty() == 2) textForDiff = "Impossible";
 			Label difficultyMsg = new Label("Current Difficulty is " + textForDiff, skin);
+			difficultyMsg.setColor(PirateGame.selectedColour);
 			table.add(difficultyMsg).center();
 			stage.addActor(table);
 			table.row();
@@ -82,6 +83,7 @@ public class DifficultyScreen implements Screen {
 		this.hardButton = new TextButton("Hard", skin);
 		this.impossibleButton = new TextButton("Impossible", skin);
 		this.backButton = new TextButton("Back", skin);
+		this.easyButton.getStyle().fontColor = PirateGame.selectedColour;
 
 		//add buttons to table
 		table.add(this.easyButton).fillX().uniformX();

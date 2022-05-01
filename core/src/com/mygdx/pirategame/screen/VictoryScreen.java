@@ -59,8 +59,8 @@ public class VictoryScreen implements Screen {
 		table2.setFillParent(true);
 
 		//Set the message and add to table
-		Label victoryMsg = new Label("YOU WON", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), Color.YELLOW));
-		Label victoryMsg2 = new Label("CONGRATULATIONS PIRATE", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), Color.YELLOW));
+		Label victoryMsg = new Label("YOU WON", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), PirateGame.selectedColour3));
+		Label victoryMsg2 = new Label("CONGRATULATIONS PIRATE", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), PirateGame.selectedColour3));
 		table.add(victoryMsg).center();
 		table.row();
 		table.add(victoryMsg2).center().padTop(20);

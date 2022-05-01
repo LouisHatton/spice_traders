@@ -56,7 +56,7 @@ public class DeathScreen implements Screen {
 		table2.center();
 		table2.setFillParent(true);
 
-		Label deathMsg = new Label("YOU  DIED", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), Color.RED));
+		Label deathMsg = new Label("YOU  DIED", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), PirateGame.selectedColour4));
 		table.add(deathMsg).center();
 		stage.addActor(table);
 

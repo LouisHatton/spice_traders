@@ -95,7 +95,7 @@ public class ShieldScreen implements Screen {
 
 		//Return Button
 		this.returnButton = new TextButton("Return", skin);
-
+		returnButton.getStyle().fontColor = PirateGame.selectedColour;
 		this.returnButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -130,6 +130,8 @@ public class ShieldScreen implements Screen {
 		lvl5ButtonLabel2 = new Label("Destroy 13 ships", skin);
 		lvl6ButtonLabel2 = new Label("Destroy 15 ships", skin);
 		Title = new Label("Bubble", label1Style);
+
+
 
 
 		boatsKilledObjective = 7;
@@ -174,7 +176,21 @@ public class ShieldScreen implements Screen {
 		titleTable.center().top();
 		titleTable.add(Title);
 
-
+		lvl1ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl1ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel2.setColor(PirateGame.selectedColour);
+		Title.setColor(PirateGame.selectedColour);
+		progressBarLabel.setColor(PirateGame.selectedColour);
+		percentageLabel.setColor(PirateGame.selectedColour);
 		table.center();
 		table.add(lvl1ButtonLabel2).padLeft(10);
 		table.add(lvl1Button).padLeft(10);
@@ -207,6 +223,7 @@ public class ShieldScreen implements Screen {
 
 		//add return button
 		Label Strategy1 = new Label("Strategy: This ability is the only active healing method. be sure to use it in sticky situations and if the player needs healing (level 3,5)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Strategy1.setColor(PirateGame.selectedColour);
 		Other.add(this.returnButton);
 		Other.add(Strategy1);
 		Other.bottom().left();

@@ -64,6 +64,8 @@ public class BloodiedScreen implements Screen {
 		stage.addActor(Other);
 
 
+
+
 		String completion = "";
 
 
@@ -87,6 +89,7 @@ public class BloodiedScreen implements Screen {
 
 		//Return Button
 		this.returnButton = new TextButton("Return", skin);
+		this.returnButton.getStyle().fontColor = PirateGame.selectedColour;
 
 		this.returnButton.addListener(new ChangeListener() {
 			@Override
@@ -104,6 +107,10 @@ public class BloodiedScreen implements Screen {
 		lvl1ButtonLabel2 = new Label("Destroy 1 college", skin);
 		lvl2ButtonLabel2 = new Label("Destroy 2 colleges", skin);
 		Title = new Label("Bloodied", label1Style);
+		lvl1ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl1ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel2.setColor(PirateGame.selectedColour);
 
 
 		int collegesKilledPercever = (int) currentCollegesKilled;
@@ -120,7 +127,9 @@ public class BloodiedScreen implements Screen {
 			lvl2Button.setDisabled(false);
 		}
 
-
+		Title.setColor(PirateGame.selectedColour);
+		progressBarLabel.setColor(PirateGame.selectedColour);
+		percentageLabel.setColor(PirateGame.selectedColour);
 		titleTable.center().top();
 		titleTable.add(Title);
 
@@ -139,7 +148,8 @@ public class BloodiedScreen implements Screen {
 		table.add(percentageLabel).padLeft(10).padRight(10);
 
 
-		Label Strategy1 = new Label("Strategy : Ensuring your health is under 50% will give the most optimal damage output without too much risk. keep an eye on your health", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+
+		Label Strategy1 = new Label("Strategy : Ensuring your health is under 50% will give the most optimal damage output without too much risk. keep an eye on your health", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour));
 		//add return button
 		Other.add(this.returnButton);
 		Other.add(Strategy1);
