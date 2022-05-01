@@ -32,6 +32,7 @@ public class SettingsScreen implements Screen {
 	private CheckBox effectCheckbox;
 	private TextButton backButton;
 	private Table titleTable = new Table();
+	public static SelectBox<String> selectBox;
 
 
 	/**
@@ -78,7 +79,7 @@ public class SettingsScreen implements Screen {
 		//The skin for the actors
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
-		SelectBox<String> selectBox = new SelectBox<String>(skin);
+		selectBox = new SelectBox<String>(skin);
 		selectBox.setItems("Default","Green","Black","Red");
 		selectBox.setSelectedIndex(PirateGame.selectedIndex);
 

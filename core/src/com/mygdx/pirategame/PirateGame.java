@@ -226,6 +226,7 @@ public class PirateGame extends Game {
 			selectedColour4 = Color.RED;
 		}
 
+
 		if(ActiveGameScreen.weatherSoundEffect == null || ActiveGameScreen.badWeather) return;
 		if(ActiveGameScreen.weatherSoundEffect.isPlaying()){
 			ActiveGameScreen.weatherSoundEffect.pause();

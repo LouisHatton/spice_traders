@@ -161,6 +161,8 @@ public class HUD implements Disposable {
 		coinLabel = new Label(String.format("%03d", coins), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
 		pointsText = new Label("Points:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
+
+
 		table3.add(box).width(140).height(140).padBottom(15).padLeft(30);
 		table2.add(hpImg).width(32).height(32).padTop(16).padRight(90);
 		table2.row();
@@ -351,6 +353,10 @@ public class HUD implements Disposable {
 	 * @param dt Delta time (elapsed time since last game tick)
 	 */
 	public void update(float dt) {
+		scoreLabel.setColor(PirateGame.selectedColour);
+		healthLabel.setColor(PirateGame.selectedColour2);
+		coinLabel.setColor(PirateGame.selectedColour3);
+		pointsText.setColor(PirateGame.selectedColour);
 		String empcoolDown2 = "" + ActiveGameScreen.player.disablingRayCooldown;
 		empCooldown.setText("  " + empcoolDown2.substring(0,3));
 		String shieldtext = "" + ActiveGameScreen.player.shieldCoolDown;
@@ -479,7 +485,10 @@ public class HUD implements Disposable {
 		}
 
 
-
+		burstCooldown.setColor(PirateGame.selectedColour);
+		ultimateCooldown.setColor(PirateGame.selectedColour);
+		shieldCooldown.setColor(PirateGame.selectedColour);
+		empCooldown.setColor(PirateGame.selectedColour);
 
 	}
 
