@@ -73,6 +73,21 @@ public class UltimateScreen implements Screen {
 		stage.addActor(titleTable);
 		stage.addActor(table);
 		stage.addActor(Other);
+		lvl1ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl1ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel2.setColor(PirateGame.selectedColour);
+		Title.setColor(PirateGame.selectedColour);
+		progressBarLabel.setColor(PirateGame.selectedColour);
+		percentageLabel.setColor(PirateGame.selectedColour);
 
 
 		String completion = "";
@@ -109,6 +124,8 @@ public class UltimateScreen implements Screen {
 		this.lvl4Button = new TextButton("Level 4", skin);
 		this.lvl5Button = new TextButton("Level 5", skin);
 		this.lvl6Button = new TextButton("Level 6 - Max Level", skin);
+		this.lvl1Button.getStyle().fontColor = PirateGame.selectedColour;
+		Title.setColor(PirateGame.selectedColour);
 
 		lvl2Button.setDisabled(true);
 		lvl3Button.setDisabled(true);
@@ -205,7 +222,8 @@ public class UltimateScreen implements Screen {
 
 
 		//add return button
-		Label Strategy1 = new Label("Strategy: The cool down depends on the player activity so ensure to get as many kills as possible to get this ability back faster", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Strategy1 = new Label("Strategy: The cool down depends on the player activity so ensure to get as many kills as possible to get this ability back faster", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour));
+
 		Other.add(this.returnButton);
 		Other.add(Strategy1);
 		Other.bottom().left();

@@ -113,15 +113,22 @@ public class SkillsScreen implements Screen {
 		label1Style.font = font;
 
 
+
+
 		Label Title = new Label("Skills Screen", label1Style);
 		titleTable.center().top();
 		titleTable.setFillParent(true);
 		Title.setFontScale(1);
 		titleTable.add(Title);
 		stage.addActor(titleTable);
+		Title.setColor(PirateGame.selectedColour);
+
+
 
 		//create skill tree buttons
 		bloodied = new TextButton("Bloodied", skin);
+		bloodied.getStyle().fontColor = PirateGame.selectedColour;
+
 		bloodied.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -206,6 +213,7 @@ public class SkillsScreen implements Screen {
 		//add buttons and labels to main table
 		if (ActiveGameScreen.player.getCollegesKilled() == 0) {
 			Label bloodiedLabel = new Label("Destroy a college to unlock ", skin);
+			bloodiedLabel.setColor(PirateGame.selectedColour);
 			table.add(bloodiedLabel);
 		}
 		table.add(bloodied);
@@ -213,6 +221,7 @@ public class SkillsScreen implements Screen {
 		table.row().pad(10, 0, 10, 0);
 		if (ActiveGameScreen.player.getCollegesCaptured() == 0) {
 			Label disablingRayLabel = new Label("Capture a college to unlock ", skin);
+			disablingRayLabel.setColor(PirateGame.selectedColour);
 			table.add(disablingRayLabel);
 		}
 		table.add(disablingRay);
@@ -220,6 +229,7 @@ public class SkillsScreen implements Screen {
 		table.row().pad(10, 0, 10, 0);
 		if (ActiveGameScreen.player.getBoatsKilled() < 5) {
 			Label shieldLabel = new Label("Destroy 5 Ships to unlock ", skin);
+			shieldLabel.setColor(PirateGame.selectedColour);
 			table.add(shieldLabel);
 		}
 		table.add(shield);
@@ -227,6 +237,7 @@ public class SkillsScreen implements Screen {
 		table.row().pad(10, 0, 10, 0);
 		if (HUD.getScore() < 200) {
 			Label secondaryLabel = new Label("Gather 200 Score to unlock ", skin);
+			secondaryLabel.setColor(PirateGame.selectedColour);
 			table.add(secondaryLabel);
 		}
 		table.add(secondaryAbility);
@@ -234,6 +245,7 @@ public class SkillsScreen implements Screen {
 		table.row().pad(10, 0, 10, 0);
 		if (HUD.getScore() < 500) {
 			Label ultimateLabel = new Label("Gather 500 Score to unlock ", skin);
+			ultimateLabel.setColor(PirateGame.selectedColour);
 			table.add(ultimateLabel);
 		}
 		table.add(ultimateAbility);
@@ -241,7 +253,7 @@ public class SkillsScreen implements Screen {
 		table.center();
 
 		//add return button
-		Label Strategy1 = new Label("Click on the ability once unlocked to get more information and see the progression of the ability", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Strategy1 = new Label("Click on the ability once unlocked to get more information and see the progression of the ability", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour));
 		Other.add(backButton);
 		Other.add(Strategy1);
 		Other.bottom().left();

@@ -2,6 +2,7 @@ package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -59,6 +60,7 @@ public class SettingsScreen implements Screen {
 		label1Style.font = font;
 
 		Label Title = new Label("Settings", label1Style);
+		Title.setColor(PirateGame.selectedColour);
 
 
 		//Set the input processor
@@ -78,12 +80,52 @@ public class SettingsScreen implements Screen {
 
 		SelectBox<String> selectBox = new SelectBox<String>(skin);
 		selectBox.setItems("Default","Green","Black","Red");
-		selectBox.setSelectedIndex(2);
+		selectBox.setSelectedIndex(PirateGame.selectedIndex);
 
+		this.backButton = new TextButton("Back", skin);
+		Label titleLabel = new Label("Options", skin);
+		Label musicLabel = new Label("Music Volume", skin);
+		Label effectLabel = new Label("Effect Volume", skin);
+		Label musicOnLabel = new Label("Music On/Off", skin);
+		Label effectOnLabel = new Label("Effect On/Off", skin);
+		Label selectBoxLabel = new Label("Colour settings", skin);
 		selectBox.addListener(new EventListener() {
 			@Override
 			public boolean handle(Event event) {
-				System.out.println(selectBox.getSelectedIndex());
+				if(selectBox.getSelectedIndex() == 0){
+					PirateGame.selectedColour = Color.WHITE;
+					PirateGame.selectedColour2 = Color.FIREBRICK;
+					PirateGame.selectedColour3 = Color.YELLOW;
+					PirateGame.selectedColour4 = Color.RED;
+				}
+				else if(selectBox.getSelectedIndex() == 1){
+					PirateGame.selectedColour = Color.GREEN;
+					PirateGame.selectedColour2 = Color.GREEN;
+					PirateGame.selectedColour3 = Color.GREEN;
+					PirateGame.selectedColour4 = Color.GREEN;
+				}
+				else if(selectBox.getSelectedIndex() == 2){
+					PirateGame.selectedColour = Color.BLACK;
+					PirateGame.selectedColour2 = Color.BLACK;
+					PirateGame.selectedColour3 = Color.BLACK;
+					PirateGame.selectedColour4 = Color.BLACK;
+				}
+				else if(selectBox.getSelectedIndex() == 3){
+					PirateGame.selectedColour = Color.RED;
+					PirateGame.selectedColour2 = Color.RED;
+					PirateGame.selectedColour3 = Color.RED;
+					PirateGame.selectedColour4 = Color.RED;
+				}
+
+				titleLabel.setColor(PirateGame.selectedColour);
+				musicLabel.setColor(PirateGame.selectedColour);
+				effectLabel.setColor(PirateGame.selectedColour);
+				musicOnLabel.setColor(PirateGame.selectedColour);
+				effectOnLabel.setColor(PirateGame.selectedColour);
+				selectBoxLabel.setColor(PirateGame.selectedColour);
+				PirateGame.selectedIndex = selectBox.getSelectedIndex();
+				backButton.getStyle().fontColor = PirateGame.selectedColour;
+				Title.setColor(PirateGame.selectedColour);
 				return false;
 			}
 		});
@@ -148,8 +190,11 @@ public class SettingsScreen implements Screen {
 			}
 		});
 
+
+
 		// return to main screen button
-		this.backButton = new TextButton("Back", skin);
+
+		this.backButton.getStyle().fontColor = PirateGame.selectedColour;
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
@@ -158,13 +203,14 @@ public class SettingsScreen implements Screen {
 		});
 
 
-		Label titleLabel = new Label("Options", skin);
-		Label musicLabel = new Label("Music Volume", skin);
-		Label effectLabel = new Label("Effect Volume", skin);
-		Label musicOnLabel = new Label("Music On/Off", skin);
-		Label effectOnLabel = new Label("Effect On/Off", skin);
-		Label selectBoxLabel = new Label("Colour settings", skin);
 
+
+		titleLabel.setColor(PirateGame.selectedColour);
+		musicLabel.setColor(PirateGame.selectedColour);
+		effectLabel.setColor(PirateGame.selectedColour);
+	    musicOnLabel.setColor(PirateGame.selectedColour);
+		effectOnLabel.setColor(PirateGame.selectedColour);
+		selectBoxLabel.setColor(PirateGame.selectedColour);
 		//add buttons,sliders and labels to table
 		table.add(titleLabel).colspan(2);
 		table.row().pad(10, 0, 0, 0);

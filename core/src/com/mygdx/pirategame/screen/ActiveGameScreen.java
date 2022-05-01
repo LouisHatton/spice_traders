@@ -229,6 +229,7 @@ public class ActiveGameScreen implements Screen {
 		this.startButton = new TextButton("Resume", skin);
 		this.optionsButton = new TextButton("Options", skin);
 		this.exitButton = new TextButton("Exit", skin);
+		startButton.getStyle().fontColor = PirateGame.selectedColour;
 
 
 		//Create main table and pause tables

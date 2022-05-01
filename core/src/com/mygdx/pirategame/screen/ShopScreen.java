@@ -120,11 +120,22 @@ public class ShopScreen implements Screen {
 		Label.LabelStyle label1Style = new Label.LabelStyle();
 		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
 		label1Style.font = font;
+		label1Style.font.setColor(PirateGame.selectedColour);
 		Label Title = new Label("Shop", label1Style);
 		titleTable.center().top();
 		titleTable.setFillParent(true);
 		titleTable.add(Title);
 		stage.addActor(titleTable);
+		Title.setColor(PirateGame.selectedColour);
+		bulletSpeedLabel.setColor(PirateGame.selectedColour);
+		dps1Label.setColor(PirateGame.selectedColour);
+		range1Label.setColor(PirateGame.selectedColour);
+		resistanceLabel.setColor(PirateGame.selectedColour);
+		damage1Label.setColor(PirateGame.selectedColour);
+		movement1Label.setColor(PirateGame.selectedColour);
+		health1Label.setColor(PirateGame.selectedColour);
+		GoldMulti1Label.setColor(PirateGame.selectedColour);
+		currentGold.setColor(PirateGame.selectedColour);
 
 
 		//Set the input processor
@@ -143,6 +154,7 @@ public class ShopScreen implements Screen {
 
 
 		this.bulletSpeedButton = new TextButton("Increase Bullet Speed", skin);
+		this.bulletSpeedButton.getStyle().fontColor = PirateGame.selectedColour;
 		this.bulletSpeedButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {

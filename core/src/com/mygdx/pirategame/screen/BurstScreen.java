@@ -109,6 +109,7 @@ public class BurstScreen implements Screen {
 		lvl4Button = new TextButton("Level 4", skin);
 		lvl5Button = new TextButton("Level 5", skin);
 		lvl6Button = new TextButton("Level 6 - Max Level", skin);
+		Title.setColor(PirateGame.selectedColour);
 
 		lvl2Button.setDisabled(true);
 		lvl3Button.setDisabled(true);
@@ -129,6 +130,19 @@ public class BurstScreen implements Screen {
 		lvl5ButtonLabel2 = new Label("Gain 1000 Score", skin);
 		lvl6ButtonLabel2 = new Label("Gain 1200 Score", skin);
 		Title = new Label("Burst Shot", label1Style);
+		lvl1ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl1ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel2.setColor(PirateGame.selectedColour);
+
 
 
 		scoreTarget = 400;
@@ -173,7 +187,9 @@ public class BurstScreen implements Screen {
 		titleTable.center().top();
 		titleTable.add(Title);
 
-
+		Title.setColor(PirateGame.selectedColour);
+		progressBarLabel.setColor(PirateGame.selectedColour);
+		percentageLabel.setColor(PirateGame.selectedColour);
 		table.center();
 		table.add(lvl1ButtonLabel2).padLeft(10);
 		table.add(lvl1Button).padLeft(10);
@@ -205,7 +221,7 @@ public class BurstScreen implements Screen {
 
 
 		//add return button
-		Label Strategy1 = new Label("Strategy: Ramming into an enemy and using this ability will destroy any ship!. Similarly to shooting, if the player is reversing this ability has longer reach", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Strategy1 = new Label("Strategy: Ramming into an enemy and using this ability will destroy any ship!. Similarly to shooting, if the player is reversing this ability has longer reach", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour));
 		Other.add(this.returnButton);
 		Other.add(Strategy1);
 		Other.bottom().left();

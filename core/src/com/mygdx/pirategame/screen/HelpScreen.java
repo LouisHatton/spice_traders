@@ -83,7 +83,18 @@ public class HelpScreen implements Screen {
 		Label Strategy1 = new Label("Strategy to kill boats : shooting the direction you are moving will give the player less reach. so try shooting the other way to get better reach on the enemy", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy2 = new Label("Strategy to destroy colleges : ensure that the colleges fleet has been destroyed and circle the college while shooting it", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy2Con = new Label("that way you can destroy the college without disruptions. Additionally, destroying a college will disable its fleet", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
-
+		Controls1.setColor(PirateGame.selectedColour);
+		Controls2.setColor(PirateGame.selectedColour);
+		Controls3.setColor(PirateGame.selectedColour);
+		Controls4.setColor(PirateGame.selectedColour);
+		objective1.setColor(PirateGame.selectedColour);
+		objective2.setColor(PirateGame.selectedColour);
+		objective3.setColor(PirateGame.selectedColour);
+		skillInfo1.setColor(PirateGame.selectedColour);
+		skillInfo2.setColor(PirateGame.selectedColour);
+		Strategy1.setColor(PirateGame.selectedColour);
+		Strategy2.setColor(PirateGame.selectedColour);
+		Strategy2Con.setColor(PirateGame.selectedColour);
 		//Return Button
 		this.backButton = new TextButton("Return", skin);
 		backButton.addListener(new ChangeListener() {
@@ -93,6 +104,8 @@ public class HelpScreen implements Screen {
 				parent.changeScreen(PirateGame.MENU);
 			}
 		});
+		Title.setColor(PirateGame.selectedColour);
+		backButton.getStyle().fontColor = PirateGame.selectedColour;
 
 		table.add(backButton);
 		table.row().pad(10, 0, 10, 0);

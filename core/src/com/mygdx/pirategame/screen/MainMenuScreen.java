@@ -81,6 +81,7 @@ public class MainMenuScreen implements Screen {
 		Table table = new Table();
 		table.setFillParent(true);
 		stage.addActor(table);
+		Title.setColor(PirateGame.selectedColour);
 
 		//The skin for the actors
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -91,6 +92,8 @@ public class MainMenuScreen implements Screen {
 		this.helpButton = new TextButton("Help", skin);
 		this.optionsButton = new TextButton("Options", skin);
 		this.exitButton = new TextButton("Exit", skin);
+		exitButton.getStyle().fontColor = PirateGame.selectedColour;
+		Title.setColor(PirateGame.selectedColour2);
 
 		//add buttons to table
 		table.add(this.newGameButton).fillX().uniformX();

@@ -3,6 +3,7 @@ package com.mygdx.pirategame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,6 +21,11 @@ import com.mygdx.pirategame.screen.*;
  * @version 1.0
  */
 public class PirateGame extends Game {
+	public static Color selectedColour = Color.WHITE;
+	public static Color selectedColour2 = Color.FIREBRICK;
+	public static Color selectedColour3 = Color.YELLOW;
+	public static Color selectedColour4 = Color.RED;
+	public static int selectedIndex = 0;
 	public static final float PPM = 100;
 	//Bits used in collisions
 	public static final short DEFAULT_BIT = 1;
@@ -208,6 +214,15 @@ public class PirateGame extends Game {
 	@Override
 	public void render() {
 		super.render();
+
+
+		if(selectedColour == null){
+			selectedColour = Color.WHITE;
+			selectedColour2 = Color.FIREBRICK;
+			selectedColour3 = Color.YELLOW;
+			selectedColour4 = Color.RED;
+		}
+
 		if(ActiveGameScreen.weatherSoundEffect == null || ActiveGameScreen.badWeather) return;
 		if(ActiveGameScreen.weatherSoundEffect.isPlaying()){
 			ActiveGameScreen.weatherSoundEffect.pause();
