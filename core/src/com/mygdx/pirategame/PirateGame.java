@@ -2,6 +2,7 @@ package com.mygdx.pirategame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -169,18 +170,19 @@ public class PirateGame extends Game {
 				break;
 
 			case DIFFICULTY:
-				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.getScreen(), new Stage(new ScreenViewport()));
+				difficultyScreen = new DifficultyScreen(this, this.getScreen(), new Stage(new ScreenViewport()));
 				this.setScreen(difficultyScreen);
 				break;
 
 			case SETTINGS:
-				if (settingsScreen == null) settingsScreen = new SettingsScreen(this, this.screen, new Stage(new ScreenViewport()));
+				settingsScreen = new SettingsScreen(this, this.screen, new Stage(new ScreenViewport()));
 				this.setScreen(settingsScreen);
 
 				break;
 
-		}//
+		}
 	}
+
 
 	/**
 	 * Allows the user to interact with the audio options
