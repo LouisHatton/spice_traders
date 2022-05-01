@@ -334,7 +334,7 @@ public class ButtonTests {
 		mainMenuScreen.getHelpButton().toggle();
 		mainMenuScreen.getNewGameButton().toggle();
 		//mainMenuScreen.getExitButton().toggle();
-		mainMenuScreen.getResumeGameButton().toggle();
+		//mainMenuScreen.getResumeGameButton().toggle();
 		mainMenuScreen.getOptionsButton().toggle();
 
 		assertTrue(true); // no errors occur.

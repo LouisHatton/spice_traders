@@ -109,7 +109,6 @@ public class BurstScreen implements Screen {
 		lvl4Button = new TextButton("Level 4", skin);
 		lvl5Button = new TextButton("Level 5", skin);
 		lvl6Button = new TextButton("Level 6 - Max Level", skin);
-		Title.setColor(PirateGame.selectedColour);
 
 		lvl2Button.setDisabled(true);
 		lvl3Button.setDisabled(true);
@@ -142,8 +141,7 @@ public class BurstScreen implements Screen {
 		lvl6ButtonLabel.setColor(PirateGame.selectedColour);
 		lvl5ButtonLabel2.setColor(PirateGame.selectedColour);
 		lvl6ButtonLabel2.setColor(PirateGame.selectedColour);
-
-
+		Title.setColor(PirateGame.selectedColour);
 
 		scoreTarget = 400;
 		if (score >= 400) {

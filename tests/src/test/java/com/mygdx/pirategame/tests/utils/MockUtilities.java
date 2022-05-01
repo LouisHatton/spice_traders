@@ -56,6 +56,8 @@ public class MockUtilities {
 		Mockito.doCallRealMethod().when(pirateGame).getScreen();
 		Mockito.doCallRealMethod().when(pirateGame).getCurrentScreen();
 
+		PirateGame.selectedColour = Color.WHITE;
+
 		return pirateGame;
 	}
 

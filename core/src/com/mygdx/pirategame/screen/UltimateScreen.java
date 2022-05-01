@@ -73,22 +73,6 @@ public class UltimateScreen implements Screen {
 		stage.addActor(titleTable);
 		stage.addActor(table);
 		stage.addActor(Other);
-		lvl1ButtonLabel.setColor(PirateGame.selectedColour);
-		lvl2ButtonLabel.setColor(PirateGame.selectedColour);
-		lvl1ButtonLabel2.setColor(PirateGame.selectedColour);
-		lvl2ButtonLabel2.setColor(PirateGame.selectedColour);
-		lvl3ButtonLabel.setColor(PirateGame.selectedColour);
-		lvl4ButtonLabel.setColor(PirateGame.selectedColour);
-		lvl3ButtonLabel2.setColor(PirateGame.selectedColour);
-		lvl4ButtonLabel2.setColor(PirateGame.selectedColour);
-		lvl5ButtonLabel.setColor(PirateGame.selectedColour);
-		lvl6ButtonLabel.setColor(PirateGame.selectedColour);
-		lvl5ButtonLabel2.setColor(PirateGame.selectedColour);
-		lvl6ButtonLabel2.setColor(PirateGame.selectedColour);
-		Title.setColor(PirateGame.selectedColour);
-		progressBarLabel.setColor(PirateGame.selectedColour);
-		percentageLabel.setColor(PirateGame.selectedColour);
-
 
 		String completion = "";
 
@@ -125,7 +109,6 @@ public class UltimateScreen implements Screen {
 		this.lvl5Button = new TextButton("Level 5", skin);
 		this.lvl6Button = new TextButton("Level 6 - Max Level", skin);
 		this.lvl1Button.getStyle().fontColor = PirateGame.selectedColour;
-		Title.setColor(PirateGame.selectedColour);
 
 		lvl2Button.setDisabled(true);
 		lvl3Button.setDisabled(true);
@@ -146,7 +129,6 @@ public class UltimateScreen implements Screen {
 		lvl5ButtonLabel2 = new Label("Gain 1100 Score", skin);
 		lvl6ButtonLabel2 = new Label("Gain 1250 Score", skin);
 		Title = new Label("Ultimate" ,label1Style);
-
 
 		scoreTarget = 650;
 		if (score >= 650) {
@@ -220,6 +202,21 @@ public class UltimateScreen implements Screen {
 		table.add(progressBar).left().pad(20, 8, 0, 20);
 		table.add(percentageLabel).padLeft(10).padRight(10);
 
+		lvl1ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl1ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl2ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl3ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl4ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel.setColor(PirateGame.selectedColour);
+		lvl5ButtonLabel2.setColor(PirateGame.selectedColour);
+		lvl6ButtonLabel2.setColor(PirateGame.selectedColour);
+		Title.setColor(PirateGame.selectedColour);
+		progressBarLabel.setColor(PirateGame.selectedColour);
+		percentageLabel.setColor(PirateGame.selectedColour);
 
 		//add return button
 		Label Strategy1 = new Label("Strategy: The cool down depends on the player activity so ensure to get as many kills as possible to get this ability back faster", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour));
