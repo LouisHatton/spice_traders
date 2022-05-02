@@ -32,13 +32,13 @@ public class HUD implements Disposable {
 	public static float maxHealth = 100;
 	public static float respawnProtection = 4f;
 	public static float bloodyAmount = 0.5f;
-	private static int score;
-	private static int health;
+	public static int score;
+	public static int health;
 	private static Label scoreLabel;
 	private static Label healthLabel;
 	private static Label coinLabel;
 	private static Label pointsText;
-	private static int coins;
+	public static int coins;
 	private static float coinMulti;
 	private final Texture hp;
 	private final Texture boxBackground;

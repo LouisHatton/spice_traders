@@ -166,9 +166,9 @@ public class MainMenuScreen implements Screen {
 
 				System.out.println(persistence.raw().keySet());
 
-				HUD.changePoints(persistence.getInt("points"));
-				HUD.changeCoins(persistence.getInt("coins"));
-				HUD.changeHealth(persistence.getInt("health"));
+				HUD.score = persistence.getInt("points");
+				HUD.coins = persistence.getInt("coins");
+				HUD.health = persistence.getInt("health");
 				Player.boatsKilled = persistence.getInt("boatsKilled");
 				Player.collegesKilled = persistence.getInt("collegesKilled");
 				Player.collegesCaptured = persistence.getInt("collegesCaptured");
@@ -198,10 +198,10 @@ public class MainMenuScreen implements Screen {
 				ShopScreen.healthCounter = persistence.getInt("healthCounter");
 				ShopScreen.goldMultiplierCounter = persistence.getInt("goldMultiplierCounter");
 
-				for(int i = 0; i <= persistence.getInt("bulletSpeedCounter"); i++){
+				for(int i = 0; i < persistence.getInt("bulletSpeedCounter"); i++){
 					Player.upgradeCannonBallSpeed();
 				}
-				for(int i = 0; i <= persistence.getInt("dpsCounter"); i++){
+				for(int i = 0; i < persistence.getInt("dpsCounter"); i++){
 					Player.upgradeFireRate();
 				}
 				for(int i = 0; i <= persistence.getInt("goldMultiplierCounter"); i++){
