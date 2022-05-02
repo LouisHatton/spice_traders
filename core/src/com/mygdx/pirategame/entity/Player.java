@@ -38,9 +38,9 @@ public class Player extends Entity {
 	public static int burstAmountForUltimateFire = 1;
 	public static float ultimateAmount = 0;
 	public static float ultimateAmountMultiplier = 1f;
-	public static float collegesCaptured = 0;
-	public static float boatsKilled = 0;
-	public static float collegesKilled = 0;
+	public static int collegesCaptured = 0;
+	public static int boatsKilled = 0;
+	public static int collegesKilled = 0;
 	public static boolean shieldEnabled = false;
 	public static float protectedTimer = 0f;
 	public static float normalNumberOfShips = 4;
@@ -57,14 +57,14 @@ public class Player extends Entity {
 	private final Sound breakSound;
 	private final Array<CannonFire> cannonBalls;
 	public Rectangle hitBox;
-	public float shieldCoolDown = 0f;
+	public static float shieldCoolDown = 0f;
 	public float shieldCoolDownOG = 8f;
 	public float protectTime = 2f;
 	public static boolean rayEnabled = false;
 	float firingCoolDown = 0.2f;
 	float ogFiringCoolDown = 0.2f;
 	int burstShotsUF = 0;
-	float ultimateBurstCoolDown = 0f;
+	public float ultimateBurstCoolDown = 0f;
 	float ultimateBurstOGCoolDown = 0.5f;
 	Sprite shield = new Sprite(new Texture("bubble.png"));
 	Sprite emp = new Sprite(new Texture("EMP.png"));
@@ -89,7 +89,7 @@ public class Player extends Entity {
 	public static float amountOfBullets = 3;
 	public static float sideShots = 0;
 	public static float ogburstTimer = 8;
-	public float burstCooldown = 0f;
+	public static float burstCooldown = 0f;
 	boolean burstShooting = false;
 	public static float burstShotCooldown = 0;
 	public static float burstShotCoolDownOg = 0.3f;
@@ -495,7 +495,7 @@ public class Player extends Entity {
 			ball.draw(batch);
 	}
 
-	public float getCollegesCaptured() {
+	public int getCollegesCaptured() {
 		return collegesCaptured;
 	}
 
@@ -504,7 +504,7 @@ public class Player extends Entity {
 		updateStats();
 	}
 
-	public float getCollegesKilled() {
+	public int getCollegesKilled() {
 		return collegesKilled;
 	}
 
@@ -513,7 +513,7 @@ public class Player extends Entity {
 		updateStats();
 	}
 
-	public float getBoatsKilled() {
+	public int getBoatsKilled() {
 		return boatsKilled;
 	}
 

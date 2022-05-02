@@ -27,22 +27,22 @@ public class ShopScreen implements Screen {
 
 	//The skin for the actors
 	private static Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-	private static float damage1Price = 200f;
+	public static float damage1Price = 200f;
 	private static Label damage1Label = new Label(damage1Price + " Gold", skin);
-	private static float health1Price = 150f;
+	public static float health1Price = 150f;
 	private static Label health1Label = new Label(health1Price + " Gold", skin);
-	private static float dps1Price = 200f;
+	public static float dps1Price = 200f;
 	private static Label dps1Label = new Label(dps1Price + " Gold", skin);
-	private static float range1Price = 200f;
+	public static float range1Price = 200f;
 	private static Label range1Label = new Label(range1Price + " Gold", skin);
-	private static float GoldMulti1Price = 50f;
+	public static float GoldMulti1Price = 50f;
 	private static Label GoldMulti1Label = new Label(GoldMulti1Price + " Gold", skin);
-	private static float resistancePrice = 150f;
+	public static float resistancePrice = 150f;
 	private static Label resistanceLabel = new Label(resistancePrice + " Gold", skin);
-	private static float bulletSpeedPrice = 200f;
+	public static float bulletSpeedPrice = 200f;
 	//Point unlock labels
 	private static Label bulletSpeedLabel = new Label(bulletSpeedPrice + " Gold", skin);
-	private static float movement1Price = 175f;
+	public static float movement1Price = 175f;
 	private static Label movement1Label = new Label(movement1Price + " Gold", skin);
 	private final Table Other = new Table();
 	//To store whether buttons are enabled or disabled
@@ -62,6 +62,20 @@ public class ShopScreen implements Screen {
 	private TextButton healthButton;
 	private TextButton goldMultiplierButton;
 	private TextButton backButton;
+
+
+
+	public static int bulletSpeedCounter = 0;
+	public static int dpsCounter = 0;
+	public static int rangeCounter = 0;
+	public static int resistanceCounter = 0;
+	public static int damageCounter = 0;
+	public static int movementCounter = 0;
+	public static int healthCounter = 0;
+	public static int goldMultiplierCounter = 0;
+
+
+
 
 	/**
 	 * Instantiates a new Skill tree.
@@ -117,6 +131,15 @@ public class ShopScreen implements Screen {
 		titleTable.clearChildren();
 		titleTable.reset();
 
+		bulletSpeedLabel.setText(bulletSpeedPrice + " Gold");
+		dps1Label.setText(dps1Price + " Gold");
+		range1Label.setText(range1Price + " Gold");
+		resistanceLabel.setText(resistancePrice + " Gold");
+		damage1Label.setText(damage1Price + " Gold");
+		movement1Label.setText(movement1Price + " Gold");
+		health1Label.setText(health1Price + " Gold");
+		GoldMulti1Label.setText(GoldMulti1Price + " Gold");
+
 		Label.LabelStyle label1Style = new Label.LabelStyle();
 		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
 		label1Style.font = font;
@@ -164,6 +187,7 @@ public class ShopScreen implements Screen {
 					bulletSpeedLabel.setText("");
 					bulletSpeedLabel.setText(bulletSpeedPrice + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					bulletSpeedCounter ++;
 				}
 
 			}
@@ -179,6 +203,7 @@ public class ShopScreen implements Screen {
 					dps1Label.setText("");
 					dps1Label.setText(dps1Price + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					dpsCounter ++;
 				}
 			}
 		});
@@ -194,6 +219,7 @@ public class ShopScreen implements Screen {
 					range1Label.setText("");
 					range1Label.setText(range1Price + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					rangeCounter ++;
 				}
 			}
 		});
@@ -208,6 +234,7 @@ public class ShopScreen implements Screen {
 					resistanceLabel.setText("");
 					resistanceLabel.setText(resistancePrice + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					resistanceCounter ++;
 				}
 
 
@@ -224,6 +251,7 @@ public class ShopScreen implements Screen {
 					damage1Label.setText("");
 					damage1Label.setText(damage1Price + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					damageCounter ++;
 				}
 
 
@@ -241,6 +269,7 @@ public class ShopScreen implements Screen {
 					movement1Label.setText("");
 					movement1Label.setText(movement1Price + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					movementCounter++;
 				}
 
 
@@ -257,6 +286,7 @@ public class ShopScreen implements Screen {
 					health1Label.setText("");
 					health1Label.setText(health1Price + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					healthCounter++;
 				}
 
 
@@ -273,6 +303,7 @@ public class ShopScreen implements Screen {
 					GoldMulti1Label.setText("");
 					GoldMulti1Label.setText(GoldMulti1Price + " Gold");
 					currentGold.setText(" Gold: " + HUD.getCoins());
+					goldMultiplierCounter++;
 				}
 			}
 		});

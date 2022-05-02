@@ -28,6 +28,11 @@ public class Persistence {
 		return this.storage.getInteger(key);
 	}
 
+	public boolean getBool(String key) {
+		return this.storage.getBoolean(key);
+	}
+
+
 	public float getFloat(String key) {
 		return this.storage.getFloat(key);
 	}

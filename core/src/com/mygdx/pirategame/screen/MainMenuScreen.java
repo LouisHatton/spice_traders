@@ -169,6 +169,51 @@ public class MainMenuScreen implements Screen {
 				HUD.changePoints(persistence.getInt("points"));
 				HUD.changeCoins(persistence.getInt("coins"));
 				HUD.changeHealth(persistence.getInt("health"));
+				Player.boatsKilled = persistence.getInt("boatsKilled");
+				Player.collegesKilled = persistence.getInt("collegesKilled");
+				Player.collegesCaptured = persistence.getInt("collegesCaptured");
+				Player.ultimateFirerEnabled = persistence.getBool("ultimateFirerEnabled");
+				Player.isBloodied = persistence.getBool("isBloodied");
+				Player.shieldEnabled = persistence.getBool("shieldEnabled");
+				Player.rayEnabled = persistence.getBool("rayEnabled");
+				Player.burstFire = persistence.getBool("burstFire");
+				Player.disablingRayCooldown = persistence.getFloat("disablingRayCooldown");
+				Player.protectedTimer = persistence.getFloat("protectedTimer");
+				Player.ultimateAmount = persistence.getFloat("ultimateAmount");
+				Player.shieldCoolDown = persistence.getFloat("shieldCoolDown");
+				Player.burstCooldown = persistence.getFloat("burstCooldown");
+				ShopScreen.damage1Price = persistence.getFloat("damage1Price");
+				ShopScreen.health1Price = persistence.getFloat("health1Price");
+				ShopScreen.dps1Price = persistence.getFloat("dps1Price");
+				ShopScreen.range1Price = persistence.getFloat("range1Price");
+				ShopScreen.GoldMulti1Price = persistence.getFloat("GoldMulti1Price");
+				ShopScreen.resistancePrice = persistence.getFloat("resistancePrice");
+				ShopScreen.bulletSpeedPrice = persistence.getFloat("bulletSpeedPrice");
+				ShopScreen.bulletSpeedCounter = persistence.getInt("bulletSpeedCounter");
+				ShopScreen.dpsCounter = persistence.getInt("dpsCounter");
+				ShopScreen.rangeCounter = persistence.getInt("rangeCounter");
+				ShopScreen.resistanceCounter = persistence.getInt("resistanceCounter");
+				ShopScreen.damageCounter = persistence.getInt("damageCounter");
+				ShopScreen.movementCounter = persistence.getInt("movementCounter");
+				ShopScreen.healthCounter = persistence.getInt("healthCounter");
+				ShopScreen.goldMultiplierCounter = persistence.getInt("goldMultiplierCounter");
+
+				for(int i = 0; i <= persistence.getInt("bulletSpeedCounter"); i++){
+					Player.upgradeCannonBallSpeed();
+				}
+				for(int i = 0; i <= persistence.getInt("dpsCounter"); i++){
+					Player.upgradeFireRate();
+				}
+				for(int i = 0; i <= persistence.getInt("goldMultiplierCounter"); i++){
+					HUD.changeCoinsMulti(1.1f);
+				}
+
+				Player.upgradeRange(0.1f *  persistence.getInt("rangeCounter"));
+				HUD.upgradResistance(10f * persistence.getInt("resistanceCounter"));
+				ActiveGameScreen.changeDamage(1 *  persistence.getInt("damageCounter"));
+				ActiveGameScreen.changeAcceleration(10f * persistence.getInt("movementCounter"));
+				ActiveGameScreen.changeMaxSpeed(10f * persistence.getInt("movementCounter"));
+				HUD.upgradMaxHealth(10f * persistence.getInt("healthCounter"));
 
 				PirateGame.difficultySet = true;
 				PirateGame.difficultyMultiplier = persistence.getFloat("difficulty");
@@ -191,15 +236,10 @@ public class MainMenuScreen implements Screen {
 					}
 				}
 
-				float x = persistence.getFloat("player_x");
-				float y = persistence.getFloat("player_x");
 
 				Player player = ActiveGameScreen.player;
-				Body body = player.getBody();
-				activeGameScreen.world.destroyBody(body);
+				player.getBody().setTransform(persistence.getFloat("playerX"), persistence.getFloat("playerY"), persistence.getFloat("playerAngle"));
 
-				player.setSpawnLocation(new Location(x, y));
-				player.defineEntity();
 			}
 		});
 	}

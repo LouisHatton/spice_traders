@@ -83,6 +83,9 @@ public class SkillsScreen implements Screen {
 	 */
 	@Override
 	public void show() {
+
+
+
 		table.reset();
 		table.clearChildren();
 		table.clear();
@@ -257,6 +260,19 @@ public class SkillsScreen implements Screen {
 		Other.add(backButton);
 		Other.add(Strategy1);
 		Other.bottom().left();
+
+		if(ActiveGameScreen.player.getCollegesKilled() > 0){
+			states.set(0, 1);
+			bloodied.setDisabled(false);
+		}
+		if(ActiveGameScreen.player.getCollegesCaptured() > 0){
+			states.set(1, 1);
+			disablingRay.setDisabled(false);
+		}
+		if(ActiveGameScreen.player.getBoatsKilled() >= 5){
+			states.set(2, 1);
+			shield.setDisabled(false);
+		}
 	}
 
 	/**

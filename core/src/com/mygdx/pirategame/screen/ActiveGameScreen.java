@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -80,6 +82,7 @@ public class ActiveGameScreen implements Screen {
 	private float stateTime;
 	private Table pauseTable;
 	private Table table;
+	private Table saveTable;
 	private TextButton pauseButton;
 	private TextButton skillButton;
 	private TextButton shopButton;
@@ -88,7 +91,8 @@ public class ActiveGameScreen implements Screen {
 	private TextButton optionsButton;
 	private TextButton exitButton;
 	private TextButton saveButton;
-
+	Label savedGame;
+	float saveTimer = 0f;
 	private Box2DDebugRenderer debugger;
 	private ShaderProgram shader;
 	SpriteBatch batch;
@@ -217,6 +221,8 @@ public class ActiveGameScreen implements Screen {
 		ShaderProgram.pedantic = false;
 		shader = new ShaderProgram(Gdx.files.internal("vignette.vsh"), Gdx.files.internal("vignette.fsh"));
 		System.out.println(shader.isCompiled() ? "yay" : shader.getLog());
+		savedGame = new Label("Game Saved!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
+
 
 
 		Gdx.input.setInputProcessor(stage);
@@ -239,8 +245,11 @@ public class ActiveGameScreen implements Screen {
 
 		//Create main table and pause tables
 		table = new Table();
+		saveTable = new Table();
 		table.setFillParent(true);
+		saveTable.setFillParent(true);
 		stage.addActor(table);
+		stage.addActor(saveTable);
 
 		pauseTable = new Table();
 		pauseTable.setFillParent(true);
@@ -276,6 +285,10 @@ public class ActiveGameScreen implements Screen {
 		pauseTable.add(this.exitButton).fillX().uniformX();
 
 		pauseTable.center();
+
+		saveTable.center().top();
+		saveTable.add(savedGame);
+		saveTable.setVisible(false);
 
 
 
@@ -350,6 +363,41 @@ public class ActiveGameScreen implements Screen {
 				persistence.set("points", HUD.getScore());
 				persistence.set("coins", HUD.getCoins());
 				persistence.set("health", HUD.getHealth());
+				persistence.set("boatsKilled", player.getBoatsKilled());
+				persistence.set("collegesKilled", player.getCollegesKilled());
+				persistence.set("collegesCaptured", player.getCollegesCaptured());
+				persistence.set("ultimateFirerEnabled", player.ultimateFirerEnabled);
+				persistence.set("isBloodied", player.isBloodied);
+				persistence.set("shieldEnabled", player.shieldEnabled);
+				persistence.set("rayEnabled", player.rayEnabled);
+				persistence.set("burstFire", player.burstFire);
+				persistence.set("playerX", player.getBody().getPosition().x);
+				persistence.set("playerY", player.getBody().getPosition().y);
+				persistence.set("playerAngle", player.getBody().getAngle());
+				persistence.set("disablingRayCooldown", player.disablingRayCooldown);
+				persistence.set("protectedTimer", player.protectedTimer);
+				persistence.set("ultimateAmount", player.ultimateAmount);
+				persistence.set("shieldCoolDown", player.shieldCoolDown);
+				persistence.set("burstCooldown", player.burstCooldown);
+				persistence.set("damage1Price", ShopScreen.damage1Price);
+				persistence.set("health1Price", ShopScreen.health1Price);
+				persistence.set("dps1Price", ShopScreen.dps1Price);
+				persistence.set("range1Price", ShopScreen.range1Price);
+				persistence.set("GoldMulti1Price", ShopScreen.GoldMulti1Price);
+				persistence.set("resistancePrice", ShopScreen.resistancePrice);
+				persistence.set("bulletSpeedPrice", ShopScreen.bulletSpeedPrice);
+				persistence.set("movement1Price", ShopScreen.movement1Price);
+				persistence.set("bulletSpeedCounter", ShopScreen.bulletSpeedCounter);
+				persistence.set("dpsCounter", ShopScreen.dpsCounter);
+				persistence.set("rangeCounter", ShopScreen.rangeCounter);
+				persistence.set("resistanceCounter", ShopScreen.resistanceCounter);
+				persistence.set("damageCounter", ShopScreen.damageCounter);
+				persistence.set("movementCounter", ShopScreen.movementCounter);
+				persistence.set("healthCounter", ShopScreen.healthCounter);
+				persistence.set("goldMultiplierCounter", ShopScreen.goldMultiplierCounter);
+
+
+
 
 				persistence.set("difficulty", PirateGame.difficultyMultiplier);
 
@@ -369,14 +417,8 @@ public class ActiveGameScreen implements Screen {
 					persistence.set("skill_" + i, state);
 				}
 
-				Vector2 playerPos = getPlayerPos();
-
-				persistence.set("player_x", playerPos.x);
-				persistence.set("player_y", playerPos.y);
-
-				pauseTable.setVisible(false);
-				table.setVisible(true);
-				resume();
+				saveTimer = 3f;
+				saveTable.setVisible(true);
 			}
 		});
 	}
@@ -414,6 +456,7 @@ public class ActiveGameScreen implements Screen {
 		if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
 			if (camera.zoom > 0.0155f) camera.zoom -= 0.02f / 100;
 		}
+
 
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -552,6 +595,13 @@ public class ActiveGameScreen implements Screen {
 	 */
 	@Override
 	public void render(float dt) {
+		if(saveTimer > 0){
+			saveTable.setVisible(true);
+			saveTimer -= dt;
+		}
+		else {
+			saveTable.setVisible(false);
+		}
 		if (gameStatus == GAME_PAUSED) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);
