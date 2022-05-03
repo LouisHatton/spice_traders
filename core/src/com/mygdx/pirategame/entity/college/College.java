@@ -14,6 +14,7 @@ import com.mygdx.pirategame.entity.college.version.CollegeFire;
 import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.utils.SpawnUtils;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +168,7 @@ public class College extends Enemy {
 				surrended = true;
 				setHealth(1);
 				ActiveGameScreen.player.setCollegesCaptured(1);
-				deathCoolDown = 0.5f;
+				deathCoolDown = 0.8f;
 			}
 		}
 		//Update cannon balls
@@ -226,7 +227,14 @@ public class College extends Enemy {
 		takeDamage(getDamage());
 		getBar().changeHealth(getDamage());
 
-		if(currentCollege == "alcuin_flag.png") ActiveGameScreen.carefulTimer = 3f;
+		if(currentCollege == "alcuin_flag.png") {
+			ActiveGameScreen.carefulTimer = 3f;
+			if(getHealth() <= 1){
+				System.out.println("pp");
+				setToDestroy(true);
+				died = true;
+			}
+		}
 	}
 
 	/**

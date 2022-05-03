@@ -787,7 +787,7 @@ public class ActiveGameScreen implements Screen {
 			return col.isDestroyed();
 		});
 
-		if (allDestroyed) {
+		if (allDestroyed || player.getCollegesCaptured() >= 3) {
 			player.resetStats();
 			game.changeScreen(PirateGame.VICTORY);
 			game.killGame();
