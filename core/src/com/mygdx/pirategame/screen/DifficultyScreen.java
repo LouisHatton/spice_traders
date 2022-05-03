@@ -17,7 +17,9 @@ import com.mygdx.pirategame.PirateGame;
 
 import static com.mygdx.pirategame.screen.MainMenuScreen.renderBackground;
 
-
+/**
+ * Select the difficulty of the game.
+ */
 public class DifficultyScreen implements Screen {
 
 

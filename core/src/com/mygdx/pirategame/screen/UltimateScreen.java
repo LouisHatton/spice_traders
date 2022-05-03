@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 
+/**
+ * Ability shown on {@link ActiveGameScreen}
+ */
 public class UltimateScreen implements Screen {
 
 

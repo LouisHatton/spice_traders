@@ -57,6 +57,9 @@ public class WorldCreator {
 		}
 	}
 
+	/**
+	 * @return All known College Walls.
+	 */
 	public Set<CollegeWalls> getWalls() {
 		return spawnedWalls;
 	}

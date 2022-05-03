@@ -198,12 +198,11 @@ public class ActiveGameScreen implements Screen {
 		});
 	}
 
+	/**
+	 * @return All current ships, alive and dead.
+	 */
 	public static List<EnemyShip> getShips() {
 		return ships;
-	}
-
-	public static void chasePlayer(EnemyShip enemy) {
-
 	}
 
 	/**
@@ -430,6 +429,9 @@ public class ActiveGameScreen implements Screen {
 		}
 	}
 
+	/**
+	 * Process a specific input, allowing us to handle velocity / direction.
+	 */
 	private void processInput() {
 		Vector2 baseVector = new Vector2(0, 0);
 
@@ -736,6 +738,12 @@ public class ActiveGameScreen implements Screen {
 		return true;
 	}
 
+	/**
+	 * Generate an array of coins - these haven't been drawn yet!
+	 *
+	 * @param amount Amount of coins you wish to spawn.
+	 * @return List with coins at pre-determined, unique positions.
+	 */
 	public List<Coin> generateCoins(int amount) {
 		List<Coin> generatedCoins = new ArrayList<>();
 
@@ -746,6 +754,12 @@ public class ActiveGameScreen implements Screen {
 		return generatedCoins;
 	}
 
+	/**
+	 * Generate an array of ships - these haven't been drawn yet!
+	 *
+	 * @param amount Amount of ships you wish to spawn.
+	 * @return List with ships at pre-determined, unique positions.
+	 */
 	public List<EnemyShip> generateShips(int amount) {
 		List<EnemyShip> enemyShips = new ArrayList<>();
 
@@ -756,6 +770,12 @@ public class ActiveGameScreen implements Screen {
 		return enemyShips;
 	}
 
+	/**
+	 * Generate a set of locations - these are unique.
+	 *
+	 * @param amount Amount of locations you wish to fetch.
+	 * @return List of unique locations.
+	 */
 	public Set<Location> generateRandomLocations(int amount) {
 		Set<Location> locations = new HashSet<>();
 
@@ -823,30 +843,51 @@ public class ActiveGameScreen implements Screen {
 		return hud;
 	}
 
+	/**
+	 * @return Current Pause Button.
+	 */
 	public TextButton getPauseButton() {
 		return pauseButton;
 	}
 
+	/**
+	 * @return Current Skill Button.
+	 */
 	public TextButton getSkillButton() {
 		return skillButton;
 	}
 
+	/**
+	 * @return Current Shop Button.
+	 */
 	public TextButton getShopButton() {
 		return shopButton;
 	}
 
+	/**
+	 * @return Current Difficulty Button.
+	 */
 	public TextButton getDifficultyButton() {
 		return difficultyButton;
 	}
 
+	/**
+	 * @return Current Start Button.
+	 */
 	public TextButton getStartButton() {
 		return startButton;
 	}
 
+	/**
+	 * @return Current Options Button.
+	 */
 	public TextButton getOptionsButton() {
 		return optionsButton;
 	}
 
+	/**
+	 * @return Current Exit Button.
+	 */
 	public TextButton getExitButton() {
 		return exitButton;
 	}

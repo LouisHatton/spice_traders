@@ -74,6 +74,11 @@ public class SpawnUtils {
 		}
 	}
 
+	/**
+	 * Ensures Spawnutils is a singleton class.
+	 *
+	 * @return Instance of SpawnUtils.
+	 */
 	public static SpawnUtils get() {
 		if (INSTANCE == null) {
 			INSTANCE = new SpawnUtils();

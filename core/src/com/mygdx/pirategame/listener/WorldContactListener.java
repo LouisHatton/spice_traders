@@ -66,6 +66,13 @@ public class WorldContactListener implements ContactListener {
 
 	}
 
+	/**
+	 * Detect and respond to a collision between two entities.
+	 *
+	 * @param fixA First entity to detect.
+	 * @param fixB Second entity to detect.
+	 * @param cDef Defined bit logic to base decision off.
+	 */
 	public void selectAppropriateResponse(Fixture fixA, Fixture fixB, int cDef) {
 		// Fixes contact to an entity
 		switch (cDef) {
@@ -96,6 +103,12 @@ public class WorldContactListener implements ContactListener {
 		}
 	}
 
+	/**
+	 * Handle a collision between a Player and a Coin.
+	 *
+	 * @param fixA First entity involved.
+	 * @param fixB Second entity involved.
+	 */
 	public void handlePlayerAndCoin(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.COIN_BIT) {
 			((Entity) fixA.getUserData()).onContact();
@@ -104,6 +117,12 @@ public class WorldContactListener implements ContactListener {
 		}
 	}
 
+	/**
+	 * Handle a collision between a Wall and a Player.
+	 *
+	 * @param fixA First entity involved.
+	 * @param fixB Second entity involved.
+	 */
 	public void handleWallAndPlayer(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.DEFAULT_BIT) {
 			if (fixA.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixA.getUserData().getClass())) {
@@ -117,6 +136,12 @@ public class WorldContactListener implements ContactListener {
 		}
 	}
 
+	/**
+	 * Handle a collision between an Enemy and a Player.
+	 *
+	 * @param fixA First entity involved.
+	 * @param fixB Second entity involved.
+	 */
 	public void handleEnemyAndPlayer(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.ENEMY_BIT) {
 			((Enemy) fixA.getUserData()).onContact();
@@ -125,6 +150,12 @@ public class WorldContactListener implements ContactListener {
 		}
 	}
 
+	/**
+	 * Handle a collision between a College and a Cannon.
+	 *
+	 * @param fixA First entity involved.
+	 * @param fixB Second entity involved.
+	 */
 	public void handleCollegeAndCannon(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.COLLEGE_BIT) {
 			if (fixA.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(fixA.getUserData().getClass())) {
@@ -139,6 +170,12 @@ public class WorldContactListener implements ContactListener {
 		}
 	}
 
+	/**
+	 * Handle a collision between an Enemy and a Cannon.
+	 *
+	 * @param fixA First entity involved.
+	 * @param fixB Second entity involved.
+	 */
 	public void handleEnemyAndCannon(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.ENEMY_BIT) {
 			((Enemy) fixA.getUserData()).onContact();
@@ -149,6 +186,12 @@ public class WorldContactListener implements ContactListener {
 		}
 	}
 
+	/**
+	 * Handle a collision between a Player and a Cannon.
+	 *
+	 * @param fixA First entity involved.
+	 * @param fixB Second entity involved.
+	 */
 	public void handlePlayerAndCannon(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.PLAYER_BIT) {
 			HUD.changeHealth(-10);
@@ -159,6 +202,12 @@ public class WorldContactListener implements ContactListener {
 		}
 	}
 
+	/**
+	 * Handle a collision between a College and a Player.
+	 *
+	 * @param fixA First entity involved.
+	 * @param fixB Second entity involved.
+	 */
 	public void handleCollegeFireAndPlayer(Fixture fixA, Fixture fixB) {
 		if (fixA.getFilterData().categoryBits == PirateGame.COLLEGEFIRE_BIT) {
 			HUD.changeHealth(-10);

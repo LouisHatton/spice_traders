@@ -44,21 +44,44 @@ public abstract class Entity extends Sprite {
 	 */
 	public abstract void onContact();
 
+	/**
+	 * Update the entity.
+	 */
 	public void update() {
 	}
 
+	/**
+	 * Grab the current world the entity is associated with.
+	 *
+	 * @return World the entity is in.
+	 */
 	public World getWorld() {
 		return world;
 	}
 
+	/**
+	 * Find the game the entity is currently associated with.
+	 *
+	 * @return Current instance.
+	 */
 	public ActiveGameScreen getScreen() {
 		return screen;
 	}
 
+	/**
+	 * Grab the body of the entity that's currently spawned in.
+	 *
+	 * @return Current body.
+	 */
 	public Body getBody() {
 		return b2body;
 	}
 
+	/**
+	 * Set the body of the entity that should be associated with this instance.
+	 *
+	 * @param b2body New body
+	 */
 	public void setBody(Body b2body) {
 		this.b2body = b2body;
 	}
