@@ -41,7 +41,8 @@ public class College extends Enemy {
 	float pointsCoolDown = 0;
 	float ogCoolDown = 1f;
 	boolean died = false;
-	Texture currentCollegeTexture;
+	Texture surrenderedFlag;
+	Texture destroyedflag;
 	private List<EnemyShip> fleet = new ArrayList<>();
 
 	/**
@@ -78,6 +79,8 @@ public class College extends Enemy {
 			}
 			fleet.add(new EnemyShip(screen, ranX, ranY, college.getShipTexture(), college.getName()));
 		}
+		surrenderedFlag = new Texture("surender_flag.png");
+		destroyedflag = new Texture("burnning_flag.png");
 	}
 
 	public static void updateTexture(String path) {
@@ -164,16 +167,16 @@ public class College extends Enemy {
 				ActiveGameScreen.player.setCollegesCaptured(-1);
 				ActiveGameScreen.player.setCollegesKilled(1);
 				died = true;
-				currentCollegeTexture = new Texture("burnning_flag.png");
-				setTexture(currentCollegeTexture);
+
+				setTexture(destroyedflag);
 			}
 			if (!surrended) {
 				surrended = true;
 				setHealth(1);
 				ActiveGameScreen.player.setCollegesCaptured(1);
 				deathCoolDown = 0.8f;
-				currentCollegeTexture = new Texture("surender_flag.png");
-				setTexture(currentCollegeTexture);
+
+				setTexture(surrenderedFlag);
 			}
 		}
 		//Update cannon balls
