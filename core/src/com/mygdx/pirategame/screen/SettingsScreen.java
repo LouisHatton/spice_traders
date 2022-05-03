@@ -23,7 +23,7 @@ import com.mygdx.pirategame.PirateGame;
 public class SettingsScreen implements Screen {
 
 	private final com.mygdx.pirategame.PirateGame PirateGame;
-	private final Screen parent;
+	private Screen parent;
 	private final Stage stage;
 
 	private Slider volumeMusicSlider;
@@ -314,6 +314,10 @@ public class SettingsScreen implements Screen {
 
 	public TextButton getBackButton() {
 		return backButton;
+	}
+
+	public void setParent(Screen parent) {
+		this.parent = parent;
 	}
 }
 

@@ -23,7 +23,7 @@ import static com.mygdx.pirategame.screen.MainMenuScreen.renderBackground;
 public class DifficultyScreen implements Screen {
 
 
-	private final Screen parent;
+	private Screen parent;
 	private final com.mygdx.pirategame.PirateGame pirateGame;
 	private final Stage stage;
 	String textForDiff = " ";
@@ -212,5 +212,9 @@ public class DifficultyScreen implements Screen {
 
 	public String getTextForDiff() {
 		return textForDiff;
+	}
+
+	public void setParent(Screen parent) {
+		this.parent = parent;
 	}
 }

@@ -172,11 +172,13 @@ public class PirateGame extends Game {
 
 			case DIFFICULTY:
 				if (difficultyScreen == null) difficultyScreen = new DifficultyScreen(this, this.getScreen(), new Stage(new ScreenViewport()));
+				difficultyScreen.setParent(this.screen);
 				this.setScreen(difficultyScreen);
 				break;
 
 			case SETTINGS:
 				if (settingsScreen == null) settingsScreen = new SettingsScreen(this, this.screen, new Stage(new ScreenViewport()));
+				settingsScreen.setParent(this.screen);
 				this.setScreen(settingsScreen);
 
 				break;
