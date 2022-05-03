@@ -163,12 +163,16 @@ public class College extends Enemy {
 				ActiveGameScreen.player.setCollegesCaptured(-1);
 				ActiveGameScreen.player.setCollegesKilled(1);
 				died = true;
+				Texture texture = new Texture("burnning_flag.png");
+				setTexture(texture);
 			}
 			if (!surrended) {
 				surrended = true;
 				setHealth(1);
 				ActiveGameScreen.player.setCollegesCaptured(1);
 				deathCoolDown = 0.8f;
+				Texture texture = new Texture("surender_flag.png");
+				setTexture(texture);
 			}
 		}
 		//Update cannon balls
@@ -183,14 +187,13 @@ public class College extends Enemy {
 	 * Draws the batch of cannonballs
 	 */
 	public void draw(Batch batch) {
-		if (!isDestroyed()) {
 			super.draw(batch);
 			//Render health bar
 			getBar().render(batch);
 			//Render balls
 			for (CollegeFire ball : cannonBalls)
 				ball.draw(batch);
-		}
+
 	}
 
 	/**
