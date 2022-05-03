@@ -104,7 +104,7 @@ public class ActiveGameScreen implements Screen {
 	Label wantToSave;
 	Table wantToSaveTable;
 	Label careful;
-	Table carefulMsg;
+	Table carefulMsg = new Table();
 	boolean gameSaved = false;
 	boolean onSaveMenu = false;
 	public static float carefulTimer = 0f;
