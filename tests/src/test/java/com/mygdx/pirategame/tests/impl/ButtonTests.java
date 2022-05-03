@@ -13,7 +13,6 @@ import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
@@ -27,10 +26,7 @@ public class ButtonTests {
 	public static void mockGraphics() {
 		Gdx.gl20 = Mockito.mock(GL20.class);
 		Gdx.gl = Gdx.gl20;
-	}
 
-	@BeforeEach
-	public void init() {
 		MockUtilities.createDefaultScoreAndPoints();
 	}
 

@@ -4,8 +4,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import com.mygdx.pirategame.utils.Location;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 
 import java.util.Set;
@@ -16,8 +16,8 @@ import static org.junit.Assert.assertFalse;
 @RunWith(GdxTestRunner.class)
 public class GenerationTests {
 
-	@BeforeEach
-	public void scoreAndPoints() {
+	@BeforeClass
+	public static void scoreAndPoints() {
 		MockUtilities.createDefaultScoreAndPoints();
 	}
 

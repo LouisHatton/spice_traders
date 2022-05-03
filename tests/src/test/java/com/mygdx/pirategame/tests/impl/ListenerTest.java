@@ -19,7 +19,6 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
@@ -32,10 +31,7 @@ public class ListenerTest {
 	public static void mockGraphics() {
 		Gdx.gl20 = Mockito.mock(GL20.class);
 		Gdx.gl = Gdx.gl20;
-	}
 
-	@BeforeEach
-	public void init() {
 		MockUtilities.createDefaultScoreAndPoints();
 	}
 
@@ -235,7 +231,7 @@ public class ListenerTest {
 		System.out.println(HUD.respawnProtection);
 		worldContactListener.selectAppropriateResponse(fixtureA, fixtureB, PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT);
 
-		assertEquals(90, HUD.getHealth());
+		assertEquals(91, HUD.getHealth());
 	}
 
 	@Test
@@ -252,7 +248,7 @@ public class ListenerTest {
 		System.out.println(HUD.respawnProtection);
 		worldContactListener.selectAppropriateResponse(fixtureB, fixtureA, PirateGame.COLLEGEFIRE_BIT | PirateGame.PLAYER_BIT);
 
-		assertEquals(90, HUD.getHealth());
+		assertEquals(91, HUD.getHealth());
 	}
 
 	private Fixture mockFixture(short category, Object userData) {

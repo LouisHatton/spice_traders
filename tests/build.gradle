@@ -10,14 +10,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation('junit:junit:4.13')
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.2.0'
 
     compile project(":desktop")
     compile project(":core")
-
-    compile "junit:junit:4.+"
-    compile "org.mockito:mockito-all:1.9.+"
 
     compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
     compile "com.badlogicgames.gdx:gdx:$gdxVersion"

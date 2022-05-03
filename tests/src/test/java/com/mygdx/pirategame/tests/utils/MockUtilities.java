@@ -77,6 +77,8 @@ public class MockUtilities {
 	}
 
 	public static PirateGame createGameAndScreen() {
+		createDefaultScoreAndPoints();
+
 		PirateGame pirateGame = createGame();
 		ActiveGameScreen activeGameScreen = createScreen();
 		PirateGame.difficultyMultiplier = 1f;

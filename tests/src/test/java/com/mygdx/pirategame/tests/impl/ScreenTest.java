@@ -30,6 +30,8 @@ public class ScreenTest {
 	public static void mockGraphics() {
 		Gdx.gl20 = Mockito.mock(GL20.class);
 		Gdx.gl = Gdx.gl20;
+
+		MockUtilities.createDefaultScoreAndPoints();
 	}
 
 	@Test
@@ -48,6 +50,8 @@ public class ScreenTest {
 		Whitebox.setInternalState(activeGameScreen, "weatherSoundEffect", Mockito.mock(Music.class));
 
 		activeGameScreen.render(1f);
+
+		assertTrue(true); // i.e. no errors occur as initialised correctly.
  	}
 
 	@Test

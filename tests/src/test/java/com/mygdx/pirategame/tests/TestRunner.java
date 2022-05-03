@@ -26,7 +26,6 @@ public class TestRunner {
 			ButtonTests.class
 	);
 
-	@Test
 	public void runTests() {
 		boolean hasPassed = true;
 		int testsRan = 0;

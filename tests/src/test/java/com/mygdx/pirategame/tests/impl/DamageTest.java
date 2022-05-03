@@ -16,7 +16,6 @@ import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.internal.util.reflection.Whitebox;
@@ -36,10 +35,7 @@ public class DamageTest {
 	public static void mockGraphics() {
 		Gdx.gl20 = Mockito.mock(GL20.class);
 		Gdx.gl = Gdx.gl20;
-	}
 
-	@BeforeEach
-	public void scoreAndPoints() {
 		MockUtilities.createDefaultScoreAndPoints();
 	}
 
@@ -85,12 +81,12 @@ public class DamageTest {
 		Mockito.doCallRealMethod().when(pirateGame).getCurrentScreen();
 		Mockito.doCallRealMethod().when(activeGameScreen).gameOverCheck();
 
-		HUD.changeHealth(-110);
+		HUD.changeHealth(-130);
 		activeGameScreen.gameOverCheck();
 
-		assertEquals("You are not dead!", PirateGame.DEATH, pirateGame.getCurrentScreen());
-
 		HUD.respawnProtection = 0f;
+
+		assertEquals("You are not dead!", PirateGame.DEATH, pirateGame.getCurrentScreen());
 	}
 
 	@Test

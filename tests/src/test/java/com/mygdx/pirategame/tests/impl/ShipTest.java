@@ -7,7 +7,6 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
@@ -15,11 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class ShipTest {
-
-	@BeforeEach
-	public void init() {
-		MockUtilities.createDefaultScoreAndPoints();
-	}
 
 	@Test
 	public void testInitialHealth() {
@@ -109,9 +103,8 @@ public class ShipTest {
 		assertEquals("Health is not 99.", 99, HUD.getHealth());
 
 		activeGameScreen.hud.update(1);
+		PirateGame.difficultyMultiplier = 1f; // Normal for other tests.
 
 		assertEquals("Health has not regenned.", 100, HUD.getHealth());
-
-		PirateGame.difficultyMultiplier = 1f; // Normal for other tests.
 	}
 }

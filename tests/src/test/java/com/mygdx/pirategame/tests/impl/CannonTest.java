@@ -9,8 +9,8 @@ import com.mygdx.pirategame.entity.ship.EnemyShip;
 import com.mygdx.pirategame.screen.ActiveGameScreen;
 import com.mygdx.pirategame.tests.lib.GdxTestRunner;
 import com.mygdx.pirategame.tests.utils.MockUtilities;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
@@ -20,8 +20,8 @@ import static org.junit.Assert.assertTrue;
 @RunWith(GdxTestRunner.class)
 public class CannonTest {
 
-	@BeforeEach
-	public void init() {
+	@BeforeClass
+	public static void init() {
 		MockUtilities.createDefaultScoreAndPoints();
 	}
 
