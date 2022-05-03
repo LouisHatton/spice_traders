@@ -487,6 +487,7 @@ public class ActiveGameScreen implements Screen {
 				table.setVisible(false);
 				pauseTable.setVisible(true);
 				pause();
+
 			}
 		}
 	}
@@ -638,8 +639,10 @@ public class ActiveGameScreen implements Screen {
 
 		if (gameStatus == GAME_RUNNING) {
 			update(dt);
+			gameSaved = false;
 			table.setVisible(true);
 			pauseTable.setVisible(false);
+			onSaveMenu = false;
 		}
 
 		if(player.getCollegesKilled() >= 2){
