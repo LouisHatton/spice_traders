@@ -1022,6 +1022,12 @@ public class ActiveGameScreen implements Screen {
 			persistence.set("isDestroyed_" + i, ships.get(i).isDestroyed());
 		}
 
+		persistence.set("Health_Alcuin" , colleges.get("Alcuin").getHealth());
+		persistence.set("Health_Anne_Lister" , colleges.get("Anne Lister").getHealth());
+		persistence.set("Health_Constantine" , colleges.get("Constantine").getHealth());
+		persistence.set("Health_Goodricke" , colleges.get("Goodricke").getHealth());
+
+
 
 		gameSaved = true;
 	}

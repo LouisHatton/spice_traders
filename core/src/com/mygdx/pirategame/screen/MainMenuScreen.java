@@ -1,3 +1,5 @@
+//Main menu problems.
+//player college
 package com.mygdx.pirategame.screen;
 
 import com.badlogic.gdx.Gdx;
@@ -247,6 +249,13 @@ public class MainMenuScreen implements Screen {
 					ships.get(i).getBody().setTransform(persistence.getFloat("Position_X_" + i), persistence.getFloat("Position_Y_" + i), persistence.getFloat("Position_Angle_" + i));
 					ships.get(i).setDestroyed(persistence.getBool("isDestroyed_" + i));
 				}
+
+				Map<String, College> colleges = ActiveGameScreen.colleges;
+
+				colleges.get("Alcuin").setHealth(persistence.getInt("Health_Alcuin"));
+				colleges.get("Anne Lister").setHealth(persistence.getInt("Health_Anne_Lister"));
+				colleges.get("Constantine").setHealth(persistence.getInt("Health_Constantine"));
+				colleges.get("Goodricke").setHealth(persistence.getInt("Health_Goodricke"));
 
 			}
 		});
