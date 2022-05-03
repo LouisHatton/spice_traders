@@ -154,6 +154,9 @@ public class Player extends Entity {
 	}
 
 	public static void resetStats() {
+		if(ActiveGameScreen.weatherSoundEffect.isPlaying()){
+			ActiveGameScreen.weatherSoundEffect.pause();
+		}
 		normalNumberOfShips = 4;
 		numberOfShipsFollowing = 0;
 		maxNumberOfShipsFollowing = 4;

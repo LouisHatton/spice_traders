@@ -406,7 +406,6 @@ public class ActiveGameScreen implements Screen {
 					wantToSaveTable.setVisible(true);
 					pauseTable.setVisible(false);
 					table.setVisible(false);
-					System.out.println("pp");
 				}
 				else{
 					player.resetStats();
@@ -427,6 +426,10 @@ public class ActiveGameScreen implements Screen {
 				saveTable.setVisible(true);
 			}
 		});
+
+		game.batch.setShader(batch.getShader());
+		badWeather = false;
+
 	}
 
 	/**
