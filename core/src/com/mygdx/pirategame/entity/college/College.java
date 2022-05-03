@@ -41,6 +41,7 @@ public class College extends Enemy {
 	float pointsCoolDown = 0;
 	float ogCoolDown = 1f;
 	boolean died = false;
+	Texture currentCollegeTexture;
 	private List<EnemyShip> fleet = new ArrayList<>();
 
 	/**
@@ -163,16 +164,16 @@ public class College extends Enemy {
 				ActiveGameScreen.player.setCollegesCaptured(-1);
 				ActiveGameScreen.player.setCollegesKilled(1);
 				died = true;
-				Texture texture = new Texture("burnning_flag.png");
-				setTexture(texture);
+				currentCollegeTexture = new Texture("burnning_flag.png");
+				setTexture(currentCollegeTexture);
 			}
 			if (!surrended) {
 				surrended = true;
 				setHealth(1);
 				ActiveGameScreen.player.setCollegesCaptured(1);
 				deathCoolDown = 0.8f;
-				Texture texture = new Texture("surender_flag.png");
-				setTexture(texture);
+				currentCollegeTexture = new Texture("surender_flag.png");
+				setTexture(currentCollegeTexture);
 			}
 		}
 		//Update cannon balls
