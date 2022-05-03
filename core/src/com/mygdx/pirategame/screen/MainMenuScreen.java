@@ -239,6 +239,14 @@ public class MainMenuScreen implements Screen {
 
 				Player player = ActiveGameScreen.player;
 				player.getBody().setTransform(persistence.getFloat("playerX"), persistence.getFloat("playerY"), persistence.getFloat("playerAngle"));
+				List<EnemyShip> ships = ActiveGameScreen.ships;
+
+				for(int i = 0; i < ships.size(); i++){
+					ships.get(i).setHealth(persistence.getInt("Health_" + i));
+					ships.get(i).college = persistence.getString("College_" + i);
+					ships.get(i).getBody().setTransform(persistence.getFloat("Position_X_" + i), persistence.getFloat("Position_Y_" + i), persistence.getFloat("Position_Angle_" + i));
+					ships.get(i).setDestroyed(persistence.getBool("isDestroyed_" + i));
+				}
 
 			}
 		});

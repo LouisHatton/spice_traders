@@ -45,6 +45,10 @@ public class Persistence {
 		return this.storage.getBoolean(key);
 	}
 
+	public String getString(String key) {
+		return this.storage.getString(key);
+	}
+
 	/**
 	 * @param key Key you wish to retrieve.
 	 * @return Value attributed to that key.

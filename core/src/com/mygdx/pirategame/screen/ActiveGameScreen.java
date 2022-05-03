@@ -67,7 +67,7 @@ public class ActiveGameScreen implements Screen {
 	public static Rectangle BoundsG = new Rectangle();
 	private static float accel = 0.05f;
 	protected static Map<String, College> colleges = new HashMap<>();
-	protected static List<EnemyShip> ships = new ArrayList<>();
+	public static List<EnemyShip> ships = new ArrayList<>();
 	protected static int gameStatus;
 	private final Stage stage;
 	private final OrthographicCamera camera;
@@ -269,6 +269,9 @@ public class ActiveGameScreen implements Screen {
 		wantToSaveTable.setVisible(false);
 		stage.addActor(wantToSaveTable);
 
+		saveTable.setVisible(false);
+		saveTable.center().top();
+
 		//Set the visability of the tables. Particuarly used when coming back from options or skillTree
 		if (gameStatus == GAME_PAUSED) {
 			table.setVisible(false);
@@ -306,6 +309,8 @@ public class ActiveGameScreen implements Screen {
 		wantToSaveTable.add(no);
 		wantToSaveTable.row();
 		wantToSaveTable.add(cancel);
+
+		saveTable.add(savedGame);
 
 
 		this.pauseButton.addListener(new ChangeListener() {
@@ -418,6 +423,8 @@ public class ActiveGameScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				// Make sure to load data in the MainMenuScreen too!
 				save();
+				saveTimer = 3f;
+				saveTable.setVisible(true);
 			}
 		});
 	}
@@ -1003,8 +1010,16 @@ public class ActiveGameScreen implements Screen {
 			persistence.set("skill_" + i, state);
 		}
 
-		saveTimer = 3f;
-		saveTable.setVisible(true);
+		for(int i = 0; i < ships.size(); i++){
+			persistence.set("Health_" + i, ships.get(i).getHealth());
+			persistence.set("College_" + i, ships.get(i).college);
+			persistence.set("Position_X_" + i, ships.get(i).getBody().getPosition().x);
+			persistence.set("Position_Y_" + i, ships.get(i).getBody().getPosition().y);
+			persistence.set("Position_Angle_" + i, ships.get(i).getBody().getAngle());
+			persistence.set("isDestroyed_" + i, ships.get(i).isDestroyed());
+		}
+
+
 		gameSaved = true;
 	}
 }
