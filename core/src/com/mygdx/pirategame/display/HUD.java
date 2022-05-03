@@ -320,6 +320,10 @@ public class HUD implements Disposable {
 	 * @return health : returns health value
 	 */
 	public static int getHealth() {
+		if (health > maxHealth) {
+			return (int) maxHealth;
+		}
+
 		return health;
 	}
 

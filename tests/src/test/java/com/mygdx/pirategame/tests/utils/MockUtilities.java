@@ -86,10 +86,14 @@ public class MockUtilities {
 		Whitebox.setInternalState(pirateGame, "gameScreen", activeGameScreen);
 		Mockito.when(pirateGame.getScreen()).thenReturn(activeGameScreen);
 
-		Whitebox.setInternalState(activeGameScreen, "game", pirateGame);
 		Whitebox.setInternalState(pirateGame, "batch", Mockito.mock(SpriteBatch.class));
+		Whitebox.setInternalState(activeGameScreen, "game", pirateGame);
+
+		ActiveGameScreen.game = pirateGame;
 
 		Whitebox.setInternalState(activeGameScreen, "hud", createDefaultScoreAndPoints());
+		Whitebox.setInternalState(activeGameScreen, "batch", Mockito.mock(SpriteBatch.class));
+
 		//Mockito.when(activeGameScreen.getHud()).thenReturn(new HUD(pirateGame.batch));
 
 		Mockito.when(activeGameScreen.checkGenPos(Mockito.anyInt(), Mockito.anyInt())).thenCallRealMethod();

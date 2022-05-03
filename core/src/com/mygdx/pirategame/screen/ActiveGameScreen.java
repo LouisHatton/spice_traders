@@ -429,7 +429,6 @@ public class ActiveGameScreen implements Screen {
 
 		game.batch.setShader(batch.getShader());
 		badWeather = false;
-
 	}
 
 	/**
