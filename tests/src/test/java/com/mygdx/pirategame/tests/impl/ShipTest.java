@@ -74,6 +74,7 @@ public class ShipTest {
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) pirateGame.getScreen();
 
 		PirateGame.difficultyMultiplier = 1;
+		HUD.maxHealth = 100;
 		activeGameScreen.update(1);
 		activeGameScreen.hud.update(1);
 
@@ -92,6 +93,8 @@ public class ShipTest {
 	public void testHUDHealthMultiplier() {
 		ActiveGameScreen activeGameScreen = (ActiveGameScreen) MockUtilities.createGameAndScreen().getScreen();
 
+		HUD.maxHealth = 100;
+		PirateGame.difficultyMultiplier = 1;
 		activeGameScreen.update(1);
 		activeGameScreen.hud.update(1);
 

@@ -1,6 +1,7 @@
 package com.mygdx.pirategame.tests.utils;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -93,6 +94,7 @@ public class MockUtilities {
 
 		Whitebox.setInternalState(activeGameScreen, "hud", createDefaultScoreAndPoints());
 		Whitebox.setInternalState(activeGameScreen, "batch", Mockito.mock(SpriteBatch.class));
+		Whitebox.setInternalState(activeGameScreen, "weatherSoundEffect", Mockito.mock(Music.class));
 
 		//Mockito.when(activeGameScreen.getHud()).thenReturn(new HUD(pirateGame.batch));
 
