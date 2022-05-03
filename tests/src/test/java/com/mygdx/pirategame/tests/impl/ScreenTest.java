@@ -41,6 +41,7 @@ public class ScreenTest {
 
 		Whitebox.setInternalState(activeGameScreen, "table", new Table());
 		Whitebox.setInternalState(activeGameScreen, "pauseTable", new Table());
+		Whitebox.setInternalState(activeGameScreen, "saveTable", new Table());
 		Whitebox.setInternalState(activeGameScreen, "stage", MockUtilities.mockStage());
 		Whitebox.setInternalState(activeGameScreen, "renderer", Mockito.mock(OrthogonalTiledMapRenderer.class));
 		Whitebox.setInternalState(activeGameScreen, "debugger", Mockito.mock(Box2DDebugRenderer.class));
