@@ -35,4 +35,4 @@ jobs:
         path: | 
           desktop/build/libs/desktop-1.0.jar
           tests/build/reports/tests/test/
-        retention-days: 2
+        retention-days: 30
