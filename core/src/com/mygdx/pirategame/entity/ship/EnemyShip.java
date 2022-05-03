@@ -73,8 +73,8 @@ public class EnemyShip extends Enemy {
 
 		this.detectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 11, 11);
 		this.enemyDetectBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 1f, 1f);
-		this.stoppingDistanceBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 4, 4);
-		this.shootBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 6, 6);
+		this.stoppingDistanceBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 5.5f, 5.5f);
+		this.shootBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 7, 7);
 		this.leaveBox = new com.badlogic.gdx.math.Rectangle(body.getPosition().x, body.getPosition().y, 17, 17);
 		setBody(body);
 		super.initHealthBar();
