@@ -225,6 +225,8 @@ public class College extends Enemy {
 		Gdx.app.log("enemy", "collision");
 		takeDamage(getDamage());
 		getBar().changeHealth(getDamage());
+
+		if(currentCollege == "alcuin_flag.png") ActiveGameScreen.carefulTimer = 3f;
 	}
 
 	/**

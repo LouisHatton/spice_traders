@@ -103,8 +103,11 @@ public class ActiveGameScreen implements Screen {
 	public static Music weatherSoundEffect;
 	Label wantToSave;
 	Table wantToSaveTable;
+	Label careful;
+	Table carefulMsg;
 	boolean gameSaved = false;
 	boolean onSaveMenu = false;
+	public static float carefulTimer = 0f;
 
 	/**
 	 * Initialises the Game Screen,
@@ -229,6 +232,7 @@ public class ActiveGameScreen implements Screen {
 		System.out.println(shader.isCompiled() ? "yay" : shader.getLog());
 		savedGame = new Label("Game Saved!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
 		wantToSave = new Label("Save Game?", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
+		careful = new Label("Careful! Dont shoot your own college! Killing your own college will result in defeat!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
 
 
 
@@ -267,10 +271,15 @@ public class ActiveGameScreen implements Screen {
 		wantToSaveTable = new Table();
 		wantToSaveTable.setFillParent(true);
 		wantToSaveTable.setVisible(false);
+		carefulMsg = new Table();
+		carefulMsg.setFillParent(true);
+		carefulMsg.setVisible(false);
 		stage.addActor(wantToSaveTable);
+		stage.addActor(carefulMsg);
 
 		saveTable.setVisible(false);
 		saveTable.center().top();
+		carefulMsg.center().top();
 
 		//Set the visability of the tables. Particuarly used when coming back from options or skillTree
 		if (gameStatus == GAME_PAUSED) {
@@ -311,6 +320,7 @@ public class ActiveGameScreen implements Screen {
 		wantToSaveTable.add(cancel);
 
 		saveTable.add(savedGame);
+		carefulMsg.add(careful).padTop(25f);
 
 
 		this.pauseButton.addListener(new ChangeListener() {
@@ -612,6 +622,14 @@ public class ActiveGameScreen implements Screen {
 		}
 		else {
 			saveTable.setVisible(false);
+		}
+
+		if(carefulTimer > 0){
+			carefulMsg.setVisible(true);
+			carefulTimer -= dt;
+		}
+		else {
+			carefulMsg.setVisible(false);
 		}
 		if (gameStatus == GAME_PAUSED && !onSaveMenu) {
 			pauseTable.setVisible(true);
