@@ -41,8 +41,8 @@ public class College extends Enemy {
 	float pointsCoolDown = 0;
 	float ogCoolDown = 1f;
 	boolean died = false;
-	Texture surrenderedFlag;
-	Texture destroyedflag;
+	Texture surrenderedFlag = new Texture("surender_flag.png");;
+	Texture destroyedflag = new Texture("burnning_flag.png");;
 	private List<EnemyShip> fleet = new ArrayList<>();
 
 	/**
@@ -79,8 +79,6 @@ public class College extends Enemy {
 			}
 			fleet.add(new EnemyShip(screen, ranX, ranY, college.getShipTexture(), college.getName()));
 		}
-		surrenderedFlag = new Texture("surender_flag.png");
-		destroyedflag = new Texture("burnning_flag.png");
 	}
 
 	public static void updateTexture(String path) {
