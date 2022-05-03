@@ -91,6 +91,9 @@ public class ActiveGameScreen implements Screen {
 	private TextButton optionsButton;
 	private TextButton exitButton;
 	private TextButton saveButton;
+	private TextButton yes;
+	private TextButton no;
+	private TextButton cancel;
 	Label savedGame;
 	float saveTimer = 0f;
 	private Box2DDebugRenderer debugger;
@@ -98,6 +101,10 @@ public class ActiveGameScreen implements Screen {
 	SpriteBatch batch;
 	public static boolean badWeather = false;
 	public static Music weatherSoundEffect;
+	Label wantToSave;
+	Table wantToSaveTable;
+	boolean gameSaved = false;
+	boolean onSaveMenu = false;
 
 	/**
 	 * Initialises the Game Screen,
@@ -221,17 +228,21 @@ public class ActiveGameScreen implements Screen {
 		shader = new ShaderProgram(Gdx.files.internal("vignette.vsh"), Gdx.files.internal("vignette.fsh"));
 		System.out.println(shader.isCompiled() ? "yay" : shader.getLog());
 		savedGame = new Label("Game Saved!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
+		wantToSave = new Label("Save Game?", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
 
 
 
 		Gdx.input.setInputProcessor(stage);
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
+		yes = new TextButton("Yes!", skin);
+		no = new TextButton("No, I do not want to Save!", skin);
 		//GAME BUTTONS
 		this.pauseButton = new TextButton("Pause", skin);
 		this.skillButton = new TextButton("Skill Tree", skin);
 		this.shopButton = new TextButton("Shop", skin);
 		this.difficultyButton = new TextButton("Change Difficulty", skin);
+		this.cancel = new TextButton("Cancel", skin);
 
 		//PAUSE MENU BUTTONS
 		this.startButton = new TextButton("Resume", skin);
@@ -253,7 +264,10 @@ public class ActiveGameScreen implements Screen {
 		pauseTable = new Table();
 		pauseTable.setFillParent(true);
 		stage.addActor(pauseTable);
-
+		wantToSaveTable = new Table();
+		wantToSaveTable.setFillParent(true);
+		wantToSaveTable.setVisible(false);
+		stage.addActor(wantToSaveTable);
 
 		//Set the visability of the tables. Particuarly used when coming back from options or skillTree
 		if (gameStatus == GAME_PAUSED) {
@@ -283,12 +297,15 @@ public class ActiveGameScreen implements Screen {
 		pauseTable.row().pad(20, 0, 10, 0);
 		pauseTable.add(this.exitButton).fillX().uniformX();
 
-		pauseTable.center();
 
-		saveTable.center().top();
-		saveTable.add(savedGame);
-		saveTable.setVisible(false);
-
+		wantToSaveTable.center();
+		wantToSaveTable.add(wantToSave).padBottom(80);
+		wantToSaveTable.row();
+		wantToSaveTable.add(yes);
+		wantToSaveTable.row();
+		wantToSaveTable.add(no);
+		wantToSaveTable.row();
+		wantToSaveTable.add(cancel);
 
 
 		this.pauseButton.addListener(new ChangeListener() {
@@ -306,6 +323,27 @@ public class ActiveGameScreen implements Screen {
 			public void changed(ChangeEvent event, Actor actor) {
 				pauseTable.setVisible(false);
 				game.changeScreen(PirateGame.SKILL);
+			}
+		});
+
+		this.yes.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				save();
+				player.resetStats();
+				pauseTable.setVisible(false);
+				game.changeScreen(PirateGame.MENU);
+				game.killGame();
+			}
+		});
+
+		this.no.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				player.resetStats();
+				pauseTable.setVisible(false);
+				game.changeScreen(PirateGame.MENU);
+				game.killGame();
 			}
 		});
 
@@ -337,18 +375,41 @@ public class ActiveGameScreen implements Screen {
 		this.optionsButton.addListener(new ChangeListener() {
 										   @Override
 										   public void changed(ChangeEvent event, Actor actor) {
-											   pauseTable.setVisible(false);
-											   game.changeScreen(PirateGame.SETTINGS);
-										   }
-									   }
+			   pauseTable.setVisible(false);
+			   game.changeScreen(PirateGame.SETTINGS);
+		   }
+	   }
 		);
+
+		this.cancel.addListener(new ChangeListener() {
+			   @Override
+			   public void changed(ChangeEvent event, Actor actor) {
+				   wantToSaveTable.setVisible(false);
+				   pauseTable.setVisible(true);
+				   table.setVisible(false);
+			   }
+		   }
+		);
+
+
 
 		this.exitButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				Gdx.app.exit();
-				//pauseTable.setVisible(false);
-				//game.changeScreen(PirateGame.MENU);
+				if(!gameSaved){
+					onSaveMenu = true;
+					wantToSaveTable.setVisible(true);
+					pauseTable.setVisible(false);
+					table.setVisible(false);
+					System.out.println("pp");
+				}
+				else{
+					player.resetStats();
+					pauseTable.setVisible(false);
+					game.changeScreen(PirateGame.MENU);
+					game.killGame();
+				}
+
 			}
 		});
 
@@ -356,68 +417,7 @@ public class ActiveGameScreen implements Screen {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				// Make sure to load data in the MainMenuScreen too!
-				Persistence persistence = Persistence.get();
-				persistence.reset();
-
-				persistence.set("points", HUD.getScore());
-				persistence.set("coins", HUD.getCoins());
-				persistence.set("health", HUD.getHealth());
-				persistence.set("boatsKilled", player.getBoatsKilled());
-				persistence.set("collegesKilled", player.getCollegesKilled());
-				persistence.set("collegesCaptured", player.getCollegesCaptured());
-				persistence.set("ultimateFirerEnabled", player.ultimateFirerEnabled);
-				persistence.set("isBloodied", player.isBloodied);
-				persistence.set("shieldEnabled", player.shieldEnabled);
-				persistence.set("rayEnabled", player.rayEnabled);
-				persistence.set("burstFire", player.burstFire);
-				persistence.set("playerX", player.getBody().getPosition().x);
-				persistence.set("playerY", player.getBody().getPosition().y);
-				persistence.set("playerAngle", player.getBody().getAngle());
-				persistence.set("disablingRayCooldown", player.disablingRayCooldown);
-				persistence.set("protectedTimer", player.protectedTimer);
-				persistence.set("ultimateAmount", player.ultimateAmount);
-				persistence.set("shieldCoolDown", player.shieldCoolDown);
-				persistence.set("burstCooldown", player.burstCooldown);
-				persistence.set("damage1Price", ShopScreen.damage1Price);
-				persistence.set("health1Price", ShopScreen.health1Price);
-				persistence.set("dps1Price", ShopScreen.dps1Price);
-				persistence.set("range1Price", ShopScreen.range1Price);
-				persistence.set("GoldMulti1Price", ShopScreen.GoldMulti1Price);
-				persistence.set("resistancePrice", ShopScreen.resistancePrice);
-				persistence.set("bulletSpeedPrice", ShopScreen.bulletSpeedPrice);
-				persistence.set("movement1Price", ShopScreen.movement1Price);
-				persistence.set("bulletSpeedCounter", ShopScreen.bulletSpeedCounter);
-				persistence.set("dpsCounter", ShopScreen.dpsCounter);
-				persistence.set("rangeCounter", ShopScreen.rangeCounter);
-				persistence.set("resistanceCounter", ShopScreen.resistanceCounter);
-				persistence.set("damageCounter", ShopScreen.damageCounter);
-				persistence.set("movementCounter", ShopScreen.movementCounter);
-				persistence.set("healthCounter", ShopScreen.healthCounter);
-				persistence.set("goldMultiplierCounter", ShopScreen.goldMultiplierCounter);
-
-
-
-
-				persistence.set("difficulty", PirateGame.difficultyMultiplier);
-
-				for (College college : colleges.values()) {
-					if (college.isCaptured()) {
-						persistence.set("college_captured_" + college.getType().getName(), true);
-					}
-
-					if (college.isDestroyed()) {
-						persistence.set("college_destroyed_" + college.getType().getName(), true);
-					}
-				}
-
-				for (int i = 0; i < SkillsScreen.states.size(); i++) {
-					int state = SkillsScreen.states.get(i);
-
-					persistence.set("skill_" + i, state);
-				}
-
-				saveTimer = 3f;
-				saveTable.setVisible(true);
+				save();
 			}
 		});
 	}
@@ -604,7 +604,7 @@ public class ActiveGameScreen implements Screen {
 		else {
 			saveTable.setVisible(false);
 		}
-		if (gameStatus == GAME_PAUSED) {
+		if (gameStatus == GAME_PAUSED && !onSaveMenu) {
 			pauseTable.setVisible(true);
 			table.setVisible(false);
 		}
@@ -940,5 +940,71 @@ public class ActiveGameScreen implements Screen {
 	 */
 	public TextButton getExitButton() {
 		return exitButton;
+	}
+
+	public void save(){
+		Persistence persistence = Persistence.get();
+		persistence.reset();
+
+		persistence.set("points", HUD.getScore());
+		persistence.set("coins", HUD.getCoins());
+		persistence.set("health", HUD.getHealth());
+		persistence.set("boatsKilled", player.getBoatsKilled());
+		persistence.set("collegesKilled", player.getCollegesKilled());
+		persistence.set("collegesCaptured", player.getCollegesCaptured());
+		persistence.set("ultimateFirerEnabled", player.ultimateFirerEnabled);
+		persistence.set("isBloodied", player.isBloodied);
+		persistence.set("shieldEnabled", player.shieldEnabled);
+		persistence.set("rayEnabled", player.rayEnabled);
+		persistence.set("burstFire", player.burstFire);
+		persistence.set("playerX", player.getBody().getPosition().x);
+		persistence.set("playerY", player.getBody().getPosition().y);
+		persistence.set("playerAngle", player.getBody().getAngle());
+		persistence.set("disablingRayCooldown", player.disablingRayCooldown);
+		persistence.set("protectedTimer", player.protectedTimer);
+		persistence.set("ultimateAmount", player.ultimateAmount);
+		persistence.set("shieldCoolDown", player.shieldCoolDown);
+		persistence.set("burstCooldown", player.burstCooldown);
+		persistence.set("damage1Price", ShopScreen.damage1Price);
+		persistence.set("health1Price", ShopScreen.health1Price);
+		persistence.set("dps1Price", ShopScreen.dps1Price);
+		persistence.set("range1Price", ShopScreen.range1Price);
+		persistence.set("GoldMulti1Price", ShopScreen.GoldMulti1Price);
+		persistence.set("resistancePrice", ShopScreen.resistancePrice);
+		persistence.set("bulletSpeedPrice", ShopScreen.bulletSpeedPrice);
+		persistence.set("movement1Price", ShopScreen.movement1Price);
+		persistence.set("bulletSpeedCounter", ShopScreen.bulletSpeedCounter);
+		persistence.set("dpsCounter", ShopScreen.dpsCounter);
+		persistence.set("rangeCounter", ShopScreen.rangeCounter);
+		persistence.set("resistanceCounter", ShopScreen.resistanceCounter);
+		persistence.set("damageCounter", ShopScreen.damageCounter);
+		persistence.set("movementCounter", ShopScreen.movementCounter);
+		persistence.set("healthCounter", ShopScreen.healthCounter);
+		persistence.set("goldMultiplierCounter", ShopScreen.goldMultiplierCounter);
+
+
+
+
+		persistence.set("difficulty", PirateGame.difficultyMultiplier);
+
+		for (College college : colleges.values()) {
+			if (college.isCaptured()) {
+				persistence.set("college_captured_" + college.getType().getName(), true);
+			}
+
+			if (college.isDestroyed()) {
+				persistence.set("college_destroyed_" + college.getType().getName(), true);
+			}
+		}
+
+		for (int i = 0; i < SkillsScreen.states.size(); i++) {
+			int state = SkillsScreen.states.get(i);
+
+			persistence.set("skill_" + i, state);
+		}
+
+		saveTimer = 3f;
+		saveTable.setVisible(true);
+		gameSaved = true;
 	}
 }
