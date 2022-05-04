@@ -26,6 +26,7 @@ public class HelpScreen implements Screen {
 	private final Stage stage;
 	private Table titleTable = new Table();
 	Label tiplabel;
+	Label tip2label;
 	Table tip = new Table();
 
 	private TextButton backButton;
@@ -83,20 +84,23 @@ public class HelpScreen implements Screen {
 		Label Controls1 = new Label("W accelerates, S reverse / decelerate , D steer right, A steer left and Space-bar to drop the anchor (Break)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Controls2 = new Label("Left click to fire (fires at the direction of the mouse click)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Controls3 = new Label("ESCAPE to see menu", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
-		Label Controls4 = new Label("The keybindings for the abilities will be shown on the ability icon (or the skill screen) (To get to skill screen load up a game then pause and click skill tree)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Controls4 = new Label("The keybindings for the abilities will be shown on the ability icon (or the skill screen)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Controls5 = new Label(" (To get to skill screen load up a game then pause and click skill tree)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective1 = new Label("The objective is to capture or destroy all other colleges. Take a college down to 1 hp for them to surrender! (Be captured)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective2 = new Label("Destroy the college by shooting a college that has surrendered", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective3 = new Label("Collect coins on the way and spend them in the shop to get upgrades", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective4 = new Label("Do not destroy your own college as that will result in a defeat (Alcuin)(The college you start next to)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label skillInfo1 = new Label("Automatically unlock abilities as you complete objectives", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label skillInfo2 = new Label("To get more information about your abilities and objectives (Progress) look at the skills tab", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
-		Label Strategy1 = new Label("Strategy to kill boats : shooting the direction you are moving will give the player less reach. so try shooting the other way to get better reach on the enemy", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Strategy1 = new Label("Strategy to kill boats : shooting the direction you are moving will give the player less reach.", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Strategy1Con = new Label("so try shooting the other way to get better reach on the enemy", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy2 = new Label("Strategy to destroy colleges : ensure that the colleges fleet has been destroyed and circle the college while shooting it", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy2Con = new Label("that way you can destroy the college without disruptions. Additionally, destroying a college will disable its fleet", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Controls1.setColor(PirateGame.selectedColour);
 		Controls2.setColor(PirateGame.selectedColour);
 		Controls3.setColor(PirateGame.selectedColour);
 		Controls4.setColor(PirateGame.selectedColour);
+		Controls5.setColor(PirateGame.selectedColour);
 		objective1.setColor(PirateGame.selectedColour);
 		objective2.setColor(PirateGame.selectedColour);
 		objective3.setColor(PirateGame.selectedColour);
@@ -106,6 +110,7 @@ public class HelpScreen implements Screen {
 		Strategy1.setColor(PirateGame.selectedColour);
 		Strategy2.setColor(PirateGame.selectedColour);
 		Strategy2Con.setColor(PirateGame.selectedColour);
+		Strategy1Con.setColor(PirateGame.selectedColour);
 		//Return Button
 		this.backButton = new TextButton("Return", skin);
 		backButton.addListener(new ChangeListener() {
@@ -122,9 +127,12 @@ public class HelpScreen implements Screen {
 		table.row().pad(10, 0, 10, 0);
 		table.left().top();
 
-		tiplabel = new Label("Tip: Getting a pacifist victory (not destroying colleges but capturing them) will help the player avoid the bad weather. which activates from destroying two colleges.", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		tiplabel = new Label("Tip: Getting a pacifist victory (not destroying colleges but capturing them) will help the player avoid the bad weather.", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		tip2label = new Label("which activates from destroying two colleges.", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		tiplabel.setColor(PirateGame.selectedColour);
 		tip.add(tiplabel);
+		tip.row();
+		tip.add(tip2label);
 
 		//add return button
 		Other.add(Controls1);
@@ -133,7 +141,9 @@ public class HelpScreen implements Screen {
 		Other.row();
 		Other.add(Controls3);
 		Other.row();
-		Other.add(Controls4).padBottom((40));
+		Other.add(Controls4);
+		Other.row();
+		Other.add(Controls5).padBottom((40));
 		Other.row();
 		Other.add(objective1);
 		Other.row();
@@ -149,7 +159,9 @@ public class HelpScreen implements Screen {
 		Other.add(skillInfo2).padBottom((80));
 		Other.center();
 		Other.row();
-		Other.add(Strategy1).padBottom((20));
+		Other.add(Strategy1);
+		Other.row();
+		Other.add(Strategy1Con).padBottom((20));
 		Other.row();
 		Other.add(Strategy2);
 		Other.row();
