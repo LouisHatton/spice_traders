@@ -18,8 +18,8 @@ import com.mygdx.pirategame.screen.*;
  * This includes most constants used throught for collision and changing screens
  * Provides access for screens to interact with eachother and the options interface
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class PirateGame extends Game {
 	public static Color selectedColour = Color.WHITE;

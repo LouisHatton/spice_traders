@@ -13,8 +13,8 @@ import com.mygdx.pirategame.entity.Enemy;
  * Displays the health of enemy ships
  * Creates and displays a health bar for entities with health
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class HealthBar {
 

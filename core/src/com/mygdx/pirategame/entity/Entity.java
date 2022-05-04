@@ -10,8 +10,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * Defines an entity
  * Instantiates an entity
  *
- * @author Ethan Alabaster
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public abstract class Entity extends Sprite {
 

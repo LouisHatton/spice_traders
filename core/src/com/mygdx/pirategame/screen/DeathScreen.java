@@ -19,8 +19,8 @@ import com.mygdx.pirategame.PirateGame;
  * Death Screen
  * Produces a death screen on player death
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class DeathScreen implements Screen {
 

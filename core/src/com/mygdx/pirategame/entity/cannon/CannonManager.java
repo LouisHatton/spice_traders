@@ -3,8 +3,13 @@ package com.mygdx.pirategame.entity.cannon;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 
+
+
 /**
  * Handle all spawned in cannonballs.
+ *
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class CannonManager {
 

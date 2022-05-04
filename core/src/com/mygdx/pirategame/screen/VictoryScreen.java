@@ -18,8 +18,8 @@ import com.mygdx.pirategame.PirateGame;
 /**
  * The type for the victory screen
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class VictoryScreen implements Screen {
 

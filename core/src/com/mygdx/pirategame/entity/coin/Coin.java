@@ -17,8 +17,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * Creates an object for each coin
  * Extends the entity class to define coin as an entity
  *
- * @author Joe Dickinson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class Coin extends Entity {
 

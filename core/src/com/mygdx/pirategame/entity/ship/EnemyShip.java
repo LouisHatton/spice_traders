@@ -23,8 +23,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * Generates enemy ship data
  * Instantiates an enemy ship
  *
- * @author Ethan Alabaster, Sam Pearson, Edward Poulter
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class EnemyShip extends Enemy {
 
@@ -145,6 +145,7 @@ public class EnemyShip extends Enemy {
 		//If ship is set to destroy and isnt, destroy it
 		 if (!isDestroyed() && !isSetToDestroy()) {
 			//Update position and angle of ship
+			 //code below is the AI it checks if the player is within a certain range and applies the range type to the player (if in shooting range -> shoot)
 			setPosition(body.getPosition().x - getWidth() / 2f, body.getPosition().y - getHeight() / 2f);
 			float angle = (float) Math.atan2(body.getLinearVelocity().y, body.getLinearVelocity().x);
 			if ((this.detectBox.overlaps(ActiveGameScreen.player.hitBox) || isFollowing) && college != "Alcuin" && !ActiveGameScreen.player.stopFollowing) {

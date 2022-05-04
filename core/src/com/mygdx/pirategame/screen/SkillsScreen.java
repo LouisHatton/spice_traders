@@ -24,8 +24,8 @@ import java.util.List;
  * It is a visual representation for the skills that the game automatically unlocks for the player.
  * Automatically unlocked when a points threshold is reached
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class SkillsScreen implements Screen {
 
@@ -329,6 +329,10 @@ public class SkillsScreen implements Screen {
 	public void hide() {
 	}
 
+	/**
+	 *
+	 * resets all the stats
+	 */
 	public static void resetStats(){
 		states = Arrays.asList(1, 1, 1, 1, 1);
 

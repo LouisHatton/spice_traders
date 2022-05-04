@@ -18,7 +18,12 @@ import com.mygdx.pirategame.PirateGame;
 import static com.mygdx.pirategame.screen.MainMenuScreen.renderBackground;
 
 /**
- * Select the difficulty of the game.
+ * Difficulty Screen
+ * To select or change the difficulty
+ *
+ *
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class DifficultyScreen implements Screen {
 
@@ -37,6 +42,12 @@ public class DifficultyScreen implements Screen {
 
 	private Table info = new Table();
 
+	/**
+	 * Instantiates a new Difficulty Screen
+	 *
+	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
+	 * @param parent     the screen that called the options screen. Allows for easy return
+	 */
 	public DifficultyScreen(PirateGame pirateGame, Screen parent, Stage stage) {
 		this.pirateGame = pirateGame;
 		this.parent = parent;

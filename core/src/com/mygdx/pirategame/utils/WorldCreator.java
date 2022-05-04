@@ -13,8 +13,8 @@ import java.util.Set;
 /**
  * This is the class where all boundaries and collisions are created for the map.
  *
- * @author Ethan Alabaster
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class WorldCreator {
 

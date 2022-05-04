@@ -9,8 +9,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * Class to generate enemies
  * Instantiates enemies
  *
- * @author Ethan Alabaster
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public abstract class Enemy extends Entity {
 

@@ -25,8 +25,8 @@ import com.mygdx.pirategame.utils.Location;
 /**
  * Creates the class of the player. Everything that involves actions coming from the player boat
  *
- * @author Ethan Alabaster, Edward Poulter
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class Player extends Entity {
 	public static boolean healBubble = false;
@@ -140,19 +140,39 @@ public class Player extends Entity {
 		shield.setSize(2f, 2f);
 	}
 
+	/**
+	 * upgrades the cannonball speed
+	 *
+	 *
+	 */
 	public static void upgradeCannonBallSpeed() {
 		cannonBallSpeedLvl++;
 	}
 
+	/**
+	 * upgrades the fireRate
+	 *
+	 *
+	 */
 	public static void upgradeFireRate() {
 		fireRateLvl++;
 		fireRateChanged = true;
 	}
 
+	/**
+	 * increases range
+	 *
+	 * @param multiplier increases range by amount
+	 */
 	public static void upgradeRange(float multiplier) {
 		rangeMultiplier += multiplier;
 	}
 
+	/**
+	 * called at end of a game to reset everything
+	 *
+	 *
+	 */
 	public static void resetStats() {
 		if(ActiveGameScreen.weatherSoundEffect.isPlaying()){
 			ActiveGameScreen.weatherSoundEffect.pause();
@@ -177,12 +197,13 @@ public class Player extends Entity {
 
 	/**
 	 * Update the position of the player. Also updates any cannon balls the player generates
+	 * updates all the player abilities
 	 *
 	 * @param dt Delta Time
 	 */
 	public void update(float dt) {
 		if(burstFire){
-		if(burstShooting){
+		if(burstShooting){ //burst fire checking
 			if(burstShotCooldown <= 0){
 				if(sideShots > 0){
 					cannonBalls.add(new CannonFire(getScreen(), getBody().getPosition().x, getBody().getPosition().y, getBody(), 0, getBody().getAngle(), cannonBallSpeedLvl, rangeMultiplier, (short) (PirateGame.ENEMY_BIT | PirateGame.PLAYER_BIT | PirateGame.COLLEGE_BIT), PirateGame.CANNON_BIT));
@@ -206,7 +227,7 @@ public class Player extends Entity {
 			}
 		}
 
-		if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && burstCooldown <= 0){
+		if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT) && burstCooldown <= 0){ //burst fire activation
 			burstShooting = true;
 			sideShots = amountToTheSide;
 			burstCooldown = ogburstTimer;
@@ -217,7 +238,7 @@ public class Player extends Entity {
 		}
 	}
 		emp.setCenter(getBody().getPosition().x, getBody().getPosition().y);
-		if (empExplosion) {
+		if (empExplosion) { // emp animation
 			if (!empSet) {
 				empExplosionCooldown = empExplosionCooldownOG;
 				emp.setSize(0.5f, 0.5f);
@@ -232,14 +253,14 @@ public class Player extends Entity {
 		}
 
 
-		if (rayEnabled) {
+		if (rayEnabled) { //emp checking
 			if (stopFollowing) {
 				rayActiveFor -= dt;
 				if (rayActiveFor <= 0) {
 					stopFollowing = false;
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.F) && disablingRayCooldown <= 0) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.F) && disablingRayCooldown <= 0) { //emp activation
 				disablingRayCooldown = disablingRayCooldownOg;
 				stopFollowing = true;
 				rayActiveFor = 3f;
@@ -259,7 +280,7 @@ public class Player extends Entity {
 		}
 
 
-		if (ultimateTimer < 0) {
+		if (ultimateTimer < 0) { //ultimate checking
 			ultimateAmount += 1 * ultimateAmountMultiplier;
 			ultimateTimer = 0.5f;
 		} else {
@@ -270,17 +291,17 @@ public class Player extends Entity {
 
 		//System.out.println(ultimateAmount);
 
-		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
+		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier; //update number of ships following based on the difficulty
 
 		shield.setCenter(this.getBody().getPosition().x, this.getBody().getPosition().y);
 
 
-		maxNumberOfShipsFollowing = normalNumberOfShips * PirateGame.difficultyMultiplier;
+
 		//System.out.println(numberOfShipsFollowing);
 
 
 		this.hitBox.setPosition(this.getBody().getPosition());
-		if (shieldEnabled) {
+		if (shieldEnabled) {//shield checking
 			if (protectedTimer > 0) {
 				protectedTimer -= dt;
 				if (!bursted && burstHeal) {
@@ -291,7 +312,7 @@ public class Player extends Entity {
 					shield.setSize(shield.getWidth() + 0.1f, shield.getHeight() + 0.1f);
 				}
 			}
-			if (Gdx.input.isKeyJustPressed(Input.Keys.E) && shieldCoolDown <= 0) {
+			if (Gdx.input.isKeyJustPressed(Input.Keys.E) && shieldCoolDown <= 0) { //shield activation
 				protectedTimer = protectTime;
 				shieldCoolDown = shieldCoolDownOG;
 				bursted = false;
@@ -309,7 +330,7 @@ public class Player extends Entity {
 		}
 
 
-		if (fireRateChanged) {
+		if (fireRateChanged) { //fire rate checking
 			ogFiringCoolDown = ogFiringCoolDown / (fireRateLvl * 0.1f);
 			fireRateChanged = false;
 		}
@@ -326,19 +347,19 @@ public class Player extends Entity {
 				cannonBalls.removeValue(ball, true);
 		}
 
-		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && firingCoolDown <= 0) {
+		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && firingCoolDown <= 0) { //firing
 			fire();
 			firingCoolDown = ogFiringCoolDown;
 		} else if (firingCoolDown > 0) {
 			firingCoolDown -= dt;
 		}
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.Q) && ultimateAmount >= 100 && ultimateFirerEnabled) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.Q) && ultimateAmount >= 100 && ultimateFirerEnabled) { // ultimate activation
 			burstShotsUF = burstAmountForUltimateFire;
 			ultimateAmount = 0;
 		}
 
-		if (ultimateBurstCoolDown <= 0) {
+		if (ultimateBurstCoolDown <= 0) { //ultimate checker
 			if (burstShotsUF > 0) {
 				ultimateFirer();
 			}
@@ -358,6 +379,11 @@ public class Player extends Entity {
 		}
 	}
 
+	/**
+	 * changes max speed
+	 *
+	 * @param percentage increase by
+	 */
 	public void changeMaxSpeed(float percentage) {
 		this.maximumSpeed = this.maximumSpeed * (1 + (percentage / 100));
 		this.turnSpeed = this.turnSpeed * (1 + (percentage / 100));
@@ -414,6 +440,9 @@ public class Player extends Entity {
          */
 	}
 
+	/**
+	 * activation of ultimate
+	 */
 	public void ultimateFirer() {
 		if (!ultimateFirerEnabled) return;
 		for (int i = 0; i <= amountOfShotsInUltimateFire; i++) {
@@ -424,6 +453,9 @@ public class Player extends Entity {
 		ultimateBurstCoolDown = ultimateBurstOGCoolDown;
 	}
 
+	/**
+	 * Calculates velocity
+	 */
 	public Vector2 getForwardVelocity() {
 		Vector2 currentNormal = this.getBody().getWorldVector(new Vector2(0, 1));
 		float dotProduct = currentNormal.dot(this.getBody().getLinearVelocity());
@@ -431,10 +463,16 @@ public class Player extends Entity {
 		return multiply(dotProduct, currentNormal);
 	}
 
+	/**
+	 *  Vector2 multiplier
+	 */
 	public Vector2 multiply(float a, Vector2 v) {
 		return new Vector2(a * v.x, a * v.y);
 	}
 
+	/**
+	 * calculates lateral velocity
+	 */
 	public Vector2 getLateralVelocity() {
 		Vector2 currentNormal = this.getBody().getWorldVector(new Vector2(1, 0));
 		float dotProduct = currentNormal.dot(this.getBody().getLinearVelocity());
@@ -503,6 +541,7 @@ public class Player extends Entity {
 		return collegesCaptured;
 	}
 
+
 	public void setCollegesCaptured(float collegesCaptured) {
 		this.collegesCaptured += collegesCaptured;
 		updateStats();
@@ -526,6 +565,9 @@ public class Player extends Entity {
 		updateStats();
 	}
 
+	/**
+	 * checks if stats meet the ability requirements
+	 */
 	void updateStats() {
 		if (boatsKilled >= 5) {
 			SkillsScreen.unlock(2);

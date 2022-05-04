@@ -18,8 +18,8 @@ import com.mygdx.pirategame.PirateGame;
 /**
  * Screen with instructions for the user
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class HelpScreen implements Screen {
 	private final PirateGame parent;

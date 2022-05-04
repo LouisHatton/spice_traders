@@ -37,8 +37,8 @@ import java.util.Map;
 /**
  * Main menu is the first screen the player sees. Allows them to navigate where they want to go to
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class MainMenuScreen implements Screen {
 

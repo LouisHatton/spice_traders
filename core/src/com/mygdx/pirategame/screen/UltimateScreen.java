@@ -16,7 +16,12 @@ import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 
 /**
- * Ability shown on {@link ActiveGameScreen}
+ * Ultimate Info Screen
+ * Creates a screen with information about the Ultimate ability
+ *
+ *
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class UltimateScreen implements Screen {
 

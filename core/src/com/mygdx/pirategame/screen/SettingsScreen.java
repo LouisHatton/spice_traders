@@ -17,8 +17,8 @@ import com.mygdx.pirategame.PirateGame;
 /**
  * Provides a UI for the user to interact with the audioControls interface
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class SettingsScreen implements Screen {
 

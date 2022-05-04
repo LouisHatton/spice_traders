@@ -26,8 +26,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * Instantiates colleges
  * Instantiates college fleets
  *
- * @author Ethan Alabaster, Edward Poulter
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 
 public class College extends Enemy {
@@ -122,7 +122,7 @@ public class College extends Enemy {
 			if (pointsCoolDown <= 0) {
 				HUD.changePoints(2);
 				HUD.changeCoins(1);
-				ActiveGameScreen.player.ultimateAmount += 1 * ActiveGameScreen.player.ultimateAmountMultiplier;
+				ActiveGameScreen.player.ultimateAmount += 1 * ActiveGameScreen.player.ultimateAmountMultiplier; //updates ultimate
 				pointsCoolDown = ogCoolDown;
 			} else {
 				pointsCoolDown -= dt;
@@ -155,11 +155,11 @@ public class College extends Enemy {
 		if (!surrended) {
 			this.getBar().update();
 		} else {
-			this.getBar().deathSize();
+			this.getBar().deathSize(); //adjust health bar
 		}
 
 		if (getHealth() <= 0) {
-			if (deathCoolDown > 0) return;
+			if (deathCoolDown > 0) return; // check if the college has just been hit and died so the player doesn't accidentally kill a college
 			if (surrended && !died) {
 				setToDestroy(true);
 				ActiveGameScreen.player.setCollegesCaptured(-1);

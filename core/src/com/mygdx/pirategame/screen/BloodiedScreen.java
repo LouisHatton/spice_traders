@@ -13,6 +13,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.pirategame.PirateGame;
 
+
+/**
+ * Bloodied Info Screen
+ * Creates a screen with information about the Bloodied ability
+ *
+ *
+ * @author Faris Alblooki
+ * @version 2.0
+ */
 public class BloodiedScreen implements Screen {
 
 
@@ -36,6 +45,11 @@ public class BloodiedScreen implements Screen {
 	private Label progressBarLabel;
 	private Label percentageLabel;
 
+	/**
+	 * Instantiates a new BloodiedScreen
+	 *
+	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
+	 */
 	public BloodiedScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
 		this.stage = stage;

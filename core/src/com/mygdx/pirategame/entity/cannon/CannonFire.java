@@ -19,8 +19,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * Used by player and colleges,
  * Use should extend to enemy ships when implementing ship combat
  *
- * @author Ethan Alabaster
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class CannonFire extends Entity {
 

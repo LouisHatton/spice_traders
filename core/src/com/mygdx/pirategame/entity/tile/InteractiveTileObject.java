@@ -11,8 +11,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
  * Interactive Tile Object
  * Generates the world with interactive tiles
  *
- * @author Ethan Alabaster
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public abstract class InteractiveTileObject extends Entity {
 

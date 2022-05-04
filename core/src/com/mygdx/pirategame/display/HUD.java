@@ -22,8 +22,8 @@ import com.mygdx.pirategame.screen.SkillsScreen;
  * Hud
  * Produces a hud for the player
  *
- * @author Ethan Alabaster, Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class HUD implements Disposable {
 
@@ -101,19 +101,19 @@ public class HUD implements Disposable {
 		label1Style.font = font;
 
 		HUD.stage = stage;
-		abilities3.setFillParent(true);
+		abilities3.setFillParent(true); //setting the abilities
 		abilities2.setFillParent(true);
 		abilities1.setFillParent(true);
 		abilities1.add(shotLogo);
 
 		burstCooldown = new Label("0", label1Style);
-		ultimateCooldown = new Label("0",label1Style);
+		ultimateCooldown = new Label("0",label1Style); //setting ability cool downs
 		shieldCooldown = new Label("0", label1Style);
 		empCooldown = new Label("0", label1Style);
 
 		burstStack.add(darkburstLogo);
 		burstStack.add(burstCooldown);
-		ultimateStack.add(darkultimateLogo);
+		ultimateStack.add(darkultimateLogo); //stacking cool down on abilities
 		ultimateStack.add(ultimateCooldown);
 		shieldStack.add(darkshieldLogo);
 		shieldStack.add(shieldCooldown);
@@ -121,7 +121,7 @@ public class HUD implements Disposable {
 		empStack.add(empCooldown);
 
 		abilities1.bottom().left();
-		abilities2.center().bottom();
+		abilities2.center().bottom(); // setting up cool down locations
 		abilities3.bottom().right();
 
 		stage.addActor(abilities1);
@@ -157,12 +157,12 @@ public class HUD implements Disposable {
 		table3.setFillParent(true);
 
 		scoreLabel = new Label(String.format("%03d", score), new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour));
-		healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour2));
+		healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour2)); //setting labels
 		coinLabel = new Label(String.format("%03d", coins), new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour3));
 		pointsText = new Label("Points:", new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour));
 
 
-
+		//adding to the tables
 		table3.add(box).width(140).height(140).padBottom(15).padLeft(30);
 		table2.add(hpImg).width(32).height(32).padTop(16).padRight(90);
 		table2.row();
@@ -186,20 +186,20 @@ public class HUD implements Disposable {
 	 */
 	public static void changeHealth(int value) {
 		if(ActiveGameScreen.badWeather) {
-			badWeather = 1;
+			badWeather = 1; // checking for bad weather to update the damage multiplier
 		}
 		else{
 			badWeather = 0;
 		}
-		if (respawnProtection > 0) return;
-		if (value < 0 && Player.protectedTimer > 0f) return;
+		if (respawnProtection > 0) return; //if player just respawned protect him
+		if (value < 0 && Player.protectedTimer > 0f) return; //for player bubble
 		if (value > 0) {
 			if (health + value > maxHealth) {
-				health = (int) maxHealth;
+				health = (int) maxHealth; //if receiving health over max health set it to max health
 				healthLabel.setText(String.format("%02d", health));
 				return;
 			}
-			health += value;
+			health += value; //add to health
 			healthLabel.setText(String.format("%02d", health));
 			return;
 		}
@@ -209,14 +209,29 @@ public class HUD implements Disposable {
 		healthLabel.setText(String.format("%02d", health));
 	}
 
+	/**
+	 * to upgrade resistance
+	 *
+	 * @param multiplier upgrade by amount
+	 */
 	public static void upgradResistance(float multiplier) {
 		resistanceMultiplier -= multiplier;
 	}
 
+	/**
+	 * to upgrade health
+	 *
+	 * @param amount upgrade by amount
+	 */
 	public static void upgradMaxHealth(float amount) {
 		maxHealth += amount;
 	}
 
+	/**
+	 * checks for if able to purchase
+	 *
+	 * @param value decreases coin if available
+	 */
 	public static boolean purchase(float value) {
 		if (coins >= value) {
 			coins -= value;
@@ -245,7 +260,7 @@ public class HUD implements Disposable {
 	}
 
 	/**
-	 * Changes points by value increase
+	 * Changes points by value increase and enables abilities if met the condition
 	 *
 	 * @param value Increase to points
 	 */

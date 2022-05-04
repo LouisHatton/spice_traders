@@ -20,8 +20,8 @@ import com.mygdx.pirategame.entity.Player;
  * It is a visual representation for the skills that the game automatically unlocks for the player.
  * Automatically unlocked when a points threshold is reached
  *
- * @author Sam Pearson
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class ShopScreen implements Screen {
 
@@ -78,7 +78,7 @@ public class ShopScreen implements Screen {
 
 
 	/**
-	 * Instantiates a new Skill tree.
+	 * Instantiates a new ShopScreen.
 	 *
 	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
 	 */

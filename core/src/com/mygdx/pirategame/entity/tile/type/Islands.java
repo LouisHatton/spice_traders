@@ -10,8 +10,8 @@ import com.mygdx.pirategame.screen.ActiveGameScreen;
 /**
  * Sets up the class for all the Islands. Deals with what happens on collision and its properties
  *
- * @author Ethan Alabaster
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class Islands extends InteractiveTileObject {
 

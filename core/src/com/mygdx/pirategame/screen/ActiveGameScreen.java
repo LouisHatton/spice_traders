@@ -52,8 +52,8 @@ import java.util.stream.Collectors;
  * Class to generate the various screens used to play the game.
  * Instantiates all screen types and displays current screen.
  *
- * @author Ethan Alabaster, Adam Crook, Joe Dickinson, Sam Pearson, Tom Perry, Edward Poulter
- * @version 1.0
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class ActiveGameScreen implements Screen {
 
@@ -974,6 +974,9 @@ public class ActiveGameScreen implements Screen {
 		return exitButton;
 	}
 
+	/**
+	 * saves game state
+	 */
 	public void save(){
 		Persistence persistence = Persistence.get();
 		persistence.reset();

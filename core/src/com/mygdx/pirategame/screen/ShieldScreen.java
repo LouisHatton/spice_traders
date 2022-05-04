@@ -15,7 +15,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 
 /**
- * Ability screen shown on {@link ActiveGameScreen}
+ * Shield Info Screen
+ * Creates a screen with information about the Shield ability
+ *
+ *
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class ShieldScreen implements Screen {
 
@@ -52,6 +57,11 @@ public class ShieldScreen implements Screen {
 	private Label progressBarLabel;
 	private Label percentageLabel;
 
+	/**
+	 * Instantiates a new ShieldScreen
+	 *
+	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
+	 */
 	public ShieldScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
 		this.stage = stage;

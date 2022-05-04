@@ -8,8 +8,8 @@ import java.util.HashMap;
  * Class to determine invalid spawn areas
  * Instantiates invalid spawn map
  *
- * @author Edward Poulter, Joshua Quinn
- * @version 1.1
+ * @author Faris Alblooki
+ * @version 2
  */
 public class SpawnUtils {
 

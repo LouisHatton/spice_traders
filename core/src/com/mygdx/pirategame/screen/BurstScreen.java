@@ -15,6 +15,14 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 import com.mygdx.pirategame.display.HUD;
 
+/**
+ * Burst Info Screen
+ * Creates a screen with information about the Burst ability
+ *
+ *
+ * @author Faris Alblooki
+ * @version 2.0
+ */
 public class BurstScreen implements Screen {
 
 
@@ -50,6 +58,11 @@ public class BurstScreen implements Screen {
 	private Label progressBarLabel;
 	private Label percentageLabel;
 
+	/**
+	 * Instantiates a new BurstScreen
+	 *
+	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
+	 */
 	public BurstScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
 		this.stage = stage;

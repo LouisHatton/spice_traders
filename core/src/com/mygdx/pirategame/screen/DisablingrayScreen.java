@@ -15,7 +15,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.pirategame.PirateGame;
 
 /**
- * Ability displayed on {@link ActiveGameScreen}.
+ * Disabling Ray Info Screen
+ * Creates a screen with information about the Disabling Ray ability
+ *
+ *
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public class DisablingrayScreen implements Screen {
 
@@ -40,6 +45,11 @@ public class DisablingrayScreen implements Screen {
 	private Label progressBarLabel;
 	private Label percentageLabel;
 
+	/**
+	 * Instantiates a new DisablingrayScreen screen
+	 *
+	 * @param pirateGame the main starting body of the game. Where screen swapping is carried out.
+	 */
 	public DisablingrayScreen(PirateGame pirateGame, Stage stage) {
 		parent = pirateGame;
 		this.stage = stage;

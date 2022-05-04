@@ -5,7 +5,8 @@ import com.mygdx.pirategame.PirateGame;
 /**
  * Define each College and the appropriate attributes that belong to them.
  *
- * @author Joshua Quinn
+ * @author Faris Alblooki
+ * @version 2.0
  */
 public enum CollegeType {
 
