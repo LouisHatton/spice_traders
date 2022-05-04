@@ -25,6 +25,8 @@ public class HelpScreen implements Screen {
 	private final PirateGame parent;
 	private final Stage stage;
 	private Table titleTable = new Table();
+	Label tiplabel;
+	Table tip = new Table();
 
 	private TextButton backButton;
 
@@ -55,6 +57,10 @@ public class HelpScreen implements Screen {
 		titleTable.setFillParent(true);
 		titleTable.add(Title);
 		stage.addActor(titleTable);
+
+		tip.center().bottom();
+		tip.setFillParent(true);
+		stage.addActor(tip);
 		//Set the input processor
 		Gdx.input.setInputProcessor(stage);
 		// Create a table that fills the screen
@@ -74,12 +80,12 @@ public class HelpScreen implements Screen {
 		Label Controls1 = new Label("W accelerates, S reverse / decelerate , D steer right, A steer left and Space-bar to drop the anchor (Break)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Controls2 = new Label("Left click to fire (fires at the direction of the mouse click)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Controls3 = new Label("ESCAPE to see menu", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
-		Label Controls4 = new Label("For the abilities check the skills screen for more info", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
-		Label objective1 = new Label("The objective is to capture or destroy all other colleges. Take a college down to 1 hp for them to surrender!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label Controls4 = new Label("The keybindings for the abilities will be shown on the ability icon (or the skill screen) (To get to skill screen load up a game then pause and click skill tree)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label objective1 = new Label("The objective is to capture or destroy all other colleges. Take a college down to 1 hp for them to surrender! (Be captured)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective2 = new Label("Destroy the college by shooting a college that has surrendered", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective3 = new Label("Collect coins on the way and spend them in the shop to get upgrades", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label skillInfo1 = new Label("Automatically unlock abilities as you complete objectives", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
-		Label skillInfo2 = new Label("See your abilities and objectives look at the skills tab", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label skillInfo2 = new Label("To get more information about your abilities and objectives (Progress) look at the skills tab", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy1 = new Label("Strategy to kill boats : shooting the direction you are moving will give the player less reach. so try shooting the other way to get better reach on the enemy", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy2 = new Label("Strategy to destroy colleges : ensure that the colleges fleet has been destroyed and circle the college while shooting it", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy2Con = new Label("that way you can destroy the college without disruptions. Additionally, destroying a college will disable its fleet", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
@@ -110,6 +116,9 @@ public class HelpScreen implements Screen {
 		table.add(backButton);
 		table.row().pad(10, 0, 10, 0);
 		table.left().top();
+
+		tiplabel = new Label("Tip: Getting a pacifist victory (not destroying colleges but capturing them) will help the player avoid the bad weather. which activates from destroying two colleges.", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		tip.add(tiplabel);
 
 		//add return button
 		Other.add(Controls1);
