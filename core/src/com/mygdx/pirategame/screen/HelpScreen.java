@@ -48,6 +48,9 @@ public class HelpScreen implements Screen {
 		titleTable.clear();
 		titleTable.clearChildren();
 		titleTable.reset();
+		tip.clear();
+		tip.clearChildren();
+		tip.reset();
 		Label.LabelStyle label1Style = new Label.LabelStyle();
 		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
 		label1Style.font = font;
@@ -118,6 +121,7 @@ public class HelpScreen implements Screen {
 		table.left().top();
 
 		tiplabel = new Label("Tip: Getting a pacifist victory (not destroying colleges but capturing them) will help the player avoid the bad weather. which activates from destroying two colleges.", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		tiplabel.setColor(PirateGame.selectedColour);
 		tip.add(tiplabel);
 
 		//add return button
