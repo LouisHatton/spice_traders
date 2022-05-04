@@ -234,8 +234,8 @@ public class College extends Enemy {
 
 		if(currentCollege == "alcuin_flag.png") {
 			ActiveGameScreen.carefulTimer = 3f;
+			ActiveGameScreen.carefulNotSet = false;
 			if(getHealth() <= 1){
-				System.out.println("pp");
 				setToDestroy(true);
 				died = true;
 			}

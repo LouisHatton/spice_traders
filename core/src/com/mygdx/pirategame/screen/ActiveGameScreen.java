@@ -108,6 +108,7 @@ public class ActiveGameScreen implements Screen {
 	boolean gameSaved = false;
 	boolean onSaveMenu = false;
 	public static float carefulTimer = 0f;
+	public static boolean carefulNotSet = true;
 
 	/**
 	 * Initialises the Game Screen,
@@ -116,7 +117,6 @@ public class ActiveGameScreen implements Screen {
 	 * @param game passes game data to current class,
 	 */
 	public ActiveGameScreen(PirateGame game) {
-
 
 		badWeather = false;
 		gameStatus = GAME_RUNNING;
@@ -271,7 +271,6 @@ public class ActiveGameScreen implements Screen {
 		wantToSaveTable = new Table();
 		wantToSaveTable.setFillParent(true);
 		wantToSaveTable.setVisible(false);
-		carefulMsg = new Table();
 		carefulMsg.setFillParent(true);
 		carefulMsg.setVisible(false);
 		stage.addActor(wantToSaveTable);
@@ -629,7 +628,7 @@ public class ActiveGameScreen implements Screen {
 			carefulMsg.setVisible(true);
 			carefulTimer -= dt;
 		}
-		else {
+		else if(!carefulNotSet) {
 			carefulMsg.setVisible(false);
 		}
 		if (gameStatus == GAME_PAUSED && !onSaveMenu) {
