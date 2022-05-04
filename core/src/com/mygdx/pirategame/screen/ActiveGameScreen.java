@@ -271,6 +271,7 @@ public class ActiveGameScreen implements Screen {
 		wantToSaveTable = new Table();
 		wantToSaveTable.setFillParent(true);
 		wantToSaveTable.setVisible(false);
+		carefulMsg = new Table();
 		carefulMsg.setFillParent(true);
 		carefulMsg.setVisible(false);
 		stage.addActor(wantToSaveTable);
