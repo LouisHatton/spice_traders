@@ -87,6 +87,7 @@ public class HelpScreen implements Screen {
 		Label objective1 = new Label("The objective is to capture or destroy all other colleges. Take a college down to 1 hp for them to surrender! (Be captured)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective2 = new Label("Destroy the college by shooting a college that has surrendered", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label objective3 = new Label("Collect coins on the way and spend them in the shop to get upgrades", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
+		Label objective4 = new Label("Do not destroy your own college as that will result in a defeat (Alcuin)(The college you start next to)", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label skillInfo1 = new Label("Automatically unlock abilities as you complete objectives", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label skillInfo2 = new Label("To get more information about your abilities and objectives (Progress) look at the skills tab", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
 		Label Strategy1 = new Label("Strategy to kill boats : shooting the direction you are moving will give the player less reach. so try shooting the other way to get better reach on the enemy", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), Color.WHITE));
@@ -99,6 +100,7 @@ public class HelpScreen implements Screen {
 		objective1.setColor(PirateGame.selectedColour);
 		objective2.setColor(PirateGame.selectedColour);
 		objective3.setColor(PirateGame.selectedColour);
+		objective4.setColor(PirateGame.selectedColour);
 		skillInfo1.setColor(PirateGame.selectedColour);
 		skillInfo2.setColor(PirateGame.selectedColour);
 		Strategy1.setColor(PirateGame.selectedColour);
@@ -137,7 +139,9 @@ public class HelpScreen implements Screen {
 		Other.row();
 		Other.add(objective2);
 		Other.row();
-		Other.add(objective3).padBottom((40));
+		Other.add(objective3);
+		Other.row();
+		Other.add(objective4).padBottom((40));
 		Other.row();
 		Other.add(skillInfo1);
 		Other.center();
