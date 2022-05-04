@@ -232,7 +232,7 @@ public class ActiveGameScreen implements Screen {
 		System.out.println(shader.isCompiled() ? "yay" : shader.getLog());
 		savedGame = new Label("Game Saved!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
 		wantToSave = new Label("Save Game?", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
-		careful = new Label("Careful! Dont shoot your own college! Killing your own college will result in defeat!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
+		careful = new Label("Careful! Dont shoot your own college! Killing your own college will result in a defeat!", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour2));
 
 
 
