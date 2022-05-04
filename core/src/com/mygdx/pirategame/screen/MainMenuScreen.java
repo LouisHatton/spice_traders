@@ -84,7 +84,7 @@ public class MainMenuScreen implements Screen {
 		BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
 		label1Style.font = font;
 
-		Label Title = new Label("Spice Traders", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), Color.FIREBRICK));
+		Label Title = new Label("Spice Traders", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("font.fnt")), PirateGame.selectedColour2));
 		titleTable.center().top();
 		titleTable.setFillParent(true);
 		titleTable.add(Title);

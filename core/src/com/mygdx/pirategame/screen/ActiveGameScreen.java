@@ -349,6 +349,7 @@ public class ActiveGameScreen implements Screen {
 				pauseTable.setVisible(false);
 				game.changeScreen(PirateGame.MENU);
 				game.killGame();
+				player.resetStats();
 			}
 		});
 
@@ -359,6 +360,7 @@ public class ActiveGameScreen implements Screen {
 				pauseTable.setVisible(false);
 				game.changeScreen(PirateGame.MENU);
 				game.killGame();
+				player.resetStats();
 			}
 		});
 

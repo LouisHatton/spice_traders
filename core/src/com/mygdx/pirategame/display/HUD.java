@@ -156,10 +156,10 @@ public class HUD implements Disposable {
 		table3.top().right();
 		table3.setFillParent(true);
 
-		scoreLabel = new Label(String.format("%03d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), Color.RED));
-		coinLabel = new Label(String.format("%03d", coins), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
-		pointsText = new Label("Points:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		scoreLabel = new Label(String.format("%03d", score), new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour));
+		healthLabel = new Label(String.format("%03d", health), new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour2));
+		coinLabel = new Label(String.format("%03d", coins), new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour3));
+		pointsText = new Label("Points:", new Label.LabelStyle(new BitmapFont(), PirateGame.selectedColour));
 
 
 
