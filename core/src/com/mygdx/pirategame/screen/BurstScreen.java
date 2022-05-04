@@ -233,7 +233,7 @@ public class BurstScreen implements Screen {
 
 
 		//add return button
-		Label Strategy1 = new Label("Strategy: Ramming into an enemy and using this ability will destroy any ship!. Similarly to shooting, if the player is reversing this ability has longer reach", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour));
+		Label Strategy1 = new Label("Strategy: Ramming into an enemy and using this ability will destroy any ship!.if the player is reversing this ability has longer reach", new Label.LabelStyle(new BitmapFont(Gdx.files.internal("textFont.fnt")), PirateGame.selectedColour));
 		Other.add(this.returnButton);
 		Other.add(Strategy1);
 		Other.bottom().left();
