@@ -80,7 +80,7 @@ public class SettingsScreen implements Screen {
 		Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
 
 		selectBox = new SelectBox<String>(skin);
-		selectBox.setItems("Default","Green","Black","Red");
+		selectBox.setItems("Default","Blue","Black","Red","White","Yellow","Brown","Cyan","Gold","Gray","Orange","Purple","Pink");
 		selectBox.setSelectedIndex(PirateGame.selectedIndex);
 
 		this.backButton = new TextButton("Back", skin);
@@ -100,10 +100,10 @@ public class SettingsScreen implements Screen {
 					PirateGame.selectedColour4 = Color.RED;
 				}
 				else if(selectBox.getSelectedIndex() == 1){
-					PirateGame.selectedColour = Color.GREEN;
-					PirateGame.selectedColour2 = Color.GREEN;
-					PirateGame.selectedColour3 = Color.GREEN;
-					PirateGame.selectedColour4 = Color.GREEN;
+					PirateGame.selectedColour = Color.BLUE;
+					PirateGame.selectedColour2 = Color.BLUE;
+					PirateGame.selectedColour3 = Color.BLUE;
+					PirateGame.selectedColour4 = Color.BLUE;
 				}
 				else if(selectBox.getSelectedIndex() == 2){
 					PirateGame.selectedColour = Color.BLACK;
@@ -116,6 +116,60 @@ public class SettingsScreen implements Screen {
 					PirateGame.selectedColour2 = Color.RED;
 					PirateGame.selectedColour3 = Color.RED;
 					PirateGame.selectedColour4 = Color.RED;
+				}
+				else if(selectBox.getSelectedIndex() == 4){
+					PirateGame.selectedColour = Color.WHITE;
+					PirateGame.selectedColour2 = Color.WHITE;
+					PirateGame.selectedColour3 = Color.WHITE;
+					PirateGame.selectedColour4 = Color.WHITE;
+				}
+				else if(selectBox.getSelectedIndex() == 5){
+					PirateGame.selectedColour = Color.YELLOW;
+					PirateGame.selectedColour2 = Color.YELLOW;
+					PirateGame.selectedColour3 = Color.YELLOW;
+					PirateGame.selectedColour4 = Color.YELLOW;
+				}
+				else if(selectBox.getSelectedIndex() == 6){
+					PirateGame.selectedColour = Color.BROWN;
+					PirateGame.selectedColour2 = Color.BROWN;
+					PirateGame.selectedColour3 = Color.BROWN;
+					PirateGame.selectedColour4 = Color.BROWN;
+				}
+				else if(selectBox.getSelectedIndex() == 7){
+					PirateGame.selectedColour = Color.CYAN;
+					PirateGame.selectedColour2 = Color.CYAN;
+					PirateGame.selectedColour3 = Color.CYAN;
+					PirateGame.selectedColour4 = Color.CYAN;
+				}
+				else if(selectBox.getSelectedIndex() == 8){
+					PirateGame.selectedColour = Color.GOLD;
+					PirateGame.selectedColour2 = Color.GOLD;
+					PirateGame.selectedColour3 = Color.GOLD;
+					PirateGame.selectedColour4 = Color.GOLD;
+				}
+				else if(selectBox.getSelectedIndex() == 9){
+					PirateGame.selectedColour = Color.GRAY;
+					PirateGame.selectedColour2 = Color.GRAY;
+					PirateGame.selectedColour3 = Color.GRAY;
+					PirateGame.selectedColour4 = Color.GRAY;
+				}
+				else if(selectBox.getSelectedIndex() == 10){
+					PirateGame.selectedColour = Color.ORANGE;
+					PirateGame.selectedColour2 = Color.ORANGE;
+					PirateGame.selectedColour3 = Color.ORANGE;
+					PirateGame.selectedColour4 = Color.ORANGE;
+				}
+				else if(selectBox.getSelectedIndex() == 11){
+					PirateGame.selectedColour = Color.PURPLE;
+					PirateGame.selectedColour2 = Color.PURPLE;
+					PirateGame.selectedColour3 = Color.PURPLE;
+					PirateGame.selectedColour4 = Color.PURPLE;
+				}
+				else if(selectBox.getSelectedIndex() == 12){
+					PirateGame.selectedColour = Color.PINK;
+					PirateGame.selectedColour2 = Color.PINK;
+					PirateGame.selectedColour3 = Color.PINK;
+					PirateGame.selectedColour4 = Color.PINK;
 				}
 
 				titleLabel.setColor(PirateGame.selectedColour);
